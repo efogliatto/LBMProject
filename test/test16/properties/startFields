@@ -2,11 +2,14 @@ fields
 {
     valuesList
     {
-        4
+        7
         phi
 	U
 	muPhi
 	h
+	p
+	rho
+	g
     }
 }
 
@@ -23,6 +26,18 @@ muPhi
     value 0;
 }
 
+p
+{
+    type latticeScalarField;
+    value 1;
+}
+
+rho
+{
+    type latticeScalarField;
+    value 1;
+}
+
 U
 {
     type latticeVectorField;
@@ -30,6 +45,12 @@ U
 }
 
 h
+{
+    type latticePdfField;
+    value (0 0 0 0 0 0 0 0 0);
+}
+
+g
 {
     type latticePdfField;
     value (0 0 0 0 0 0 0 0 0);

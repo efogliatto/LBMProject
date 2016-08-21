@@ -17,6 +17,8 @@ struct lattice {
     double cs2;
     double c;
     double nlocal;
+    int d;
+    int Q;
     
 };
 
