@@ -45,6 +45,8 @@ protected:
     // Write vtk files
     const void writeVTK() const;
 
+    // Write vtk files
+    const void writeRAW() const;
 
     
 

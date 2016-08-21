@@ -109,7 +109,11 @@ const void vtkPatchWriter::write() const {
 
 	// Single vtk files
 	writeVTK();
-	
+
+	//  Fields in raw format
+	if(_time.currentTime() == _time.startTime()) {
+	    writeRAW();
+	}
 
 	// Time folder and .pvtu file
 	if( _pid == 0 ) {
@@ -411,5 +415,98 @@ const void vtkPatchWriter::writeVTK() const {
 
 }
 
+
+
+
+
+// Write VTK field in XML format
+const void vtkPatchWriter::writeRAW() const {
+
+    // Create folder if it doesnt exist
+    ostringstream folder;
+    folder << "processor" << _pid << "/" << _time.currentTime();    
+    system( ("mkdir -p " + folder.str()).c_str() );
+    
+
+    // Write Scalar fields
+    for(uint i = 0 ; i < _scalarFields.size() ; i++) {
+
+	ostringstream fname;
+	fname << "processor" << _pid << "/" << _time.currentTime() << "/" << _scalarFields[i].first;
+	ofstream outFile( fname.str().c_str() );
+
+	// Total number of elements
+	outFile << _points.size() << endl;
+	    
+	for(lbPatch_iterator<double> pt = (_scalarFields[i].second)->begin() ; pt != (_scalarFields[i].second)->end() ; ++pt)
+	    outFile << "          " << *pt << endl;
+
+	for(vector<double>::const_iterator pt = (_scalarFields[i].second)->ghostBegin() ; pt != (_scalarFields[i].second)->ghostEnd() ; ++pt)
+	    outFile << "          " << *pt << endl;
+
+	outFile.close();
+	    
+    }
+
+    // Write Vector fields
+    for(uint i = 0 ; i < _vectorFields.size() ; i++) {
+
+	ostringstream fname;
+	fname << "processor" << _pid << "/" << _time.currentTime() << "/" << _vectorFields[i].first;
+	ofstream outFile( fname.str().c_str() );
+
+        // Total number of elements
+	outFile << _points.size() << endl;	
+	    
+	for(lbPatch_iterator<Vector3> pt = (_vectorFields[i].second)->begin() ; pt != (_vectorFields[i].second)->end() ; ++pt)
+	    outFile << "          " << (*pt).x() << " " << (*pt).y() << " " << (*pt).z() << " " << endl;
+	    
+	for(vector<Vector3>::const_iterator pt = (_vectorFields[i].second)->ghostBegin() ; pt != (_vectorFields[i].second)->ghostEnd() ; ++pt) 
+	    outFile << "          " << pt->x() << " " << pt->y() << " " << pt->z() << " " << endl;
+
+	outFile.close();
+
+    }	
+
+
+    // Write LBfields
+    for(uint i = 0 ; i < _lbFields.size() ; i++) {
+
+
+	ostringstream fname;
+	fname << "processor" << _pid << "/" << _time.currentTime() << "/" << _lbFields[i].first;
+	ofstream outFile( fname.str().c_str() );
+
+        // Total number of elements
+	outFile << _points.size() << endl;	
+
+	for(lbPatch_iterator<pdf> pt = (_lbFields[i].second)->begin() ; pt != (_lbFields[i].second)->end() ; ++pt) {
+
+	    outFile << "          ";
+
+	    for(uint j = 0 ; j < (*pt).size() ; j++) 
+		outFile << (*pt)[j] << " ";
+
+	    outFile << endl;
+	    
+	}
+	    
+
+	for(vector<pdf>::const_iterator pt = (_lbFields[i].second)->ghostBegin() ; pt != (_lbFields[i].second)->ghostEnd() ; ++pt) {
+		
+	    outFile << "          ";
+		
+	    for(uint j = 0 ; j < (*pt).size() ; j++) 
+		outFile << (*pt)[j] << " ";
+
+	    outFile << endl;
+		
+	}
+	    
+	outFile.close();
+	    
+    }		
+
+}
 
 
