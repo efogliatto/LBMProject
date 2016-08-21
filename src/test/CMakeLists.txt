@@ -1,7 +1,7 @@
 #------------------ Unit tests ------------------#
 
 set ( PROJECT_LINK_LIBS libbasic.so libtime.so liblbmodel.so libio.so libfields.so libgeometry.so )
-link_directories( ~/LBMProject_v2.0/lib )
+link_directories( ~/LBMProject_v3/lib )
 
 
 # Test 1. basicPatch

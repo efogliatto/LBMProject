@@ -11,6 +11,5 @@
       <PDataArray type="Float32" NumberOfComponents="3"/>
     </PPoints>
     <Piece Source="../processor0/0/fields.vtu"/>
-    <Piece Source="../processor1/0/fields.vtu"/>
   </PUnstructuredGrid>
 </VTKFile>
