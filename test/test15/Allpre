@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Clear case
+rm -rf D2Q9_lattice
+rm -rf processor*
+rm -rf *.pvd
+rm -rf [0-9]*
+
+# Compute lattice
+latticeMesh -d D2Q9 --periodicBox
+
+# lattice partitioning
+latticeMeshPartition -n $1 -d D2Q9
+
+# field partitioning
+latticeFieldsPartition -n $1 -d D2Q9

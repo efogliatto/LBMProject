@@ -1,0 +1,8 @@
+phi
+{
+    type latticeScalarField;
+    function   Rayleigh-Taylor;
+    d  256;
+    lambda 256;
+    D 4;
+}

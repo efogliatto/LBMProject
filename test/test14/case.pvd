@@ -1,0 +1,6 @@
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian">
+  <Collection>
+    <DataSet part="0"  timestep="0" file="0/fields.pvtu" />
+    <DataSet part="0"  timestep="1" file="1/fields.pvtu" />
+  </Collection>
+</VTKFile>

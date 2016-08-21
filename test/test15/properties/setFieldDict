@@ -1,0 +1,47 @@
+Shapes
+{
+    Cyl
+    Box
+}
+
+Fields
+{
+    valuesList
+    {
+        2
+	phi
+	U
+    }
+}
+
+Cyl
+{
+    type cylinder;
+    origin ( 100 100 0 );
+    axis ( 0 0 1 );
+    radius 80;
+    height 0;
+    inside true;
+}
+
+Box
+{
+    type box;
+    min ( 92 10 0 );
+    max ( 108 100 0 );
+    inside false;
+}
+
+phi
+{
+    type latticeScalarField;
+    function none;    
+    inside  1;
+    outside -1;
+}
+
+U
+{
+    type latticeVectorField;
+    function zalesaksDisk;    
+}

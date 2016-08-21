@@ -1,0 +1,36 @@
+fields
+{
+    valuesList
+    {
+        4
+        phi
+	U
+	muPhi
+	h
+    }
+}
+
+
+phi
+{
+    type latticeScalarField;
+    value 1;
+}
+
+muPhi
+{
+    type latticeScalarField;
+    value 0;
+}
+
+U
+{
+    type latticeVectorField;
+    value (0 0 0);
+}
+
+h
+{
+    type latticePdfField;
+    value (0 0 0 0 0 0 0 0 0);
+}

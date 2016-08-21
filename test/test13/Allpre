@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Clear case
+rm -rf D2Q9_lattice
+rm -rf processor*
+
+# Compute lattice
+latticeMesh -d D2Q9 --semiPeriodicBox
+
+# lattice partitioning
+latticeMeshPartition -n 2 -d D2Q9

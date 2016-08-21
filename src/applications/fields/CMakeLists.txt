@@ -1,0 +1,2 @@
+# latticeFieldsPartition
+add_subdirectory (latticeFieldsPartition)
