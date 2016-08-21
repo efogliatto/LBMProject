@@ -12,6 +12,7 @@ OBJECTS = twoPhasesMRT.o \
 	latticeWeights.o \
 	sourceTermCH.o \
 	sourceMatrix.o \
+	collisionMatrix.o \
 	lbModelM.o \
 	lbModelInvM.o
 
