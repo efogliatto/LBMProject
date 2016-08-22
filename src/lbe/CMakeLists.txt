@@ -5,5 +5,8 @@ add_library(lbe SHARED
   matVecMult.c
   cahnHilliardSource.c
   cahnHilliardEquilibrium.c
-  cahnHilliardCollision.c  
+  cahnHilliardCollision.c
+  liangEquilibrium.c
+  liangTotalForce.c
+  liangCollision.c  
   )
