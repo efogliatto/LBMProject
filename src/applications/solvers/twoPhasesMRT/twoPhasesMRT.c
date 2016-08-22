@@ -78,11 +78,9 @@ int main() {
 
     	// Update time
     	t.current += t.tstep;
-
-	printf("%f\n",t.current);
 	
-	// Collide Cahn-Hilliard Field
-	collideCahnHilliard(U, Uold, phi, phiOld, muPhi, h, lat, fld, t.tstep);
+    	// Collide Cahn-Hilliard Field
+    	collideCahnHilliard(U, Uold, phi, phiOld, muPhi, h, lat, fld, t.tstep);
 
     };
     

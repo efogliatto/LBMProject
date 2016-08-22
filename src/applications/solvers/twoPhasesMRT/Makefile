@@ -10,7 +10,6 @@ OBJECTS = twoPhasesMRT.o \
 	collideCahnHilliard.o \
 	latticeVel.o \
 	latticeWeights.o \
-	latticeWeightsPt.o \
 	sourceTermCH.o \
 	sourceMatrix.o \
 	collisionMatrix.o \

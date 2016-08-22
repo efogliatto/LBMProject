@@ -6,7 +6,7 @@ struct lattice readLatticeProperties() {
     lat.size = 0;
     lat.cs2 = 1 / 3;
     lat.c = 1;
-    lat.nlocal = 40401;
+    lat.nlocal = 263425;
     lat.d = 2;
     lat.Q = 9;
     

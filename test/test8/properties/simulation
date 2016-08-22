@@ -1,5 +1,0 @@
-startTime 0;
-endTime 1;
-writeInterval 1;
-timeStep 0.3;
-writeVTK true;
