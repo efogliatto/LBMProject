@@ -5,6 +5,7 @@
 #include <readVectorField.h>
 #include <readPdfField.h>
 #include <twoPhasesFields.h>
+#include <cahnHilliardCollision.h>
 
 int main() {
 
@@ -39,6 +40,18 @@ int main() {
 
 
 
+    // Advance in time. Collide, stream, update and write
+    while(info.time.current < info.time.end) {
+
+    	// Update time
+    	info.time.current += info.time.tstep;
+
+	printf("time = %.2f \n", info.time.current);
+
+	// Collide h
+	cahnHilliardCollision(&fields, &info);
+
+    }
     
     return 0;
     
