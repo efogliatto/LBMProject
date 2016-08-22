@@ -4,4 +4,5 @@
 add_library(io SHARED
   dictionary.C
   vtkPatchWriter.C
+  readBasicInfo.C
   )
