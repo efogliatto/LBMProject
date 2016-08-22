@@ -19,6 +19,8 @@ struct latticeInfo {
     double nlocal;
     int d;
     int Q;
+    int** vel;
+    double* omega;
     
 };
 

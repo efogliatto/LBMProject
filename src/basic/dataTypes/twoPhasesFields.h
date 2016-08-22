@@ -5,6 +5,8 @@ struct twoPhasesFields {
 
     double* phi;
 
+    double* phi_old;
+
     double* muPhi;
 
     double* rho;
@@ -12,6 +14,8 @@ struct twoPhasesFields {
     double* p;
 
     double** U;
+    
+    double** U_old;
 
     double** h;
 

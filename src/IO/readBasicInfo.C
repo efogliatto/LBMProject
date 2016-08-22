@@ -56,7 +56,26 @@ const struct solverInfo readBasicInfo() {
 
 
 
+    // Lattice weights
+    const vector<double> omega = lbm->omega();
+    info.lattice.omega = (double*)malloc( lbm->Q() * sizeof(double));
+    for(uint i = 0 ; i < lbm->Q() ; i++)
+	info.lattice.omega[i] = omega[i];
 
+
+    // Lattice velocities
+    const vector<Vector3> vel = lbm->latticeVel();
+    info.lattice.vel = (int**)malloc( lbm->Q() * sizeof(int*));
+    for(uint i = 0 ; i < lbm->Q() ; i++)
+	info.lattice.vel[i] = (int*)malloc( 3 * sizeof(int));
+
+    for(uint i = 0 ; i < lbm->Q() ; i++) {
+	info.lattice.vel[i][0] = (int)vel[i].x();
+	info.lattice.vel[i][1] = (int)vel[i].y();
+	info.lattice.vel[i][2] = (int)vel[i].z();
+    }
+    
+    
 
     // Read macroscopic properties
     dictionary mp("properties/macroscopicProperties");

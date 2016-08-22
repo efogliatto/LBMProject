@@ -2,6 +2,8 @@
 #include <basicSolverInfo.h>
 #include <readBasicInfo.h>
 #include <readScalarField.h>
+#include <readVectorField.h>
+#include <readPdfField.h>
 #include <twoPhasesFields.h>
 
 int main() {
@@ -9,6 +11,8 @@ int main() {
     // Simulation properties
     struct solverInfo info = readBasicInfo();
 
+
+    
     // Read Fields
     struct twoPhasesFields fields;
 
@@ -26,6 +30,15 @@ int main() {
 
     // Velocity
     fields.U = readVectorField("U", &info);
+
+    // Cahn-Hilliard field
+    fields.h = readPdfField("h", &info);
+
+    // Navier-Stokes field
+    fields.g = readPdfField("g", &info);    
+
+
+
     
     return 0;
     

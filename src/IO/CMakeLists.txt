@@ -7,4 +7,5 @@ add_library(io SHARED
   readBasicInfo.C
   readScalarField.C
   readVectorField.C
+  readPdfField.C
   )
