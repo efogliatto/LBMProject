@@ -10,11 +10,13 @@ OBJECTS = twoPhasesMRT.o \
 	collideCahnHilliard.o \
 	latticeVel.o \
 	latticeWeights.o \
+	latticeWeightsPt.o \
 	sourceTermCH.o \
 	sourceMatrix.o \
 	collisionMatrix.o \
 	lbModelM.o \
-	lbModelInvM.o
+	lbModelInvM.o \
+	CHequilibrium.o
 
 default: twoPhasesMRT
 

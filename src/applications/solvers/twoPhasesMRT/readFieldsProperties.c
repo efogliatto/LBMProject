@@ -45,6 +45,8 @@ struct fields readFieldsProperties() {
 
     fld.rho_A = 1;
     fld.rho_B = 1.222222;
+
+    fld.eta = fld.M_phi / (   (1/3) * 1 * (1/fld.Sh[3] - 0.5)   );
     
     return fld;   
 

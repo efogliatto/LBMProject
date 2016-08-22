@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "data.h"
+#include <stdlib.h>
 
 struct Time readTime();
 struct lattice readLatticeProperties();
@@ -8,8 +9,7 @@ double* readScalarField(const char* fname, const struct Time t, const struct lat
 double** readVectorField(const char* fname, const struct Time t, const struct lattice lat);
 double** readPdfField(const char* fname, const struct Time t, const struct lattice lat);
 int** readNeighbours(const struct lattice lat);
-void collideCahnHilliard(double* phi,double* muPhi,double** U,double** h, const struct lattice lat);
-
+void collideCahnHilliard(double** U, double** Uold, double* phi, double* phiOld, double* muPhi, double** h, const struct lattice lat, const struct fields fld, const double dt);
 
 int main() {
 
@@ -30,6 +30,8 @@ int main() {
     // Order parameter
     double* phi;
     phi = readScalarField("phi", t, lat);
+    double* phiOld;
+    phiOld = readScalarField("phi", t, lat);
     
     // Chemical potential
     double* muPhi;
@@ -45,7 +47,9 @@ int main() {
 
     // Velocity
     double** U;
-    U = readVectorField("U", t, lat);    
+    U = readVectorField("U", t, lat);
+    double** Uold;
+    Uold = readVectorField("U", t, lat);
 
     // Cahn-Hilliard field
     double** h;
@@ -59,17 +63,27 @@ int main() {
     int** nb;
     nb = readNeighbours(lat);
 
+    /* unsigned int i; */
+    /* for(i = 0 ; i < lat.nlocal ; i++) { */
+    /* 	printf("%d %d\n", i, lat.Q); */
+    
+    /* 	double* st; */
+    /* 	st = (double*)malloc( lat.Q * sizeof(double) ); */
+
+    /* } */
 
 
     // Move over time. Collide, stream and update fields
-    while(t.current <= t.end) {
+    while(t.current < t.end) {
 
-	// Update time
-	t.current += t.tstep;
+    	// Update time
+    	t.current += t.tstep;
 
-	// Collide Cahn-Hilliard Field
-	collideCahnHilliard(phi,muPhi,U,h,lat);
+	printf("%f\n",t.current);
 	
+	// Collide Cahn-Hilliard Field
+	collideCahnHilliard(U, Uold, phi, phiOld, muPhi, h, lat, fld, t.tstep);
+
     };
     
     return 0;

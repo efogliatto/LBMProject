@@ -6,10 +6,11 @@ double* latticeWeights(const struct lattice lat) {
 
     double* omega;
 
+    /* printf(lat) */
+    
     if(  (lat.d == 2) && (lat.Q == 9)  )  {
 
-	unsigned int i;
-	omega = (double*)malloc( lat.Q * sizeof(double) );
+	omega = malloc( 9 * sizeof(double) );
 
 	omega[0] = 4.0 / 9.0;
 	omega[1] = 1.0 / 9.0;

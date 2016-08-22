@@ -37,6 +37,8 @@ struct fields {
     double gz;
     double rho_A;
     double rho_B;
+
+    double eta;
     
 };
 
