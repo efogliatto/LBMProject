@@ -20,10 +20,10 @@ OBJECTS = twoPhasesMRT.o \
 default: twoPhasesMRT
 
 %.o: %.c $(HEADERS)
-	gcc -c $< -o $@
+	gcc -c -O3 $< -o $@
 
 twoPhasesMRT: $(OBJECTS)
-	gcc $(OBJECTS) -o $@
+	gcc $(OBJECTS) -O3 -o $@
 
 clean:
 	-rm -f $(OBJECTS)

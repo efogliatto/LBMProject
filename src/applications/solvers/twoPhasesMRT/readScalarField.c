@@ -12,7 +12,7 @@ double* readScalarField(const char* fname, const struct Time t, const struct lat
     // Open file
     FILE* infile;
     char name[80];
-    sprintf(name,"processor0/%d/",t.start);
+    sprintf(name,"processor0/0/");
     strcat(name,fname);
 
     infile = fopen( name, "r" );
