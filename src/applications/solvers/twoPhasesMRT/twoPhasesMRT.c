@@ -18,7 +18,8 @@ int main() {
     struct twoPhasesFields fields;
 
     // Order parameter
-    fields.phi = readScalarField("phi", &info);
+    fields.phi     = readScalarField("phi", &info);
+    fields.phi_old = readScalarField("phi", &info);
 
     // Chemical potential
     fields.muPhi = readScalarField("muPhi", &info);
@@ -30,7 +31,8 @@ int main() {
     fields.rho = readScalarField("rho", &info);
 
     // Velocity
-    fields.U = readVectorField("U", &info);
+    fields.U     = readVectorField("U", &info);
+    fields.U_old = readVectorField("U", &info);
 
     // Cahn-Hilliard field
     fields.h = readPdfField("h", &info);
@@ -46,7 +48,7 @@ int main() {
     	// Update time
     	info.time.current += info.time.tstep;
 
-	printf("time = %.2f \n", info.time.current);
+	/* printf("time = %.2f \n", info.time.current); */
 
 	// Collide h
 	cahnHilliardCollision(&fields, &info);

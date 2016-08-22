@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-const struct solverInfo readBasicInfo();
+struct solverInfo readBasicInfo();
     
 #ifdef __cplusplus
 }

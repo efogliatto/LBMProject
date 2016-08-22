@@ -17,7 +17,7 @@ find_package(MPI REQUIRED)
 include_directories(include ${MPI_INCLUDE_PATH} ${Boost_INCLUDE_DIRS})
 
 # Compiler options for CGAL
-SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} --std=c++11 -Wall" )
+SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} --std=c++11 -Wall -fopenmp" )
 
 # Directorio con fuentes
 add_subdirectory (src)
