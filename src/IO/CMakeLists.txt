@@ -6,4 +6,5 @@ add_library(io SHARED
   vtkPatchWriter.C
   readBasicInfo.C
   readScalarField.C
+  readVectorField.C
   )

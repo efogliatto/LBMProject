@@ -1,6 +1,6 @@
 // Read field for c-written solvers
 
-#include <readScalarField.h>
+#include <readVectorField.h>
 #include <fstream>
 #include <stdlib.h>
 #include <sstream>
@@ -11,9 +11,9 @@ extern "C" {
 #endif
 
 
-const double* readScalarField(const char* fname, const struct solverInfo* info) {
+double** readVectorField(const char* fname, const struct solverInfo* info) {
 
-    double* field;
+    double** field;
     
     // Open file
     std::ifstream inFile;
@@ -31,11 +31,16 @@ const double* readScalarField(const char* fname, const struct solverInfo* info) 
     inFile >> np;
 
     // Resize field
-    field = (double*)malloc( np * sizeof(double) );
+    field = (double**)malloc( np * sizeof(double*) );
+    for(uint i = 0 ; i < np ; i++)
+	field[i] = (double*)malloc( 3 * sizeof(double) );
     
     // Read elements
-    for(uint i = 0 ; i < np ; i++)
-    	inFile >> field[i];
+    for(uint i = 0 ; i < np ; i++){
+    	inFile >> field[i][0];
+	inFile >> field[i][1];
+	inFile >> field[i][2];
+    }
     
     // Close file
     inFile.close();

@@ -1,7 +1,7 @@
-#ifndef FIELDS_H
-#define FIELDS_H
+#ifndef TWOPHASESFIELDS_H
+#define TWOPHASESFIELDS_H
 
-struct twoPhaseFields {
+struct twoPhasesFields {
 
     double* phi;
 
@@ -19,4 +19,4 @@ struct twoPhaseFields {
     
 };
 
-#endif // FIELDS_H
+#endif // TWOPHASESFIELDS_H
