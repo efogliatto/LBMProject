@@ -8,4 +8,6 @@ add_library(io SHARED
   readScalarField.C
   readVectorField.C
   readPdfField.C
+  readNeighbours.C
+  C_IO/timeOptions.C
   )

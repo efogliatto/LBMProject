@@ -20,6 +20,8 @@ struct twoPhasesFields {
     double** h;
 
     double** g;
+
+    int** nb;
     
 };
 

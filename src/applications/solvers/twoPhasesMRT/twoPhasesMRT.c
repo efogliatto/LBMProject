@@ -7,6 +7,7 @@
 #include <twoPhasesFields.h>
 #include <cahnHilliardCollision.h>
 
+
 int main() {
 
     // Simulation properties
@@ -17,6 +18,9 @@ int main() {
     // Read Fields
     struct twoPhasesFields fields;
 
+    // Neighbours indices
+    fields.nb = readNeighbours(&info);
+    
     // Order parameter
     fields.phi     = readScalarField("phi", &info);
     fields.phi_old = readScalarField("phi", &info);
@@ -43,17 +47,17 @@ int main() {
 
 
     // Advance in time. Collide, stream, update and write
-    while(info.time.current < info.time.end) {
-
-    	// Update time
-    	info.time.current += info.time.tstep;
-
-	/* printf("time = %.2f \n", info.time.current); */
+    while( updateTime(&info) ) {
 
 	// Collide h
 	cahnHilliardCollision(&fields, &info);
 
     }
+
+
+    // Print info
+    double rt = elapsed(&info);
+    printf("\n Finished in %.0f = seconds \n", rt );
     
     return 0;
     

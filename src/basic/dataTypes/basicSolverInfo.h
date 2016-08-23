@@ -1,15 +1,37 @@
 #ifndef BASICSOLVERINFO_H
 #define BASICSOLVERINFO_H
 
+#include <time.h>
+#include <sys/time.h>
+
 struct timeInfo {
 
+    // Simulation parameters
+
+    // Start time
     double start;
+
+    // End time
     double end;
+
+    // Time step
     double tstep;
+
+    // Write interval (write every writeInterval steps)
     double writeInterval;
+
+    // Current time
     double current;
+
+    // Start time (time measurement)
+    time_t st;
+
+    // Time step
+    unsigned int stp;
     
 };
+
+
 
 struct latticeInfo {
 
@@ -59,5 +81,6 @@ struct solverInfo {
 
     struct fieldsInfo fields;    
 };
+
 
 #endif // BASICSOLVERINFO_H

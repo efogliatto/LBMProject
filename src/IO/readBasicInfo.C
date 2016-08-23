@@ -22,8 +22,9 @@ struct solverInfo readBasicInfo() {
     info.time.tstep = tp.lookUpEntry<double>("timeStep");
     info.time.writeInterval = tp.lookUpEntry<double>("writeInterval");
     info.time.current = info.time.start;
+    info.time.stp = 0;
 
-
+    info.time.st = time( NULL );
 
 
     // Read lattice properties
