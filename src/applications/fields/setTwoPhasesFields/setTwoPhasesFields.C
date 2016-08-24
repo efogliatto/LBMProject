@@ -4,7 +4,7 @@
 
 
 #include <cahnHilliardField.h>
-// #include <LiangField.h>
+#include <liangField.h>
 #include <boost/program_options.hpp>
 #include <vtkPatchWriter.h>
 #include <LBModelCreator.h>
@@ -75,9 +75,13 @@ int main(int argc, char** argv) {
     h.addChemical(&muPhi);
 
 
-    // h
+    // h equilibrium
     for(cahnHilliardField::iterator it = h.begin() ; it != h.end() ; ++it)
     	*it = it.equilibrium();
+
+    // Chemical potential
+    for(std::pair<cahnHilliardField::iterator, latticeScalarField::iterator> it(h.begin(), muPhi.begin()) ; it.first != h.end() ; ++it.first, ++it.second)
+    	*it.second =  it.first.chemical();    
 
     
 
@@ -87,24 +91,32 @@ int main(int argc, char** argv) {
     // Pressure
     latticeScalarField p( creator.create( modelName ), env, world, "p", runTime, false );
 
-    // // Lattice field
-    // liangField g( creator.create( modelName ), env, world, "g", runTime, false );
+    // Lattice field
+    liangField g( creator.create( modelName ), env, world, "g", runTime, false );
 
-    // // Add fields to g list
-    // g.add(&phi);
-    // g.add(&U);
-    // g.add(&rho);
-    // g.add(&p);
-    // g.addChemical(&muPhi);
+    // Add fields to g list
+    g.add(&phi);
+    g.add(&U);
+    g.add(&rho);
+    g.add(&p);
+    g.add(&muPhi);
 
 
-    // // g
-    // for(liangField::iterator it = g.begin() ; it != g.end() ; ++it)
-    // 	*it = it.equilibrium();    
+    // g
+    for(liangField::iterator it = g.begin() ; it != g.end() ; ++it)
+    	*it = it.equilibrium();
 
-    // // Synchronize ghost nodes
-    // h.syncGhostValues();
-    // g.syncGhostValues();
+    // p
+    for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), p.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
+    	*it.second =  it.first.zerothMoment();    
+
+    // rho
+    for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), rho.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
+    	*it.second =  it.first.density();
+    
+    // Synchronize ghost nodes
+    h.syncGhostValues();
+    g.syncGhostValues();
 
 
 
@@ -116,7 +128,7 @@ int main(int argc, char** argv) {
     writer.add(&muPhi, "muPhi");
     writer.add(&p, "p");
     writer.add(&rho, "rho");
-    // writer.add(&g, "g");
+    writer.add(&g, "g");
 
 
     writer.write();

@@ -6,7 +6,5 @@ add_library(fields SHARED
   latticeVectorFields/latticeVectorField.C
   latticePdfFields/latticePdfField.C
   latticePdfFields/cahnHilliardField/cahnHilliardField.C
-  # LBfields/MRT/cahnHilliard/cahnHilliardMRTField.C
-  # LBfields/MRT/LiangField/LiangField.C
-  # LBfields/MRT/testField/testField.C
+  latticePdfFields/liangField/liangField.C
   )
