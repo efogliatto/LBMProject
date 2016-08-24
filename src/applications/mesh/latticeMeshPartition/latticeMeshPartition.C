@@ -266,11 +266,11 @@ int main(int argc, char** argv) {
     vector< IOPatch<Vector3> > patches;
 
     for(uint pid = 0 ; pid < np ; pid++)
-	patches.push_back( IOPatch<Vector3>(lbm) );
+    	patches.push_back( IOPatch<Vector3>(lbm) );
 
     // Set patch indices
     for(uint pid = 0 ; pid < np ; pid++)
-	patches[pid].setId(pid);
+    	patches[pid].setId(pid);
 
     // Assign neighbours
     for(vector< IOPatch<Vector3> >::iterator it = patches.begin() ; it != patches.end() ; it++)
@@ -300,7 +300,7 @@ int main(int argc, char** argv) {
     // Write patch information
     for(uint pid = 0 ; pid < patches.size() ; pid++) {
 
-	cout << "    processor" << pid << endl; 
+    	cout << "    processor" << pid << endl; 
 
     	ostringstream folderName;
     	folderName << "processor" << pid << "/" << vm["DQmodel"].as<string>() << "_lattice";
@@ -323,11 +323,12 @@ int main(int argc, char** argv) {
     	// Local and ghost values
     	patches[pid].writeAllValues(  "points", folderName.str() );
 
-	// VTK Cells
-	patches[pid].writeVTKCells(  "vtkCells", folderName.str(), vtkCells );
+    	// VTK Cells
+    	patches[pid].writeVTKCells(  "vtkCells", folderName.str(), vtkCells );
 	
     }
 
+    cout << endl << "Finished domain decomposition" << endl << endl;
     
     
     return 0;

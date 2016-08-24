@@ -281,6 +281,8 @@ int main(int argc, char** argv) {
 
 
 
+    cout << endl << "Finished fields decomposition" << endl << endl;
+
     
     return 0;
 

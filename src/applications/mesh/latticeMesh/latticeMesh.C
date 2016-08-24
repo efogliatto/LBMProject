@@ -126,7 +126,7 @@ int main(int argc, char** argv) {
 	    exit(1);
 	}
 	
-	// outFile << meshPoints.size() << endl;
+	outFile << meshPoints.size() << endl;
 	for(uint i = 0 ; i < meshPoints.size() ; i++) {
 	    outFile << meshPoints[i] << endl;
 	}
