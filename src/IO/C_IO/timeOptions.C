@@ -14,7 +14,7 @@ extern "C" {
 
     
     // Flag to enable writing
-    const bool write(const struct solverInfo* info) {
+    const bool writeFlag(const struct solverInfo* info) {
 
 	bool wrt = false;
 

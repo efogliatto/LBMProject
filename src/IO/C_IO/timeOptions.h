@@ -11,7 +11,7 @@ extern "C" {
     const double elapsed (const struct solverInfo* info);
 
     // Flag to enable writing
-    const bool write(const struct solverInfo* info);
+    const bool writeFlag(const struct solverInfo* info);
 
     // Update time structure
     const bool updateTime(struct solverInfo* info);
