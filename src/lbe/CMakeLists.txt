@@ -4,7 +4,7 @@
 add_library(lbe SHARED
   matVecMult.c
   laplacian.c
-  # gradient.c
+  gradient.c
   cahnHilliardSource.c
   cahnHilliardEquilibrium.c
   cahnHilliardCollision.c
