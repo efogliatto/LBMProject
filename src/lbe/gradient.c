@@ -27,21 +27,3 @@ const double* gradient( struct twoPhasesFields* fields, const struct solverInfo*
     return grad;
     
 }
-
-
-
-/* // Move over neighbours */
-/* for(neigh_iterator neigh = lbPatch_iterator<double>::neighBegin() ; neigh != lbPatch_iterator<double>::neighEnd() ; ++neigh) {	     */
-
-/*     int revId = _field->_lbm->reverse( neigh->first ); */
-
-/*     if(  neigh->first != 0  ) { */
-
-/* 	grad += _field->_lbm->at(revId ) * (*neigh->second) * omega[revId] * _field->_c; */
-		
-/*     } */
-	    	
-/* } */
-
-
-/* return grad / ( _field->_cs2 * _field->_time.timeStep() ); */

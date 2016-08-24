@@ -125,12 +125,14 @@ int main(int argc, char** argv) {
 	    cout << "Cant't open file " << filename << endl;
 	    exit(1);
 	}
-	outFile << meshPoints.size() << endl;
+	
+	// outFile << meshPoints.size() << endl;
 	for(uint i = 0 ; i < meshPoints.size() ; i++) {
 	    outFile << meshPoints[i] << endl;
 	}
 	outFile.close();
 
+	
 	// Neighbours
 	filename = folder.str() + vm["DQmodel"].as<string>() + "_neighbours";
 	outFile.open( filename.c_str() );

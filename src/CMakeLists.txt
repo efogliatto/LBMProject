@@ -16,8 +16,8 @@ add_subdirectory (geometry)
 # Fields library
 add_subdirectory (fields)
 
-# C library. Equilibirum, collision, streamming, etc
-add_subdirectory (lbe)
+# # C library. Equilibirum, collision, streamming, etc
+# add_subdirectory (lbe)
 
 
 

@@ -6,6 +6,7 @@
 #include <readPdfField.h>
 #include <twoPhasesFields.h>
 #include <cahnHilliardCollision.h>
+#include <liangCollision.h>
 
 
 int main() {
@@ -51,6 +52,9 @@ int main() {
 
 	// Collide h
 	cahnHilliardCollision(&fields, &info);
+
+	// Collide g
+	liangCollision(&fields, &info);	
 
     }
 

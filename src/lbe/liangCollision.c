@@ -42,7 +42,11 @@ void liangCollision(struct twoPhasesFields* fields, const struct solverInfo* inf
 
     }
 
-    
+
+
+    free(st);
+    free(R);
+    free(eq);
     
 }
 
