@@ -10,4 +10,5 @@ add_library(io SHARED
   C_IO/readPdfField.C
   C_IO/readNeighbours.C
   C_IO/timeOptions.C
+  C_IO/writeScalarField.C
   )
