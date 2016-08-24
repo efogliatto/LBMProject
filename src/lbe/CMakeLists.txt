@@ -8,7 +8,7 @@ add_library(lbe SHARED
   cahnHilliardSource.c
   cahnHilliardEquilibrium.c
   cahnHilliardCollision.c
-  # liangEquilibrium.c
+  liangEquilibrium.c
   # liangTotalForce.c
   # liangCollision.c  
   )
