@@ -12,4 +12,5 @@ add_library(io SHARED
   C_IO/timeOptions.C
   C_IO/writeScalarField.C
   C_IO/writeVectorField.C
+  C_IO/writePdfField.C
   )

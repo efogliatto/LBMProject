@@ -1,6 +1,6 @@
 // Write field for c-written solvers
 
-#include <writeVectorField.h>
+#include <writePdfField.h>
 #include <fstream>
 #include <stdlib.h>
 #include <sstream>
@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 
-void writeVectorField(const char* fname, const double** field, const struct solverInfo* info) {
+void writePdfField(const char* fname, const double** field, const struct solverInfo* info) {
 
     // Open file
     std::ofstream outFile;
@@ -29,9 +29,10 @@ void writeVectorField(const char* fname, const double** field, const struct solv
     
     // Write elements
     for(uint i = 0 ; i < info->lattice.nlocal ; i++) {
-	outFile << field[i][0] << " ";
-	outFile << field[i][1] << " ";
-	outFile << field[i][2] << std::endl;
+	for(uint j = 0 ; j < (uint)info->lattice.Q ; j++) {
+	    outFile << field[i][j] << "  ";
+	}
+	outFile << std::endl;
     }
     
     // Close file
