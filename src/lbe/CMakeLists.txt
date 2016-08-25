@@ -4,9 +4,10 @@
 add_library(lbe SHARED
   matVecMult.c
   scalarFieldLaplacian.c
-  gradient.c
+  scalarFieldGradient.c
   density.c
   chemicalPotential.c
+  pressureWithU.c
   cahnHilliardSource.c
   cahnHilliardEquilibrium.c
   cahnHilliardCollision.c

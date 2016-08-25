@@ -106,13 +106,25 @@ int main(int argc, char** argv) {
     // for(liangField::iterator it = g.begin() ; it != g.end() ; ++it)
     // 	*it = it.equilibrium();
 
-    // // p
-    // for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), p.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
-    // 	*it.second =  it.first.zerothMoment();    
-
     // rho
     for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), rho.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
     	*it.second =  it.first.density();
+
+    // SACAR
+    for( latticeScalarField::iterator it = rho.begin() ; it != rho.end() ; ++it)
+	cout << it.gradient() << endl;
+    
+
+    // p
+    {
+	latticeVectorField::iterator uiter = U.begin();
+	for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), p.begin()) ; it.first != g.end() ; ++it.first, ++it.second) {
+	    *it.second =  it.first.zerothMoment( *uiter );
+	    ++uiter;
+	}
+
+    }
+    
     
     // // Synchronize ghost nodes
     // h.syncGhostValues();

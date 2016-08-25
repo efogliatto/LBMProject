@@ -40,9 +40,9 @@ protected:
     const double s_eq(const uint& id, const Vector3& U) {
 
 	const double w = _field->_lbm->omega(id),
-	    cs2 = 1  /  ( _field->_lbm->c() * _field->_lbm->c() * _field->_lbm->cs2() );
+	    cs2 = 1  /  _field->_cs2;
 
-	const Vector3 ci = _field->_lbm->at(id) * _field->_lbm->c();
+	const Vector3 ci = _field->_lbm->at(id) * _field->_c;
 
 	return w  *  (  ci * U * cs2   +   (ci * U) * (ci * U) * 0.5 * cs2 * cs2   -  U.sqMag() * 0.5 * cs2 );
 	
@@ -54,11 +54,11 @@ protected:
 
 	const vector<double> omega = _field->_lbm->omega();
 
-	const double cs2 = 1  /  ( _field->_lbm->c() * _field->_lbm->c() * _field->_lbm->cs2() );
+	const double cs2 = 1  /  _field->_cs2;
 
 	vector<Vector3> lvel = _field->_lbm->latticeVel();
 	for(uint i = 0 ; i < lvel.size() ; i++)
-	    lvel[i] = lvel[i] * _field->_lbm->c();
+	    lvel[i] = lvel[i] * _field->_c;
 
 	pdf s;
 	s.resize( lvel.size() );
@@ -120,10 +120,9 @@ public :
     	const double red = val.reduce() - val[0];
 
     	// Extra constants
-    	const double cs2 = _field->_lbm->c() * _field->_lbm->c() * _field->_lbm->cs2(),
-    	    w0 = _field->_lbm->omega(0);
-
-    	return ( cs2 / (1 - w0) )  *  ( red   +   ((*_U) * _rho.gradient()) * 0.5 * _field->_time.timeStep()   +   (*_rho) * s_eq(0,U) );
+    	const double w0 = _field->_lbm->omega(0);
+	
+    	return ( _field->_cs2 / (1 - w0) )  *  ( red   +   ((*_U) * _rho.gradient()) * 0.5 * _field->_time.timeStep()   +   (*_rho) * s_eq(0,U) );
 
     }
 
@@ -137,10 +136,9 @@ public :
     	const double red = val.reduce() - val[0];
 	
 	// Extra constants
-	const double cs2 = _field->_lbm->c() * _field->_lbm->c() * _field->_lbm->cs2(),
-	    w0 = _field->_lbm->omega(0);
+	const double w0 = _field->_lbm->omega(0);
 	
-	return ( cs2 / (1 - w0) )  *  ( red   +   (  (*_U) * _rho.gradient() ) * 0.5 * _field->_time.timeStep()   +   (*_rho) * s_eq(0,U) );
+	return ( _field->_cs2 / (1 - w0) )  *  ( red   +   (  (*_U) * _rho.gradient() ) * 0.5 * _field->_time.timeStep()   +   (*_rho) * s_eq(0,U) );
 
     }
 
@@ -158,7 +156,7 @@ public :
 	
 	// Pdf reduction
 	pdf val = (*this).value();
-	const Vector3 red = val.reduce( _field->_lbm->latticeVel(), _field->_lbm->c() );
+	const Vector3 red = val.reduce( _field->_lbm->latticeVel(), _field->_c);
 
 	
 	return ( red  +  (Fs + Fb) * 0.5 * _field->_time.timeStep() )    /    ( (*_rho)  -  0.5 * _field->_time.timeStep() * (_field->_rho_A - _field->_rho_B) * _field->_M * _muPhi.laplacian() / (_field->_phi_A - _field->_phi_B) );
@@ -174,7 +172,7 @@ public :
     	const vector<double> omega = _field->_lbm->omega();
 
     	// Sound speed
-    	double cs2 = _field->_lbm->c() * _field->_lbm->c() * _field->_lbm->cs2();
+    	double cs2 = _field->_cs2;
 
 	pdf s = s_eq( *_U );
 

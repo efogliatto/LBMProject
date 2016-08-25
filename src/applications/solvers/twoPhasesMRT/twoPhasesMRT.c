@@ -7,7 +7,9 @@
 #include <twoPhasesFields.h>
 #include <cahnHilliardCollision.h>
 #include <liangCollision.h>
-#include <density.h>
+#include <pressureWithU.h>
+
+/* #include <scalarFieldGradient.h> */
 
 int main() {
 
@@ -53,7 +55,15 @@ int main() {
     while( updateTime(&info) ) {
 	
 
-	density( &fields, &info, fields.rho );
+	/* density( &fields, &info, fields.rho ); */
+	/* pressureWithU( &fields, &info, fields.p ); */
+	
+	unsigned int id;
+	for(id = 0 ; id < info.lattice.nlocal ; id++) {
+	    double* grad = scalarFieldGradient(&fields, &info, fields.rho, id);
+	    printf("(%f %f %f)\n",grad[0],grad[1],grad[2]);
+	}
+
 	
     	/* // Collide h */
     	/* cahnHilliardCollision(&fields, &info); */

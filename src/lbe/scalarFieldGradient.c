@@ -1,9 +1,12 @@
-#include <gradient.h>
+#include <scalarFieldGradient.h>
 #include <stdlib.h>
 
-const double* gradient( struct twoPhasesFields* fields, const struct solverInfo* info, double* fld, const int id ) {
+double* scalarFieldGradient( struct twoPhasesFields* fields, const struct solverInfo* info, double* fld, const int id ) {
 
     double* grad = (double*)malloc( 3 * sizeof(double));
+    grad[0] = 0;
+    grad[1] = 0;
+    grad[2] = 0;
 
     unsigned int k;
 
@@ -23,6 +26,10 @@ const double* gradient( struct twoPhasesFields* fields, const struct solverInfo*
 
     }
 
+
+    grad[0] = grad[0] / ( info->lattice.cs2 * info->time.tstep );
+    grad[1] = grad[1] / ( info->lattice.cs2 * info->time.tstep );
+    grad[2] = grad[2] / ( info->lattice.cs2 * info->time.tstep );    
 
     return grad;
     
