@@ -20,7 +20,7 @@ struct solverInfo readBasicInfo() {
     info.time.start = tp.lookUpEntry<double>("startTime");
     info.time.end = tp.lookUpEntry<double>("endTime");
     info.time.tstep = tp.lookUpEntry<double>("timeStep");
-    info.time.writeInterval = tp.lookUpEntry<double>("writeInterval");
+    info.time.writeInterval = (unsigned int)tp.lookUpEntry<double>("writeInterval");
     info.time.current = info.time.start;
     info.time.stp = 0;
 

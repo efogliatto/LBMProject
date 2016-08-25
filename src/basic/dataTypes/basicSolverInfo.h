@@ -18,7 +18,7 @@ struct timeInfo {
     double tstep;
 
     // Write interval (write every writeInterval steps)
-    double writeInterval;
+    unsigned int writeInterval;
 
     // Current time
     double current;
@@ -38,7 +38,7 @@ struct latticeInfo {
     double size;
     double cs2;
     double c;
-    double nlocal;
+    unsigned int nlocal;
     int d;
     int Q;
     int** vel;

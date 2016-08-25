@@ -4,5 +4,5 @@ add_subdirectory (mesh)
 #Fields
 add_subdirectory (fields)
 
-# # Solvers
-# add_subdirectory (solvers)
+# Solvers
+add_subdirectory (solvers)

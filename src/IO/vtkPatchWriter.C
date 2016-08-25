@@ -439,10 +439,10 @@ const void vtkPatchWriter::writeRAW() const {
 	outFile << _points.size() << endl;
 	    
 	for(lbPatch_iterator<double> pt = (_scalarFields[i].second)->begin() ; pt != (_scalarFields[i].second)->end() ; ++pt)
-	    outFile << "          " << *pt << endl;
+	    outFile << *pt << endl;
 
 	for(vector<double>::const_iterator pt = (_scalarFields[i].second)->ghostBegin() ; pt != (_scalarFields[i].second)->ghostEnd() ; ++pt)
-	    outFile << "          " << *pt << endl;
+	    outFile << *pt << endl;
 
 	outFile.close();
 	    
@@ -459,10 +459,10 @@ const void vtkPatchWriter::writeRAW() const {
 	outFile << _points.size() << endl;	
 	    
 	for(lbPatch_iterator<Vector3> pt = (_vectorFields[i].second)->begin() ; pt != (_vectorFields[i].second)->end() ; ++pt)
-	    outFile << "          " << (*pt).x() << " " << (*pt).y() << " " << (*pt).z() << " " << endl;
+	    outFile << (*pt).x() << " " << (*pt).y() << " " << (*pt).z() << " " << endl;
 	    
 	for(vector<Vector3>::const_iterator pt = (_vectorFields[i].second)->ghostBegin() ; pt != (_vectorFields[i].second)->ghostEnd() ; ++pt) 
-	    outFile << "          " << pt->x() << " " << pt->y() << " " << pt->z() << " " << endl;
+	    outFile << pt->x() << " " << pt->y() << " " << pt->z() << " " << endl;
 
 	outFile.close();
 
@@ -482,8 +482,6 @@ const void vtkPatchWriter::writeRAW() const {
 
 	for(lbPatch_iterator<pdf> pt = (_lbFields[i].second)->begin() ; pt != (_lbFields[i].second)->end() ; ++pt) {
 
-	    outFile << "          ";
-
 	    for(uint j = 0 ; j < (*pt).size() ; j++) 
 		outFile << (*pt)[j] << " ";
 
@@ -493,8 +491,6 @@ const void vtkPatchWriter::writeRAW() const {
 	    
 
 	for(vector<pdf>::const_iterator pt = (_lbFields[i].second)->ghostBegin() ; pt != (_lbFields[i].second)->ghostEnd() ; ++pt) {
-		
-	    outFile << "          ";
 		
 	    for(uint j = 0 ; j < (*pt).size() ; j++) 
 		outFile << (*pt)[j] << " ";

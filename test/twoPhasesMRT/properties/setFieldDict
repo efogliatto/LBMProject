@@ -1,6 +1,5 @@
 Shapes
 {
-    Cyl
     Box
 }
 
@@ -13,29 +12,19 @@ Fields
     }
 }
 
-Cyl
-{
-    type cylinder;
-    origin ( 100 100 0 );
-    axis ( 0 0 1 );
-    radius 80;
-    height 0;
-    inside true;
-}
 
 Box
 {
     type box;
-    min ( 92 10 0 );
-    max ( 108 100 0 );
+    min ( 0 0 0 );
+    max ( 2.5 5 0 );
     inside false;
 }
 
 phi
 {
     type latticeScalarField;
-    function Rayleigh-Taylor;    
-    d 256;
-    lambda 256;
-    D 4;
+    function none;    
+    inside 1;
+    outside -1;
 }

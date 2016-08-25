@@ -13,10 +13,15 @@ extern "C" {
 
 void writePdfField(const char* fname, const double** field, const struct solverInfo* info) {
 
+    // Create folder if it does not exist
+    std::ostringstream fileName;
+    fileName << "processor0/" << info->time.current << "/";
+    system( ("mkdir -p " + fileName.str()).c_str() );
+    
+    
     // Open file
     std::ofstream outFile;
-    std::ostringstream fileName;
-    fileName << "processor0/" << info->time.current << "/" << fname;
+    fileName << fname;
     outFile.open( fileName.str().c_str() );
     if( !outFile.is_open() ) {
     	std::cout << "Unable to open file " << fileName << std::endl;
@@ -30,7 +35,7 @@ void writePdfField(const char* fname, const double** field, const struct solverI
     // Write elements
     for(uint i = 0 ; i < info->lattice.nlocal ; i++) {
 	for(uint j = 0 ; j < (uint)info->lattice.Q ; j++) {
-	    outFile << field[i][j] << "  ";
+	    outFile << field[i][j] << " ";
 	}
 	outFile << std::endl;
     }

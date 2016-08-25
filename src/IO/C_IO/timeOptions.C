@@ -17,7 +17,7 @@ extern "C" {
     const bool writeFlag(const struct solverInfo* info) {
 
 	bool wrt = false;
-
+	
 	if (info->time.stp == info->time.writeInterval) {
 	    wrt = true;
 	}
@@ -35,13 +35,13 @@ extern "C" {
 	
     	// Update time
     	info->time.current += info->time.tstep;
-	info->time.stp++;
+	++info->time.stp;
 
 	if ( info->time.current > info->time.end ) {
 	    upd = false;
 	}
 
-	if( info->time.stp == info->time.writeInterval) {
+	if( info->time.stp > info->time.writeInterval) {
 	    info->time.stp = 0;
 	}
 
