@@ -56,14 +56,15 @@ int main() {
 	
 
 	/* density( &fields, &info, fields.rho ); */
-	/* pressureWithU( &fields, &info, fields.p ); */
+	pressureWithU( &fields, &info, fields.p );
 	
-	unsigned int id;
-	for(id = 0 ; id < info.lattice.nlocal ; id++) {
-	    double* grad = scalarFieldGradient(&fields, &info, fields.rho, id);
-	    printf("(%f %f %f)\n",grad[0],grad[1],grad[2]);
-	}
+	/* unsigned int id; */
+	/* for(id = 0 ; id < info.lattice.nlocal ; id++) { */
+	/*     double* grad = scalarFieldGradient(&fields, &info, fields.rho, id); */
+	/* } */
 
+
+	
 	
     	/* // Collide h */
     	/* cahnHilliardCollision(&fields, &info); */

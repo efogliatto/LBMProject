@@ -108,12 +108,7 @@ int main(int argc, char** argv) {
 
     // rho
     for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), rho.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
-    	*it.second =  it.first.density();
-
-    // SACAR
-    for( latticeScalarField::iterator it = rho.begin() ; it != rho.end() ; ++it)
-	cout << it.gradient() << endl;
-    
+    	*it.second =  it.first.density();    
 
     // p
     {
