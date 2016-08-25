@@ -94,12 +94,12 @@ int main(int argc, char** argv) {
     // Lattice field
     liangField g( creator.create( modelName ), env, world, "g", runTime, false );
 
-    // // Add fields to g list
-    // g.add(&phi);
-    // g.add(&U);
-    // g.add(&rho);
-    // g.add(&p);
-    // g.add(&muPhi);
+    // Add fields to g list
+    g.add(&phi);
+    g.add(&U);
+    g.add(&rho);
+    g.add(&p);
+    g.add(&muPhi);
 
 
     // // g
@@ -110,9 +110,9 @@ int main(int argc, char** argv) {
     // for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), p.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
     // 	*it.second =  it.first.zerothMoment();    
 
-    // // rho
-    // for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), rho.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
-    // 	*it.second =  it.first.density();
+    // rho
+    for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), rho.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
+    	*it.second =  it.first.density();
     
     // // Synchronize ghost nodes
     // h.syncGhostValues();

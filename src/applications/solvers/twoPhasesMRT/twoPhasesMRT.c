@@ -7,7 +7,7 @@
 #include <twoPhasesFields.h>
 #include <cahnHilliardCollision.h>
 #include <liangCollision.h>
-#include <chemicalPotential.h>
+#include <density.h>
 
 int main() {
 
@@ -51,15 +51,15 @@ int main() {
 
     // Advance in time. Collide, stream, update and write
     while( updateTime(&info) ) {
-
-	chemicalPotential( &fields, &info, fields.muPhi );
 	
+
+	density( &fields, &info, fields.rho );
 	
     	/* // Collide h */
     	/* cahnHilliardCollision(&fields, &info); */
 
-    /* 	/\* // Collide g *\/ */
-    /* 	/\* liangCollision(&fields, &info);	 *\/ */
+    	/* // Collide g */
+    	/* liangCollision(&fields, &info); */
 
 
     	// Write fields
