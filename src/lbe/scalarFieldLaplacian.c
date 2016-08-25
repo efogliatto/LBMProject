@@ -1,6 +1,6 @@
-#include <laplacian.h>
+#include <scalarFieldLaplacian.h>
 
-const double laplacian( struct twoPhasesFields* fields, const struct solverInfo* info, double* fld, const int id ) {
+double scalarFieldLaplacian( struct twoPhasesFields* fields, const struct solverInfo* info, double* fld, const int id ) {
 
     double lap = 0;
 
@@ -21,6 +21,8 @@ const double laplacian( struct twoPhasesFields* fields, const struct solverInfo*
     }
 
 
-    return lap / ( info->lattice.cs2 * info->time.tstep * info->time.tstep);
+    lap = lap / ( info->lattice.cs2 * info->time.tstep * info->time.tstep);
+    
+    return lap;
     
 }

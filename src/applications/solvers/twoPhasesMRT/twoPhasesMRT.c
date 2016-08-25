@@ -7,10 +7,12 @@
 #include <twoPhasesFields.h>
 #include <cahnHilliardCollision.h>
 #include <liangCollision.h>
-
+#include <chemicalPotential.h>
 
 int main() {
 
+    double lap = 0;
+    
     // Simulation properties
     struct solverInfo info = readBasicInfo();
 
@@ -50,6 +52,9 @@ int main() {
     // Advance in time. Collide, stream, update and write
     while( updateTime(&info) ) {
 
+	chemicalPotential( &fields, &info, fields.muPhi );
+	
+	
     	/* // Collide h */
     	/* cahnHilliardCollision(&fields, &info); */
 

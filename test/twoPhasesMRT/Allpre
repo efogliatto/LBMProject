@@ -9,5 +9,5 @@ latticeMeshPartition -n $1 -d D2Q9
 # field partitioning
 latticeFieldsPartition -n $1 -d D2Q9
 
-# # initial equilibrium distributions
-# mpiexec -n $1 setTwoPhasesFields
+# initial equilibrium distributions
+mpiexec -n $1 setTwoPhasesFields

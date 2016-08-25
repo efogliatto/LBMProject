@@ -75,13 +75,13 @@ int main(int argc, char** argv) {
     h.addChemical(&muPhi);
 
 
-    // h equilibrium
-    for(cahnHilliardField::iterator it = h.begin() ; it != h.end() ; ++it)
-    	*it = it.equilibrium();
-
     // Chemical potential
     for(std::pair<cahnHilliardField::iterator, latticeScalarField::iterator> it(h.begin(), muPhi.begin()) ; it.first != h.end() ; ++it.first, ++it.second)
-    	*it.second =  it.first.chemical();    
+    	*it.second =  it.first.chemical();
+    
+    // // h equilibrium
+    // for(cahnHilliardField::iterator it = h.begin() ; it != h.end() ; ++it)
+    // 	*it = it.equilibrium();
 
     
 
@@ -94,29 +94,29 @@ int main(int argc, char** argv) {
     // Lattice field
     liangField g( creator.create( modelName ), env, world, "g", runTime, false );
 
-    // Add fields to g list
-    g.add(&phi);
-    g.add(&U);
-    g.add(&rho);
-    g.add(&p);
-    g.add(&muPhi);
+    // // Add fields to g list
+    // g.add(&phi);
+    // g.add(&U);
+    // g.add(&rho);
+    // g.add(&p);
+    // g.add(&muPhi);
 
 
-    // g
-    for(liangField::iterator it = g.begin() ; it != g.end() ; ++it)
-    	*it = it.equilibrium();
+    // // g
+    // for(liangField::iterator it = g.begin() ; it != g.end() ; ++it)
+    // 	*it = it.equilibrium();
 
-    // p
-    for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), p.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
-    	*it.second =  it.first.zerothMoment();    
+    // // p
+    // for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), p.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
+    // 	*it.second =  it.first.zerothMoment();    
 
-    // rho
-    for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), rho.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
-    	*it.second =  it.first.density();
+    // // rho
+    // for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), rho.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
+    // 	*it.second =  it.first.density();
     
-    // Synchronize ghost nodes
-    h.syncGhostValues();
-    g.syncGhostValues();
+    // // Synchronize ghost nodes
+    // h.syncGhostValues();
+    // g.syncGhostValues();
 
 
 

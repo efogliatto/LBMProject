@@ -3,8 +3,9 @@
 # Basic lattice-Boltzmann Equation library
 add_library(lbe SHARED
   matVecMult.c
-  laplacian.c
+  scalarFieldLaplacian.c
   gradient.c
+  chemicalPotential.c
   cahnHilliardSource.c
   cahnHilliardEquilibrium.c
   cahnHilliardCollision.c
