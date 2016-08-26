@@ -6,6 +6,7 @@ add_library(lbe SHARED
   scalarFieldLaplacian.c
   scalarFieldGradient.c
   density.c
+  swap.c
   chemicalPotential.c
   pressureWithU.c
   cahnHilliardSource.c

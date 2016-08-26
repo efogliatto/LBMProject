@@ -7,8 +7,8 @@
 #include <twoPhasesFields.h>
 #include <cahnHilliardCollision.h>
 #include <liangCollision.h>
+/* #include <timeOptions.h> */
 
-/* #include <scalarFieldGradient.h> */
 
 int main() {
 
@@ -46,7 +46,9 @@ int main() {
     fields.h = readPdfField("h", &info);
 
     // Navier-Stokes field
-    fields.g = readPdfField("g", &info);    
+    fields.g = readPdfField("g", &info);
+    fields.swp = readPdfField("g", &info);
+    
 
 
 
@@ -61,6 +63,9 @@ int main() {
     	liangCollision(&fields, &info);
 
 
+	// Swap fields
+	swap( &fields, &info, fields.h );
+	swap( &fields, &info, fields.g );
 	
 
     	// Write fields
