@@ -7,7 +7,6 @@
 #include <twoPhasesFields.h>
 #include <cahnHilliardCollision.h>
 #include <liangCollision.h>
-#include <pressureWithU.h>
 
 /* #include <scalarFieldGradient.h> */
 
@@ -68,11 +67,11 @@ int main() {
 
 	
 	
-    	// Collide h
-    	cahnHilliardCollision(&fields, &info);
+    	/* // Collide h */
+    	/* cahnHilliardCollision(&fields, &info); */
 
-    	/* // Collide g */
-    	/* liangCollision(&fields, &info); */
+    	// Collide g
+    	liangCollision(&fields, &info);
 
 
     	// Write fields

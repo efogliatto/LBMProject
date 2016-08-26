@@ -63,8 +63,11 @@ protected:
 	pdf s;
 	s.resize( lvel.size() );
 
-	for(uint i = 0 ; i < lvel.size() ; i++)
+	for(uint i = 0 ; i < lvel.size() ; i++) {
 	    s[i] = omega[i]  *  (  lvel[i] * U * cs2   +   (lvel[i] * U) * (lvel[i] * U) * 0.5 * cs2 * cs2   -  U.sqMag() * 0.5 * cs2 );
+
+	}
+       
 	
 	return s;
 	
@@ -182,9 +185,9 @@ public :
 
     	eq[0] = ( (*_p) * (omega[0] - 1) / cs2)   +   (*_rho) * s[0];
 
-    	for(uint i = 1 ; i < omega.size() ; i++)
+    	for(uint i = 1 ; i < omega.size() ; i++) {
     	    eq[i] = ( (*_p) * omega[i] / cs2 )   +   (*_rho) * s[i];
-
+	}
 
     	return eq;
 

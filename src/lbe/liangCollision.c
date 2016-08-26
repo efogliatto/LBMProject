@@ -1,5 +1,7 @@
 #include <liangCollision.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <liangEquilibrium.h>
 
 void liangCollision(struct twoPhasesFields* fields, const struct solverInfo* info) {
 
@@ -15,7 +17,7 @@ void liangCollision(struct twoPhasesFields* fields, const struct solverInfo* inf
     unsigned int id, k;
     
 
-    for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
+    /* for( id = 0 ; id < info->lattice.nlocal ; id++ ) { */
 
 	/* // Compute equilibrium value */
 	/* cahnHilliardEquilibrium(fields, info, eq, id); */
@@ -40,10 +42,29 @@ void liangCollision(struct twoPhasesFields* fields, const struct solverInfo* inf
 
 	/* } */
 
+    /* } */
+
+
+
+
+
+
+    for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
+
+	// Compute equilibrium value
+	liangEquilibrium(fields, info, eq, id);
+
+	// Assign to node
+	for( k = 0 ; k < info->lattice.Q ; k++ ) {
+
+	    fields->g[id][k] = eq[k];
+
+	}
+
     }
 
 
-
+    
     free(st);
     free(R);
     free(eq);

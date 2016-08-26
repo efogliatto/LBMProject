@@ -102,10 +102,6 @@ int main(int argc, char** argv) {
     g.add(&muPhi);
 
 
-    // // g
-    // for(liangField::iterator it = g.begin() ; it != g.end() ; ++it)
-    // 	*it = it.equilibrium();
-
     // rho
     for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), rho.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
     	*it.second =  it.first.density();    
@@ -120,28 +116,14 @@ int main(int argc, char** argv) {
 
     }
     
+    // g
+    for(liangField::iterator it = g.begin() ; it != g.end() ; ++it)
+    	*it = it.equilibrium();
+    
     
     // // Synchronize ghost nodes
     // h.syncGhostValues();
     // g.syncGhostValues();
-
-
-
-
-    // // Create collission matrices
-    // const Matrix Delta = h.collisionMatrix(),
-    // 	resMatrix = h.sourceMatrix();
-
-    // // Collide h
-    // for(cahnHilliardField::iterator it = h.begin() ; it != h.end() ; ++it) {
-
-    // 	// Source term
-    // 	pdf R = resMatrix * it.source() * runTime.timeStep();
-
-    // 	// Collide
-    // 	*it = *it  +   Delta * ( it.equilibrium() - *it )    +    R;
-
-    // }
 
     
 

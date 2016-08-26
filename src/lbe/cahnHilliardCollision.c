@@ -47,9 +47,3 @@ void cahnHilliardCollision(struct twoPhasesFields* fields, const struct solverIn
     
     
 }
-
-
-/* // Collide */
-/* it->setNodeValue( */
-/*     it->value()    +   Delta * ( it.equilibrium() - it->value() )    +    R */
-/*     ); */
