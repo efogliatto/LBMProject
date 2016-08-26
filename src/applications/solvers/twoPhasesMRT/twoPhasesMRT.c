@@ -7,7 +7,7 @@
 #include <twoPhasesFields.h>
 #include <cahnHilliardCollision.h>
 #include <liangCollision.h>
-/* #include <timeOptions.h> */
+#include <timeOptions.h>
 
 
 int main() {
@@ -92,7 +92,7 @@ int main() {
     
     // Print info
     double rt = elapsed(&info);
-    printf("\n Finished in %.0f = seconds \n\n", rt );
+    printf("\n Finished in %.2f = seconds \n\n", rt );
     
     return 0;
     

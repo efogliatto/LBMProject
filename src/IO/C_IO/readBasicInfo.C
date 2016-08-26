@@ -25,6 +25,8 @@ struct solverInfo readBasicInfo() {
     info.time.stp = 0;
 
     info.time.st = time( NULL );
+    
+    gettimeofday( &info.time.stt, NULL );
 
 
     // Read lattice properties

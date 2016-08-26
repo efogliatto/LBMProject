@@ -7,19 +7,24 @@ extern "C" {
     // Elapsed time
     const double elapsed (const struct solverInfo* info) {
 
-	return (double (time(NULL) - info->time.st));
+	struct timeval _end;
+	gettimeofday( &_end, NULL );
+	
+	return (((double)_end.tv_sec + (double)_end.tv_usec / 1000000)  - ((double)info->time.stt.tv_sec + (double)info->time.stt.tv_usec / 1000000));
+	
+	// return (double (time(NULL) - info->time.st));
 
     }
 
 
     
     // Flag to enable writing
-    const bool writeFlag(const struct solverInfo* info) {
+    const int writeFlag(const struct solverInfo* info) {
 
-	bool wrt = false;
+	int wrt = 0;
 	
 	if (info->time.stp == info->time.writeInterval) {
-	    wrt = true;
+	    wrt = 1;
 	}
 
 	return wrt;
@@ -29,16 +34,16 @@ extern "C" {
 
     
     // Update time structure
-    const bool updateTime(struct solverInfo* info) {
+    const int updateTime(struct solverInfo* info) {
 
-	bool upd = true;
+	int upd = 1;
 	
     	// Update time
     	info->time.current += info->time.tstep;
 	++info->time.stp;
 
 	if ( info->time.current > info->time.end ) {
-	    upd = false;
+	    upd = 0;
 	}
 
 	if( info->time.stp > info->time.writeInterval) {

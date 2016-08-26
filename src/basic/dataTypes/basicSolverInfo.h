@@ -25,6 +25,7 @@ struct timeInfo {
 
     // Start time (time measurement)
     time_t st;
+    struct timeval stt;
 
     // Time step
     unsigned int stp;

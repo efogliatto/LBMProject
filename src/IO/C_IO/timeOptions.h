@@ -11,10 +11,10 @@ extern "C" {
     const double elapsed (const struct solverInfo* info);
 
     // Flag to enable writing
-    const bool writeFlag(const struct solverInfo* info);
+    const int writeFlag(const struct solverInfo* info);
 
     // Update time structure
-    const bool updateTime(struct solverInfo* info);
+    const int updateTime(struct solverInfo* info);
     
     
 #ifdef __cplusplus
