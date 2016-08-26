@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <liangEquilibrium.h>
+#include <liangSource.h>
 
 void liangCollision(struct twoPhasesFields* fields, const struct solverInfo* info) {
 
@@ -17,51 +18,49 @@ void liangCollision(struct twoPhasesFields* fields, const struct solverInfo* inf
     unsigned int id, k;
     
 
-    /* for( id = 0 ; id < info->lattice.nlocal ; id++ ) { */
-
-	/* // Compute equilibrium value */
-	/* cahnHilliardEquilibrium(fields, info, eq, id); */
-
-	/* // Compute source term */
-	/* cahnHilliardSource(fields, info, R, id); */
-	
-	/* // Assign auxiliary value */
-	/* for( k = 0 ; k < info->lattice.Q ; k++ ) { */
-
-	/*     eq[k] = eq[k] - fields->h[id][k]; */
-
-	/* } */
-
-	/* // Extra multiplication */
-	/* matVecMult(info->fields.colMat, eq, st, info->lattice.Q); */
-
-	/* // Assign to node */
-	/* for( k = 0 ; k < info->lattice.Q ; k++ ) { */
-
-	/*     fields->h[id][k] += st[k] + R[k]; */
-
-	/* } */
-
-    /* } */
-
-
-
-
-
-
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
 
 	// Compute equilibrium value
 	liangEquilibrium(fields, info, eq, id);
 
-	// Assign to node
+	// Compute source term
+	liangSource(fields, info, R, id);
+	
+	
+	// Assign auxiliary value
 	for( k = 0 ; k < info->lattice.Q ; k++ ) {
 
-	    fields->g[id][k] = eq[k];
+	    eq[k] = eq[k] - fields->g[id][k];
+
+	}
+	
+	if( fields->phi[id] < 0 ) {
+	
+	    // Extra multiplication
+	    matVecMult(info->fields.colMatA, eq, st, info->lattice.Q);
 
 	}
 
+	else {
+
+	    // Extra multiplication
+	    matVecMult(info->fields.colMatB, eq, st, info->lattice.Q);
+	    
+	}
+
+	
+	// Assign to node
+	for( k = 0 ; k < info->lattice.Q ; k++ ) {
+
+	    fields->g[id][k] += st[k] + R[k];
+
+	}
+	
+
+	
+
     }
+
 
 
     
@@ -70,36 +69,3 @@ void liangCollision(struct twoPhasesFields* fields, const struct solverInfo* inf
     free(eq);
     
 }
-
-
-
-
-
-/* // Collide g */
-/* for(std::pair<LiangField::iterator, latticeScalarField::iterator> it(g.begin(), phi.begin()) ; it.first != g.end() ; ++it.first, ++it.second) { */
-
-/*     if (   (phi_A * it.second->value()) >= 0  ) { */
-	    
-/* 	// Source term */
-/* 	pdf R = resMatrixG_A * it.first.totalForce() * runTime.timeStep(); */
-
-/* 	// Collide */
-/* 	it.first->setNodeValue( */
-/* 	    it.first->value()    +   DeltaG_A * ( it.first.equilibrium() - it.first->value() )    +    R */
-/* 	    ); */
-
-/*     } */
-
-/*     else { */
-
-/* 	// Source term */
-/* 	pdf R = resMatrixG_B * it.first.totalForce() * runTime.timeStep(); */
-
-/* 	// Collide */
-/* 	it.first->setNodeValue( */
-/* 	    it.first->value()    +   DeltaG_B * ( it.first.equilibrium() - it.first->value() )    +    R */
-/* 	    ); */
-		
-/*     } */
-
-/* } */

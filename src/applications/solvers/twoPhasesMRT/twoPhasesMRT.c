@@ -52,27 +52,16 @@ int main() {
 
     // Advance in time. Collide, stream, update and write
     while( updateTime(&info) ) {
-	
-
-	/* density( &fields, &info, fields.rho ); */
-	/* pressureWithU( &fields, &info, fields.p ); */
-        /* orderParameter( &fields, &info, fields.phi ); */
-	
-	
-	/* unsigned int id; */
-	/* for(id = 0 ; id < info.lattice.nlocal ; id++) { */
-	/*     double* grad = scalarFieldGradient(&fields, &info, fields.rho, id); */
-	/* } */
-
 
 	
-	
-    	/* // Collide h */
-    	/* cahnHilliardCollision(&fields, &info); */
+    	// Collide h
+    	cahnHilliardCollision(&fields, &info);
 
     	// Collide g
     	liangCollision(&fields, &info);
 
+
+	
 
     	// Write fields
     	if( writeFlag(&info) ) {

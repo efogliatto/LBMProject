@@ -119,11 +119,12 @@ int main(int argc, char** argv) {
     // g
     for(liangField::iterator it = g.begin() ; it != g.end() ; ++it)
     	*it = it.equilibrium();
+
     
     
-    // // Synchronize ghost nodes
-    // h.syncGhostValues();
-    // g.syncGhostValues();
+    // Synchronize ghost nodes
+    h.syncGhostValues();
+    g.syncGhostValues();
 
     
 

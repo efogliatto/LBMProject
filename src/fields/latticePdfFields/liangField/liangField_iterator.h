@@ -195,68 +195,51 @@ public :
 
 
 
-/*     // Total force */
-/*     const pdf totalForce() const { */
+    // Total force
+    const pdf totalForce() {
 
-/*     	// Order parameter */
-/* 	latticeScalarField::iterator phi  =  _p->_externalScalarFields.at("phi")->at(  (*(*this)).localId()  );	 */
 
-/*     	// Chemical potential */
-/*     	latticeScalarField::iterator muPhi  =  _p->_externalScalarFields.at("muPhi")->at(  (*(*this)).localId()  );	 */
+	// Model constants
+	const double cs2 = _field->_cs2;
 
-/*     	// Velocity */
-/*     	latticeVectorField::iterator u  =  _p->_externalVectorFields.at("U")->at(  (*(*this)).localId()  ); */
-
-/*     	// Local density */
-/*     	latticeScalarField::iterator rho  =  _p->_externalScalarFields.at("rho")->at(  (*(*this)).localId()  );	 */
+	vector<Vector3> lvel = _field->_lbm->latticeVel();
+	for(uint i = 0 ; i < lvel.size() ; i++)
+	    lvel[i] = (lvel[i] * _field->_c   -   (*_U) )  /  cs2 ;
 
 
 
 
-/* 	// Model constants */
-/* 	const double cs2 = _p->_lat.lbmodel()->c() * _p->_lat.lbmodel()->c() * _p->_lat.lbmodel()->cs2(); */
+	// Surface tension force
+	const Vector3 Fs = _phi.gradient() * (*_muPhi);
 
-/* 	vector<Vector3> lvel = _p->_lat.lbmodel()->latticeVel(); */
-/* 	for(uint i = 0 ; i < lvel.size() ; i++) */
-/* 	    lvel[i] = (lvel[i] * _p->_lat.lbmodel()->c()   -   u->value() )  /  cs2 ; */
+	// Interfacial force
+	const Vector3 Fa = (*_U) * _field->_M * _muPhi.laplacian() * (_field->_rho_A - _field->_rho_B) / (_field->_phi_A - _field->_phi_B);
 
-
-
-
-/* 	// Surface tension force */
-/* 	const Vector3 Fs = phi.gradient() * muPhi->value();	 */
-
-/* 	// Interfacial force */
-/* 	const Vector3 Fa = u->value() * _p->_M * muPhi.laplacian() * (_p->_rho_A - _p->_rho_B) / (_p->_phi_A - _p->_phi_B);	 */
-
-/* 	// Body force */
-/* 	/\* Vector3 Fb(0,0,0);  // _p->_G*rho->value(); *\/ */
-/* 	/\* if( phi->value() < 0 ){ *\/ */
-/* 	/\*     Fb = _p->_G * ( _p->_rho_A - _p->_rho_B ); *\/ */
-/* 	/\* } *\/ */
-/* 	Vector3 Fb; */
-/* 	Fb = _p->_G*rho->value(); */
+	// Body force
+	/* Vector3 Fb(0,0,0);  // _p->_G*rho->value(); */
+	/* if( phi->value() < 0 ){ */
+	/*     Fb = _p->_G * ( _p->_rho_A - _p->_rho_B ); */
+	/* } */
+	Vector3 Fb;
+	Fb = _field->_G * (*_rho);
 	
-/* 	// Density gradient */
-/* 	const Vector3 rhoGrad = rho.gradient() * cs2; */
-
-
-/* 	// Gamma function */
-/* 	const pdf Gamma = _p->_lat.lbmodel()->pdfOmega()  +  s_eq( u->value() ), */
-/* 	    Gamma0 = _p->_lat.lbmodel()->pdfOmega(); */
-
-
-/* 	pdf Force; */
-/* 	Force.resize( lvel.size() ); */
-
-/* 	for(uint i = 0 ; i < lvel.size() ; i++) */
-/* 	    Force[i] = lvel[i] * (  rhoGrad * (Gamma[i] - Gamma0[i])   +  (Fs + Fa + Fb) * Gamma[i] ); */
-
+	// Density gradient
+	const Vector3 rhoGrad = _rho.gradient() * cs2;
+	
+	// Gamma function
+	const pdf Gamma = _field->_lbm->pdfOmega()  +  s_eq( *_U ),
+	    Gamma0 = _field->_lbm->pdfOmega();
 	
 
-/* 	return Force; */
+	pdf Force;
+	Force.resize( lvel.size() );
 
-/*     } */
+	for(uint i = 0 ; i < lvel.size() ; i++)
+	    Force[i] = lvel[i] * (  rhoGrad * (Gamma[i] - Gamma0[i])   +  (Fs + Fa + Fb) * Gamma[i] );
+
+	return Force;
+
+    }
 	
 };
 
