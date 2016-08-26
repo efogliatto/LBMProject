@@ -56,7 +56,9 @@ int main() {
 	
 
 	/* density( &fields, &info, fields.rho ); */
-	pressureWithU( &fields, &info, fields.p );
+	/* pressureWithU( &fields, &info, fields.p ); */
+        /* orderParameter( &fields, &info, fields.phi ); */
+	
 	
 	/* unsigned int id; */
 	/* for(id = 0 ; id < info.lattice.nlocal ; id++) { */
@@ -66,8 +68,8 @@ int main() {
 
 	
 	
-    	/* // Collide h */
-    	/* cahnHilliardCollision(&fields, &info); */
+    	// Collide h
+    	cahnHilliardCollision(&fields, &info);
 
     	/* // Collide g */
     	/* liangCollision(&fields, &info); */

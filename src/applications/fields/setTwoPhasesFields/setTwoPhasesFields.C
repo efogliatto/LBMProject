@@ -79,9 +79,9 @@ int main(int argc, char** argv) {
     for(std::pair<cahnHilliardField::iterator, latticeScalarField::iterator> it(h.begin(), muPhi.begin()) ; it.first != h.end() ; ++it.first, ++it.second)
     	*it.second =  it.first.chemical();
     
-    // // h equilibrium
-    // for(cahnHilliardField::iterator it = h.begin() ; it != h.end() ; ++it)
-    // 	*it = it.equilibrium();
+    // h equilibrium
+    for(cahnHilliardField::iterator it = h.begin() ; it != h.end() ; ++it)
+    	*it = it.equilibrium();
 
     
 
