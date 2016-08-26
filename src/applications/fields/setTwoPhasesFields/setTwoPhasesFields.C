@@ -127,6 +127,24 @@ int main(int argc, char** argv) {
 
 
 
+
+    // // Create collission matrices
+    // const Matrix Delta = h.collisionMatrix(),
+    // 	resMatrix = h.sourceMatrix();
+
+    // // Collide h
+    // for(cahnHilliardField::iterator it = h.begin() ; it != h.end() ; ++it) {
+
+    // 	// Source term
+    // 	pdf R = resMatrix * it.source() * runTime.timeStep();
+
+    // 	// Collide
+    // 	*it = *it  +   Delta * ( it.equilibrium() - *it )    +    R;
+
+    // }
+
+    
+
     // Create writer
     vtkPatchWriter writer( runTime, world.rank(), world.size(), modelName );    
     writer.add(&h, "h");
