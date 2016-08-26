@@ -54,45 +54,43 @@ int main() {
 
     // Advance in time. Collide, stream, update and write
     while( updateTime(&info) ) {
-
 	
     	// Collide h
     	cahnHilliardCollision(&fields, &info);
 
-    	// Collide g
-    	liangCollision(&fields, &info);
+    	/* // Collide g */
+    	/* liangCollision(&fields, &info); */
 
 
-	// Swap fields
-	swap( &fields, &info, fields.h );
-	swap( &fields, &info, fields.g );
+	/* // Swap fields */
+	/* swap( &fields, &info, fields.h ); */
+	/* swap( &fields, &info, fields.g ); */
 	
 
-    	// Write fields
-    	if( writeFlag(&info) ) {
+    	/* // Write fields */
+    	/* if( writeFlag(&info) ) { */
 	    
-    	    // ScalarFields
-    	    writeScalarField("phi", fields.phi, &info);
-    	    writeScalarField("muPhi", fields.muPhi, &info);
-    	    writeScalarField("rho", fields.rho, &info);
-    	    writeScalarField("p", fields.p, &info);
+    	/*     // ScalarFields */
+    	/*     writeScalarField("phi", fields.phi, &info); */
+    	/*     writeScalarField("muPhi", fields.muPhi, &info); */
+    	/*     writeScalarField("rho", fields.rho, &info); */
+    	/*     writeScalarField("p", fields.p, &info); */
 
-    	    // Vector fields
-    	    writeVectorField("U", fields.U, &info);
+    	/*     // Vector fields */
+    	/*     writeVectorField("U", fields.U, &info); */
 
-    	    // Pdf fields
-    	    writePdfField("h", fields.h, &info);
-    	    writePdfField("g", fields.g, &info);
+    	/*     // Pdf fields */
+    	/*     writePdfField("h", fields.h, &info); */
+    	/*     writePdfField("g", fields.g, &info); */
 	    
-    	}
+    	/* } */
 
     }
 
 
     
     // Print info
-    double rt = elapsed(&info);
-    printf("\n Finished in %.2f = seconds \n\n", rt );
+    printf("\n Finished in %.2f = seconds \n\n", elapsed(&info) );
     
     return 0;
     

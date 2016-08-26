@@ -1,6 +1,7 @@
 #include <cahnHilliardCollision.h>
+#include <cahnHilliardEquilibrium.h>
 #include <stdlib.h>
-#include <omp.h>
+#include <stdio.h>
 
 void cahnHilliardCollision(struct twoPhasesFields* fields, const struct solverInfo* info) {
 
@@ -15,35 +16,38 @@ void cahnHilliardCollision(struct twoPhasesFields* fields, const struct solverIn
     // Move over local points
     unsigned int id, k;
     
-    /* #pragma omp parallel for num_threads(2) */
-    /* { */
+
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
 
+	printf("%d\n", id);
+	
     	// Compute equilibrium value
     	cahnHilliardEquilibrium(fields, info, eq, id);
 
-    	// Compute source term
-    	cahnHilliardSource(fields, info, R, id);
+    	/* // Compute source term */
+    	/* cahnHilliardSource(fields, info, R, id); */
 	
-    	// Assign auxiliary value
-    	for( k = 0 ; k < info->lattice.Q ; k++ ) {
+    	/* // Assign auxiliary value */
+    	/* for( k = 0 ; k < info->lattice.Q ; k++ ) { */
 
-    	    eq[k] = eq[k] - fields->h[id][k];
+    	/*     eq[k] = eq[k] - fields->h[id][k]; */
 
-    	}
+    	/* } */
 
-    	// Extra multiplication
-    	matVecMult(info->fields.colMat, eq, st, info->lattice.Q);
+    	/* // Extra multiplication */
+    	/* matVecMult(info->fields.colMat, eq, st, info->lattice.Q); */
 
-    	// Assign to node
-    	for( k = 0 ; k < info->lattice.Q ; k++ ) {
+    	/* // Assign to node */
+    	/* for( k = 0 ; k < info->lattice.Q ; k++ ) { */
 
-    	    fields->h[id][k] += st[k] + R[k];
+    	/*     fields->h[id][k] += st[k] + R[k]; */
 
-    	}
+    	/* } */
 
     }
-    /* } */
+
+    
+
     
     
 }
