@@ -7,19 +7,28 @@
 #include <pressureWithU.h>
 #include <chemicalPotential.h>
 #include <orderParameter.h>
+#include <mpi.h>
 
-int main() {
+int main( int argc, char **argv ) {
 
-    printf("     -------------  \n");
-    printf("     | -   |   - |  \n");
-    printf("     |   - | -   |  \n");
-    printf("     |<----o---->|       Two Phases - Lattice-Boltzmann solver\n");
-    printf("     |   - | -   |  \n");
-    printf("     | -   |   - |  \n");
-    printf("     -------------  \n");
+    int pid;
     
+    // Initialize mpi
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD,&pid);
+
+    if(pid == 0) {
+	printf("     o-----o-----o  \n");
+	printf("     | -   |   - |  \n");
+	printf("     |   - | -   |  \n");
+	printf("     o<----o---->o       Two Phases - Lattice-Boltzmann solver\n");
+	printf("     |   - | -   |  \n");
+	printf("     | -   |   - |  \n");
+	printf("     o-----o-----o  \n");
+    }
+	
     // Simulation properties
-    struct solverInfo info = readBasicInfo();
+    struct solverInfo info = readBasicInfo( pid );
 
     
     // Read Fields
@@ -27,38 +36,38 @@ int main() {
 
     // Neighbours indices
     fields.nb = readNeighbours(&info);
-    printf("\nReading neighbour indices\n");
+    if(pid == 0) { printf("\nReading neighbour indices\n"); }
     
     // Order parameter
     fields.phi     = readScalarField("phi", &info);
     fields.phi_old = readScalarField("phi", &info);
-    printf("\nReading field phi\n");
+    if(pid == 0) { printf("\nReading field phi\n"); }
 
     // Chemical potential
     fields.muPhi = readScalarField("muPhi", &info);
-    printf("\nReading field muPhi\n");
+    if(pid == 0) { printf("\nReading field muPhi\n"); }
 
     // Pressure
     fields.p = readScalarField("p", &info);
-    printf("\nReading field p\n");
+    if(pid == 0) { printf("\nReading field p\n"); }
 
     // Density
     fields.rho = readScalarField("rho", &info);
-    printf("\nReading field rho\n");
+    if(pid == 0) { printf("\nReading field rho\n");  }
 
     // Velocity
     fields.U     = readVectorField("U", &info);
     fields.U_old = readVectorField("U", &info);
-    printf("\nReading field U\n");
+    if(pid == 0) { printf("\nReading field U\n");  }
 
     // Cahn-Hilliard field
     fields.h = readPdfField("h", &info);
-    printf("\nReading field h\n");
+    if(pid == 0) { printf("\nReading field h\n");  }
 
     // Navier-Stokes field
     fields.g = readPdfField("g", &info);
     fields.swp = readPdfField("g", &info);
-    printf("\nReading field g\n\n\n");
+    if(pid == 0) { printf("\nReading field g\n\n\n");  }
     
 
 
@@ -116,9 +125,11 @@ int main() {
 	
     	// Write fields
     	if( writeFlag(&info) ) {
-
-	    printf("Time = %.2f\n", info.time.current);
-	    printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) );
+	    
+	    if(pid == 0) {
+		printf("Time = %.2f\n", info.time.current);
+		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) );
+	    }
 	    
     	    // ScalarFields
     	    writeScalarField("phi", fields.phi, &info);
@@ -140,7 +151,12 @@ int main() {
 
     
     // Print info
-    printf("\n  Finished in %.2f seconds \n\n", elapsed(&info) );
+    if(pid == 0) {
+	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info) );
+    }
+
+
+    MPI_Finalize();
     
     return 0;
     

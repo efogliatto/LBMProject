@@ -15,7 +15,7 @@ void writePdfField(const char* fname, const double** field, const struct solverI
 
     // Create folder if it does not exist
     std::ostringstream fileName;
-    fileName << "processor0/" << info->time.current << "/";
+    fileName << "processor" << info->parallel.pid << "/" << info->time.current << "/";
     system( ("mkdir -p " + fileName.str()).c_str() );
     
     

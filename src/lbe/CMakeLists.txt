@@ -7,6 +7,7 @@ add_library(lbe SHARED
   scalarFieldGradient.c
   density.c
   swap.c
+  syncScalarField.c
   chemicalPotential.c
   pressureWithU.c
   orderParameter.c

@@ -18,7 +18,7 @@ int** readNeighbours( const struct solverInfo* info ) {
     // Open file
     std::ifstream inFile;
     std::ostringstream fileName;
-    fileName << "processor0/" << "/D" << info->lattice.d << "Q" << info->lattice.Q << "_lattice/neighbours" ;
+    fileName << "processor" << info->parallel.pid << "/D" << info->lattice.d << "Q" << info->lattice.Q << "_lattice/neighbours" ;
     inFile.open( fileName.str().c_str() );
     if( !inFile.is_open() ) {
 	std::cout << "Unable to open file " << fileName << std::endl;

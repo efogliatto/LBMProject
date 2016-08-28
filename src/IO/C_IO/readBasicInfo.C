@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 
-struct solverInfo readBasicInfo() {
+struct solverInfo readBasicInfo( int pid ) {
 
     struct solverInfo info;
 
@@ -27,6 +27,7 @@ struct solverInfo readBasicInfo() {
     info.time.st = time( NULL );
     
     gettimeofday( &info.time.stt, NULL );
+    
 
 
     // Read lattice properties
@@ -42,12 +43,13 @@ struct solverInfo readBasicInfo() {
     info.lattice.Q = lbm->Q();
 
 
-    // Read total number of points from neighbour file
-    std::ostringstream fileName;
-    fileName << "processor0" << "/" << lbm->name() << "_lattice/neighbours" ;
+    // Read total number of points from global Ids
+    std::ostringstream latticeFolder;
+    latticeFolder << "processor" << pid << "/" << lbm->name() << "_lattice/";
+    std::string fileName = latticeFolder.str() + "globalIds" ;
     
     std::ifstream inFile;
-    inFile.open( fileName.str().c_str() );
+    inFile.open( fileName.c_str() );
     if( !inFile.is_open() ) {
 	std::cout << "Unable to open file " << fileName << std::endl;
     	exit(1);
@@ -214,6 +216,104 @@ struct solverInfo readBasicInfo() {
     info.fields.kappa = 3 * info.fields.sigma * info.fields.D / (2 * (info.fields.phi_A - info.fields.phi_B) * (info.fields.phi_A - info.fields.phi_B));
     
     info.fields.beta  = 12 * info.fields.sigma / ( info.fields.D * pow(info.fields.phi_A - info.fields.phi_B, 4));    
+
+
+
+
+
+
+
+
+    // MPI info
+
+    info.parallel.pid = pid;
+
+    // Read total ghost elements using globalGhostsIds
+    fileName = latticeFolder.str() + "globalGhostsIds" ;
+    
+    inFile.open( fileName.c_str() );
+    if( !inFile.is_open() ) {
+	std::cout << "Unable to open file " << fileName << std::endl;
+    	exit(1);
+    }
+    
+    inFile >> info.parallel.nghosts;
+    
+    inFile.close();
+
+
+
+    // Read total send ghosts
+    fileName = latticeFolder.str() + "sendMapIds" ;     
+    inFile.open( fileName.c_str() );
+    if( !inFile.is_open() ) {
+	std::cout << "Unable to open file " << fileName << std::endl;
+    	exit(1);
+    }
+    inFile >> info.parallel.nSendGhosts;
+
+    // Resize Send ghost ids
+    info.parallel.sendGhostIds = (uint**)malloc( info.parallel.nSendGhosts * sizeof(unsigned int*) );
+
+    for(uint i = 0 ; i < info.parallel.nSendGhosts ; i++) {
+	
+	uint pid,nel;
+	inFile >> pid;
+	inFile >> nel;
+
+	info.parallel.sendGhostIds[i] = (uint*)malloc( (nel + 2) * sizeof(uint) );
+
+	info.parallel.sendGhostIds[i][0] = pid;
+	info.parallel.sendGhostIds[i][1] = nel;
+
+	for(uint j = 0 ; j < nel ; j++) {
+	    inFile >> info.parallel.sendGhostIds[i][j+2];
+	}
+	
+    }
+
+    inFile.close();
+    
+
+
+
+    // Read total recv ghosts
+    fileName = latticeFolder.str() + "recvMapIds" ;     
+    inFile.open( fileName.c_str() );
+    if( !inFile.is_open() ) {
+	std::cout << "Unable to open file " << fileName << std::endl;
+    	exit(1);
+    }
+    inFile >> info.parallel.nRecvGhosts;
+
+    // Resize Send ghost ids
+    info.parallel.recvGhostIds = (uint**)malloc( info.parallel.nRecvGhosts * sizeof(uint*) );
+
+    for(uint i = 0 ; i < info.parallel.nRecvGhosts ; i++) {
+	
+	uint pid,nel,aux;
+	inFile >> pid;
+	inFile >> nel;
+
+	info.parallel.recvGhostIds[i] = (uint*)malloc( (nel + 2) * sizeof(uint) );
+
+	info.parallel.recvGhostIds[i][0] = pid;
+	info.parallel.recvGhostIds[i][1] = nel;
+	
+	for(uint j = 0 ; j < nel ; j++) {
+	    inFile >> info.parallel.recvGhostIds[i][j+2];
+	}
+
+	for(uint j = 0 ; j < nel ; j++) {
+	    inFile >> aux;
+	}
+
+	
+    }
+
+    inFile.close();
+
+    
     
     
     return info;
