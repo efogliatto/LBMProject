@@ -8,6 +8,7 @@ add_library(lbe SHARED
   density.c
   swap.c
   syncScalarField.c
+  syncPdfField.c
   chemicalPotential.c
   pressureWithU.c
   orderParameter.c

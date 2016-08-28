@@ -30,10 +30,10 @@ void writePdfField(const char* fname, const double** field, const struct solverI
 
     
     // Total number of points
-    outFile << info->lattice.nlocal << std::endl;
+    outFile << info->lattice.nlocal + info->parallel.nghosts << std::endl;
     
     // Write elements
-    for(uint i = 0 ; i < info->lattice.nlocal ; i++) {
+    for(uint i = 0 ; i < info->lattice.nlocal + info->parallel.nghosts; i++) {
 	for(uint j = 0 ; j < (uint)info->lattice.Q ; j++) {
 	    outFile << field[i][j] << " ";
 	}

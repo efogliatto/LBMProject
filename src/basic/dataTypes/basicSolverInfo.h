@@ -1,4 +1,4 @@
-\#ifndef BASICSOLVERINFO_H
+#ifndef BASICSOLVERINFO_H
 #define BASICSOLVERINFO_H
 
 #include <time.h>
