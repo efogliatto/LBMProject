@@ -7,7 +7,8 @@
 #include <pressureWithU.h>
 #include <chemicalPotential.h>
 #include <orderParameter.h>
-#include <mpi.h>
+#include <syncScalarField.h>
+#include <syncPdfField.h>
 
 int main( int argc, char **argv ) {
 
@@ -71,13 +72,24 @@ int main( int argc, char **argv ) {
     
 
 
+    // Synchronize initial fields
+    syncScalarField(&info, fields.phi );
+    syncScalarField(&info, fields.muPhi );
+    syncScalarField(&info, fields.p );
+    syncScalarField(&info, fields.rho );
 
+    syncPdfField(&info, fields.U, 3 );
+    syncPdfField(&info, fields.h, info.lattice.Q );
+    syncPdfField(&info, fields.g, info.lattice.Q );
+
+
+    
     // Advance in time. Collide, stream, update and write
     while( updateTime(&info) ) {
 	
     	// Collide h
     	cahnHilliardCollision(&fields, &info);
-
+	
     	// Collide g
     	liangCollision(&fields, &info);
 

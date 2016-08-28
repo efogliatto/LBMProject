@@ -52,6 +52,6 @@ void swap( struct twoPhasesFields* fields, const struct solverInfo* info, double
 
 
     // Sync fields
-    syncPdfField( info, fld, info->lattice.Q );    
+    syncPdfField( info, fld, info->lattice.Q );
     
 }

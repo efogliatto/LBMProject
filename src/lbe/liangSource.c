@@ -120,5 +120,7 @@ void liangSource(struct twoPhasesFields* fields, const struct solverInfo* info, 
     free(st);
     free(Gamma);
     free(Gamma0);
+    free(Force);
+    free(rhoGrad);
     
 }

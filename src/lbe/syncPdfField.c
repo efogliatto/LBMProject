@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void syncPdfField( const struct solverInfo* info, double** fld, int sz ) {
+void syncPdfField( const struct solverInfo* info, double** fld, int sz ){
 
     unsigned int i, j, k, pid;
 
@@ -19,23 +19,22 @@ void syncPdfField( const struct solverInfo* info, double** fld, int sz ) {
 
     	for( j = 0 ; j < info->parallel.sendGhostIds[i][1] ; j++ ) {
 
-	    for( k = 0 ; k < sz ; k++ ) {
+    	    for( k = 0 ; k < sz ; k++ ) {
 	    
-		buf[j*sz + k] = fld[ info->parallel.sendGhostIds[i][j+2] ][k];
+    		buf[j*sz + k] = fld[ info->parallel.sendGhostIds[i][j+2] ][k];
+		/* if(info->parallel.pid == 1) {printf("%f\n", buf[j*sz + k]);} */
 
-	    }
+    	    }
 
     	}
 
     	// Send data
     	MPI_Send (buf, info->parallel.sendGhostIds[i][1] * sz, MPI_DOUBLE, info->parallel.sendGhostIds[i][0], info->parallel.pid, MPI_COMM_WORLD);
 
-	/* MPI_Send (&buf,count,datatype,dest,tag,comm) */
-
     }
 
 
-    MPI_Barrier(MPI_COMM_WORLD);    
+    MPI_Barrier(MPI_COMM_WORLD);
 
     
     // Receive information
@@ -54,19 +53,18 @@ void syncPdfField( const struct solverInfo* info, double** fld, int sz ) {
     	// Update field
     	for( j = 0 ; j < info->parallel.recvGhostIds[i][1] ; j++ ) {
 
-	    for( k = 0 ; k < sz ; k++ ) {
+    	    for( k = 0 ; k < sz ; k++ ) {
 		
-		fld[ info->lattice.nlocal + info->parallel.recvGhostIds[i][j+2] ][k] = buf[j*sz + k];
+    		fld[ info->lattice.nlocal + info->parallel.recvGhostIds[i][j+2] ][k] = buf[j*sz + k];
 
-	    }
+    	    }
 
-	}
+    	}
 
 	    
-    	/* MPI_Recv (&buf,count,datatype,source,tag,comm,&status) */
     }
 
 
-    MPI_Barrier(MPI_COMM_WORLD);    
+    MPI_Barrier(MPI_COMM_WORLD);
     
 }

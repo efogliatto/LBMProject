@@ -4,6 +4,7 @@
 #include <dictionary.h>
 #include <LBModelCreator.h>
 #include <fstream>
+#include <readBasicInfo.h>
 
 #ifdef __cplusplus
 extern "C" {
