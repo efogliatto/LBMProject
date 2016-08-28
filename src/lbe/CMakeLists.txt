@@ -9,6 +9,8 @@ add_library(lbe SHARED
   swap.c
   chemicalPotential.c
   pressureWithU.c
+  orderParameter.c
+  velocity.c
   cahnHilliardSource.c
   cahnHilliardEquilibrium.c
   cahnHilliardCollision.c

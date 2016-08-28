@@ -3,7 +3,10 @@
 #include <cahnHilliardCollision.h>
 #include <liangCollision.h>
 #include <timeOptions.h>
-
+#include <density.h>
+#include <pressureWithU.h>
+#include <chemicalPotential.h>
+#include <orderParameter.h>
 
 int main() {
 
@@ -69,12 +72,48 @@ int main() {
     	// Collide g
     	liangCollision(&fields, &info);
 
-
 	// Swap fields
 	swap( &fields, &info, fields.h );
 	swap( &fields, &info, fields.g );
 	
 
+	// Update macroscopic fields
+
+	// Order parameter
+	orderParameter( &fields, &info, fields.phi );	
+	
+	// Chemical potential
+	chemicalPotential( &fields, &info, fields.muPhi );	
+	
+	// Density
+	density( &fields, &info, fields.rho );
+
+	// Velocity
+	velocity( &fields, &info, fields.U );
+
+	// Pressure
+	pressureWithU( &fields, &info, fields.p );
+
+	// Old values
+	{
+
+	    unsigned int id, k;
+
+	    for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
+
+		fields.phi_old[id] = fields.phi[id];
+		
+		for( k = 0 ; k < 3 ; k++ ) {
+
+		    fields.U_old[id][k] = fields.U[id][k];
+
+		}
+
+	    }
+	    
+	}
+	
+	
     	// Write fields
     	if( writeFlag(&info) ) {
 
