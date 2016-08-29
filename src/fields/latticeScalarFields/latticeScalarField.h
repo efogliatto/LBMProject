@@ -35,6 +35,11 @@ public:
 
     // Local nodes. End
     iterator end()   { return iterator( lbPatch<double>::end(), this); }
+
+
+
+    // Read values from current time
+    void readAllValues();
     
 
     

@@ -138,3 +138,47 @@ const void latticePdfField::stream() {
 
 
 }
+
+
+
+// Read values from current time
+void latticePdfField::readAllValues() {
+
+    
+    std::ostringstream fldName;
+    fldName << "processor" << this->_id << "/" << _time.currentTime() << "/" << _name;
+
+    // Open file
+    std::ifstream inFile;
+    inFile.open( fldName.str().c_str() );
+    if( !inFile.is_open() ) {
+    	std::cout << "Unable to open file " << fldName.str() << std::endl;
+    	exit(1);
+    }
+
+    // Read total number of elements and resize
+    uint ntotal;
+    inFile >> ntotal;
+
+
+    // Read values
+    for(vector<pdf>::iterator it = this->_localValues.begin() ; it != this->_localValues.end() ; it++) {
+
+	for(uint i = 0 ; i < _lbm->Q() ; i++) {
+	    inFile >> (*it)[i];
+	}
+	
+    }
+
+    
+    // Read values
+    for(vector<pdf>::iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) {
+
+	for(uint i = 0 ; i < _lbm->Q() ; i++) {
+	    inFile >> (*it)[i];
+	}
+	
+    }
+        
+
+}

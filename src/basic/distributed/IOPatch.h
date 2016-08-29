@@ -62,6 +62,9 @@ public:
     // Local values
     const void readLocalValues(const std::string& fileName, const std::string& folderName);
 
+    /* // Local and ghost values */
+    /* const void readAllValues(const std::string& fileName, const std::string& folderName);     */
+
     // Neighbour local indices
     const void readNeighboursIds(const std::string& fileName, const std::string& folderName);
 
@@ -201,7 +204,38 @@ const void IOPatch<T>::readLocalValues(const std::string& fileName, const std::s
 
 
 
+/* // Local values */
+/* template<typename T> */
+/* const void IOPatch<T>::readAllValues(const std::string& fileName, const std::string& folderName) { */
 
+/*     // Open file */
+/*     std::ifstream inFile; */
+/*     inFile.open( (folderName + "/" + fileName).c_str() ); */
+/*     if( !inFile.is_open() ) { */
+/*     	std::cout << "Unable to open file " << fileName << std::endl; */
+/*     	exit(1); */
+/*     } */
+
+/*     // Read total number of elements and resize */
+/*     uint ntotal; */
+/*     inFile >> ntotal; */
+
+
+/*     // Read values */
+/*     for(typename std::vector<T>::iterator it = this->_localValues.begin() ; it != this->_localValues.end() ; it++) { */
+/* 	inFile >> *it; */
+/*     } */
+
+    
+/*     // Read values */
+/*     for(typename std::vector<T>::iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) { */
+/* 	inFile >> *it; */
+/*     } */
+    
+/*     // Close file */
+/*     inFile.close();     */
+    
+/* } */
 
 
 

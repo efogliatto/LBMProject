@@ -56,6 +56,8 @@ public:
     // Read values
     const void readValues(const std::string& fileName, const double& timeFolder);
 
+    /* // Read all values */
+    /* const void readAllValues(const std::string& fileName, const double& timeFolder); */
     
 
     // Member synchronization
@@ -159,6 +161,17 @@ const void mpiPatch<T>::readValues(const std::string& fileName, const double& ti
 }
 
 
+/* // Read all values from time folder */
+/* template<typename T> */
+/* const void mpiPatch<T>::readAllValues(const std::string& fileName, const double& timeFolder) { */
+
+/*     std::ostringstream fldName; */
+/*     fldName << "processor" << this->_id << "/" << timeFolder; */
+    
+/*     // Call base method */
+/*     IOPatch<T>::readAllValues( fileName, fldName.str() ); */
+    
+/* } */
 
 
 

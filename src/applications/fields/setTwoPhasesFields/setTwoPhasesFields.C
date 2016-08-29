@@ -23,7 +23,8 @@ int main(int argc, char** argv) {
     namespace po = boost::program_options; 
     po::options_description desc("Options"); 
     desc.add_options() 
-	("help,h", "Print help messages");
+	("help,h", "Print help messages")
+	("initialFields", po::bool_switch()->default_value(false), "Create initial fields only");
 
     po::variables_map vm;
     po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -31,7 +32,7 @@ int main(int argc, char** argv) {
     // --help option  
     if ( vm.count("help")  ) 
     { 
-        cout << endl << "Two Phase, Lattice-Boltzmann MRT solver. Uses Cahn-Hilliard equation" << endl << endl
+        cout << endl << "Set fields for twoPhasesMRT" << endl << endl
 	     << desc << std::endl; 
         return 0; 
     } 
@@ -75,14 +76,6 @@ int main(int argc, char** argv) {
     h.addChemical(&muPhi);
 
 
-    // Chemical potential
-    for(std::pair<cahnHilliardField::iterator, latticeScalarField::iterator> it(h.begin(), muPhi.begin()) ; it.first != h.end() ; ++it.first, ++it.second)
-    	*it.second =  it.first.chemical();
-    
-    // h equilibrium
-    for(cahnHilliardField::iterator it = h.begin() ; it != h.end() ; ++it)
-    	*it = it.equilibrium();
-
     
 
     // Density
@@ -101,32 +94,12 @@ int main(int argc, char** argv) {
     g.add(&p);
     g.add(&muPhi);
 
-
-    // rho
-    for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), rho.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
-    	*it.second =  it.first.density();    
-
-    // p
-    {
-	latticeVectorField::iterator uiter = U.begin();
-	for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), p.begin()) ; it.first != g.end() ; ++it.first, ++it.second) {
-	    *it.second =  it.first.zerothMoment( *uiter );
-	    ++uiter;
-	}
-
-    }
-    
-    // g
-    for(liangField::iterator it = g.begin() ; it != g.end() ; ++it)
-    	*it = it.equilibrium();
-
     
     
     // Synchronize ghost nodes
     h.syncGhostValues();
     g.syncGhostValues();
 
-    
 
     // Create writer
     vtkPatchWriter writer( runTime, world.rank(), world.size(), modelName );    
@@ -139,8 +112,75 @@ int main(int argc, char** argv) {
     writer.add(&g, "g");
 
 
-    writer.write();
 
+
+    if( vm["initialFields"].as<bool>() == true ) {
+
+
+	// Chemical potential
+	for(std::pair<cahnHilliardField::iterator, latticeScalarField::iterator> it(h.begin(), muPhi.begin()) ; it.first != h.end() ; ++it.first, ++it.second)
+	    *it.second =  it.first.chemical();
+    
+	// h equilibrium
+	for(cahnHilliardField::iterator it = h.begin() ; it != h.end() ; ++it)
+	    *it = it.equilibrium();
+
+
+	// rho
+	for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), rho.begin()) ; it.first != g.end() ; ++it.first, ++it.second)
+	    *it.second =  it.first.density();    
+
+	// p
+	{
+	    latticeVectorField::iterator uiter = U.begin();
+	    for(std::pair<liangField::iterator, latticeScalarField::iterator> it(g.begin(), p.begin()) ; it.first != g.end() ; ++it.first, ++it.second) {
+		*it.second =  it.first.zerothMoment( *uiter );
+		++uiter;
+	    }
+
+	}
+    
+	// g
+	for(liangField::iterator it = g.begin() ; it != g.end() ; ++it)
+	    *it = it.equilibrium();
+
+
+	// Synchronize ghost nodes
+	h.syncGhostValues();
+	g.syncGhostValues();
+	p.syncGhostValues();
+	rho.syncGhostValues();
+	phi.syncGhostValues();
+	muPhi.syncGhostValues();
+	U.syncGhostValues();
+	
+	writer.write();
+
+	
+    }
+
+    // Read from current time and write in VTK format
+    else {
+
+	while( runTime.update() ) {
+
+	    if( runTime.write() ) {
+
+		phi.readAllValues();
+		muPhi.readAllValues();
+		rho.readAllValues();
+		U.readAllValues();
+		h.readAllValues();
+		p.readAllValues();
+		g.readAllValues();
+
+		writer.write();
+
+	    }
+	    
+	}
+	
+    }
 
     
     

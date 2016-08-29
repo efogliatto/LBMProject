@@ -40,7 +40,8 @@ public:
     // Basic streamming
     const void stream();
     
-
+    // Read values from current time
+    void readAllValues();
     
 };
 

@@ -74,3 +74,47 @@ latticeVectorField::latticeVectorField( basicLBModel* lbm,
 
 // Default destructor
 latticeVectorField::~latticeVectorField() {}
+
+
+
+// Read values from current time
+void latticeVectorField::readAllValues() {
+
+    
+    std::ostringstream fldName;
+    fldName << "processor" << this->_id << "/" << _time.currentTime() << "/" << _name;
+
+    // Open file
+    std::ifstream inFile;
+    inFile.open( fldName.str().c_str() );
+    if( !inFile.is_open() ) {
+    	std::cout << "Unable to open file " << fldName.str() << std::endl;
+    	exit(1);
+    }
+
+    // Read total number of elements and resize
+    uint ntotal;
+    inFile >> ntotal;
+
+    double x,y,z;
+
+
+    // Read values
+    for(vector<Vector3>::iterator it = this->_localValues.begin() ; it != this->_localValues.end() ; it++) {
+	inFile >> x;
+	inFile >> y;
+	inFile >> z;
+	*it = Vector3(x,y,z);
+    }
+
+    
+    // Read values
+    for(vector<Vector3>::iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) {
+	inFile >> x;
+	inFile >> y;
+	inFile >> z;
+	*it = Vector3(x,y,z);
+    }
+        
+
+}

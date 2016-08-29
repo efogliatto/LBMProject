@@ -64,3 +64,38 @@ latticeScalarField::latticeScalarField( basicLBModel* lbm,
 
 // Default destructor
 latticeScalarField::~latticeScalarField() {}
+
+
+// Read values from current time
+void latticeScalarField::readAllValues() {
+
+    
+    std::ostringstream fldName;
+    fldName << "processor" << this->_id << "/" << _time.currentTime() << "/" << _name;
+
+    // Open file
+    std::ifstream inFile;
+    inFile.open( fldName.str().c_str() );
+    if( !inFile.is_open() ) {
+    	std::cout << "Unable to open file " << fldName.str() << std::endl;
+    	exit(1);
+    }
+
+    // Read total number of elements and resize
+    uint ntotal;
+    inFile >> ntotal;
+
+
+    // Read values
+    for(vector<double>::iterator it = this->_localValues.begin() ; it != this->_localValues.end() ; it++) {
+	inFile >> *it;
+    }
+
+    
+    // Read values
+    for(vector<double>::iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) {
+	inFile >> *it;
+    }
+        
+
+}

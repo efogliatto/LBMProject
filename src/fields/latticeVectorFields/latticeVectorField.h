@@ -34,6 +34,8 @@ public:
     iterator end()   { return iterator( lbPatch<Vector3>::end(), this); }
     
 
+    // Read values from current time
+    void readAllValues();
     
 };
 
