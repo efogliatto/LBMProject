@@ -100,24 +100,6 @@ int main( int argc, char **argv ) {
 	lbstream( &fields, &info, fields.g );
 	
 
-	
-	// Update macroscopic fields
-
-	// Order parameter
-	orderParameter( &fields, &info, fields.phi );
-	
-	// Chemical potential
-	chemicalPotential( &fields, &info, fields.muPhi );
-	
-	// Density
-	density( &fields, &info, fields.rho );
-
-	// Velocity
-	velocity( &fields, &info, fields.U );
-
-	// Pressure
-	pressureWithU( &fields, &info, fields.p );
-
 	// Old values
 	{
 
@@ -136,6 +118,25 @@ int main( int argc, char **argv ) {
 	    }
 	    
 	}
+	
+	
+	// Update macroscopic fields
+
+	// Order parameter
+	orderParameter( &fields, &info, fields.phi );
+	
+	// Chemical potential
+	chemicalPotential( &fields, &info, fields.muPhi );
+	
+	// Density
+	density( &fields, &info, fields.rho );
+
+	// Velocity
+	velocity( &fields, &info, fields.U );
+
+	// Pressure
+	pressureWithU( &fields, &info, fields.p );
+
 	
 	
     	// Write fields
