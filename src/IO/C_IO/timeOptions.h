@@ -2,6 +2,13 @@
 #define TIMEOPTIONS_H
 
 #include <basicSolverInfo.h>
+#include <readNeighbours.h>
+#include <basicSolverInfo.h>
+#include <readBasicInfo.h>
+#include <readScalarField.h>
+#include <readVectorField.h>
+#include <readPdfField.h>
+
 
 #ifdef __cplusplus
 extern "C" {

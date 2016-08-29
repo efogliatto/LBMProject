@@ -1,9 +1,4 @@
 #include <stdio.h>
-#include <basicSolverInfo.h>
-#include <readBasicInfo.h>
-#include <readScalarField.h>
-#include <readVectorField.h>
-#include <readPdfField.h>
 #include <twoPhasesFields.h>
 #include <cahnHilliardCollision.h>
 #include <liangCollision.h>
@@ -12,11 +7,16 @@
 
 int main() {
 
-    double lap = 0;
+    printf("     -------------  \n");
+    printf("     | -   |   - |  \n");
+    printf("     |   - | -   |  \n");
+    printf("     |<----o---->|       Two Phases - Lattice-Boltzmann solver\n");
+    printf("     |   - | -   |  \n");
+    printf("     | -   |   - |  \n");
+    printf("     -------------  \n");
     
     // Simulation properties
     struct solverInfo info = readBasicInfo();
-
 
     
     // Read Fields
@@ -24,30 +24,38 @@ int main() {
 
     // Neighbours indices
     fields.nb = readNeighbours(&info);
+    printf("\nReading neighbour indices\n");
     
     // Order parameter
     fields.phi     = readScalarField("phi", &info);
     fields.phi_old = readScalarField("phi", &info);
+    printf("\nReading field phi\n");
 
     // Chemical potential
     fields.muPhi = readScalarField("muPhi", &info);
+    printf("\nReading field muPhi\n");
 
     // Pressure
     fields.p = readScalarField("p", &info);
+    printf("\nReading field p\n");
 
     // Density
     fields.rho = readScalarField("rho", &info);
+    printf("\nReading field rho\n");
 
     // Velocity
     fields.U     = readVectorField("U", &info);
     fields.U_old = readVectorField("U", &info);
+    printf("\nReading field U\n");
 
     // Cahn-Hilliard field
     fields.h = readPdfField("h", &info);
+    printf("\nReading field h\n");
 
     // Navier-Stokes field
     fields.g = readPdfField("g", &info);
     fields.swp = readPdfField("g", &info);
+    printf("\nReading field g\n\n\n");
     
 
 
@@ -58,39 +66,42 @@ int main() {
     	// Collide h
     	cahnHilliardCollision(&fields, &info);
 
-    	/* // Collide g */
-    	/* liangCollision(&fields, &info); */
+    	// Collide g
+    	liangCollision(&fields, &info);
 
 
-	/* // Swap fields */
-	/* swap( &fields, &info, fields.h ); */
-	/* swap( &fields, &info, fields.g ); */
+	// Swap fields
+	swap( &fields, &info, fields.h );
+	swap( &fields, &info, fields.g );
 	
 
-    	/* // Write fields */
-    	/* if( writeFlag(&info) ) { */
-	    
-    	/*     // ScalarFields */
-    	/*     writeScalarField("phi", fields.phi, &info); */
-    	/*     writeScalarField("muPhi", fields.muPhi, &info); */
-    	/*     writeScalarField("rho", fields.rho, &info); */
-    	/*     writeScalarField("p", fields.p, &info); */
+    	// Write fields
+    	if( writeFlag(&info) ) {
 
-    	/*     // Vector fields */
-    	/*     writeVectorField("U", fields.U, &info); */
-
-    	/*     // Pdf fields */
-    	/*     writePdfField("h", fields.h, &info); */
-    	/*     writePdfField("g", fields.g, &info); */
+	    printf("Time = %.2f\n", info.time.current);
+	    printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) );
 	    
-    	/* } */
+    	    // ScalarFields
+    	    writeScalarField("phi", fields.phi, &info);
+    	    writeScalarField("muPhi", fields.muPhi, &info);
+    	    writeScalarField("rho", fields.rho, &info);
+    	    writeScalarField("p", fields.p, &info);
+
+    	    // Vector fields
+    	    writeVectorField("U", fields.U, &info);
+
+    	    // Pdf fields
+    	    writePdfField("h", fields.h, &info);
+    	    writePdfField("g", fields.g, &info);
+	    
+    	}
 
     }
 
 
     
     // Print info
-    printf("\n Finished in %.2f = seconds \n\n", elapsed(&info) );
+    printf("\n  Finished in %.2f seconds \n\n", elapsed(&info) );
     
     return 0;
     
