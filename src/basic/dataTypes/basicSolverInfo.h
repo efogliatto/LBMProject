@@ -94,6 +94,21 @@ struct mpiInfo {
 
     // Recv ghost ids. Id = nlocal + id
     unsigned int** recvGhostIds;
+
+
+    /* // Buffers */
+
+    /* // Scalars */
+    /* double* scalarSendBuff; */
+    /* double* scalarRecvBuff; */
+
+    /* // Vectors */
+    /* double* vectorSendBuff; */
+    /* double* vectorRecvBuff; */
+
+    /* // Pdf */
+    /* double* pdfSendBuff; */
+    /* double* pdfRecvBuff; */
     
 };
 

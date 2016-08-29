@@ -255,6 +255,10 @@ struct solverInfo readBasicInfo( int pid ) {
 
     // Resize Send ghost ids
     info.parallel.sendGhostIds = (uint**)malloc( info.parallel.nSendGhosts * sizeof(unsigned int*) );
+    // info.parallel.scalarSendBuff = (double*)malloc( info.parallel.nSendGhosts * sizeof(double) );
+    // info.parallel.vectorSendBuff = (double*)malloc( info.parallel.nSendGhosts * 3 * sizeof(double) );
+    // info.parallel.pdfSendBuff    = (double*)malloc( info.parallel.nSendGhosts * info.lattice.Q * sizeof(double) );
+    
 
     for(uint i = 0 ; i < info.parallel.nSendGhosts ; i++) {
 	
@@ -287,9 +291,13 @@ struct solverInfo readBasicInfo( int pid ) {
     }
     inFile >> info.parallel.nRecvGhosts;
 
-    // Resize Send ghost ids
-    info.parallel.recvGhostIds = (uint**)malloc( info.parallel.nRecvGhosts * sizeof(uint*) );
+    // Resize Recv ghost ids
+    info.parallel.recvGhostIds   = (uint**)malloc( info.parallel.nRecvGhosts * sizeof(uint*) );
+    // info.parallel.scalarRecvBuff = (double*)malloc( info.parallel.nRecvGhosts * sizeof(double) );
+    // info.parallel.vectorRecvBuff = (double*)malloc( info.parallel.nRecvGhosts * 3 * sizeof(double) );
+    // info.parallel.pdfRecvBuff    = (double*)malloc( info.parallel.nRecvGhosts * info.lattice.Q * sizeof(double) );
 
+    
     for(uint i = 0 ; i < info.parallel.nRecvGhosts ; i++) {
 	
 	uint pid,nel,aux;
@@ -315,6 +323,10 @@ struct solverInfo readBasicInfo( int pid ) {
     inFile.close();
 
     
+
+
+
+
     
     
     return info;

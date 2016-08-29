@@ -86,53 +86,55 @@ int main( int argc, char **argv ) {
     
     // Advance in time. Collide, stream, update and write
     while( updateTime(&info) ) {
+
 	
-    	/* // Collide h */
-    	/* cahnHilliardCollision(&fields, &info); */
+    	// Collide h
+    	cahnHilliardCollision(&fields, &info);
 	
-    	/* // Collide g */
-    	/* liangCollision(&fields, &info); */
+    	// Collide g
+    	liangCollision(&fields, &info);
 
-	/* // Swap fields */
-	/* swap( &fields, &info, fields.h ); */
-	/* swap( &fields, &info, fields.g ); */
+	// Swap fields
+	swap( &fields, &info, fields.h );
+	swap( &fields, &info, fields.g );
 	
 
-	/* // Update macroscopic fields */
-
-	/* // Order parameter */
-	/* orderParameter( &fields, &info, fields.phi );	 */
 	
-	/* // Chemical potential */
-	/* chemicalPotential( &fields, &info, fields.muPhi );	 */
+	// Update macroscopic fields
+
+	// Order parameter
+	orderParameter( &fields, &info, fields.phi );
 	
-	/* // Density */
-	/* density( &fields, &info, fields.rho ); */
+	// Chemical potential
+	chemicalPotential( &fields, &info, fields.muPhi );
+	
+	// Density
+	density( &fields, &info, fields.rho );
 
-	/* // Velocity */
-	/* velocity( &fields, &info, fields.U ); */
+	// Velocity
+	velocity( &fields, &info, fields.U );
 
-	/* // Pressure */
-	/* pressureWithU( &fields, &info, fields.p ); */
+	// Pressure
+	pressureWithU( &fields, &info, fields.p );
 
-	/* // Old values */
-	/* { */
+	// Old values
+	{
 
-	/*     unsigned int id, k; */
+	    unsigned int id, k;
 
-	/*     for( id = 0 ; id < info.lattice.nlocal ; id++ ) { */
+	    for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
 
-	/* 	fields.phi_old[id] = fields.phi[id]; */
+		fields.phi_old[id] = fields.phi[id];
 		
-	/* 	for( k = 0 ; k < 3 ; k++ ) { */
+		for( k = 0 ; k < 3 ; k++ ) {
 
-	/* 	    fields.U_old[id][k] = fields.U[id][k]; */
+		    fields.U_old[id][k] = fields.U[id][k];
 
-	/* 	} */
+		}
 
-	/*     } */
+	    }
 	    
-	/* } */
+	}
 	
 	
     	// Write fields

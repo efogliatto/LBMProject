@@ -8,34 +8,6 @@ void syncScalarField( const struct solverInfo* info, double* fld ) {
 
     MPI_Barrier(MPI_COMM_WORLD);
 
-    /* if(info->parallel.pid == 1) { */
-	
-    /* 	for( i = 0 ; i < info->parallel.nSendGhosts ; i++ ) { */
-
-    /* 	    for( j = 0 ; j < info->parallel.sendGhostIds[i][1] + 2 ; j++ ) { */
-
-    /* 		printf( "%d\n", info->parallel.sendGhostIds[i][j] ); */
-
-    /* 	    } */
-    /* 	    printf( "\n"); */
-
-    /* 	} */
-
-	
-    /* 	for( i = 0 ; i < info->parallel.nRecvGhosts ; i++ ) { */
-
-    /* 	    for( j = 0 ; j < info->parallel.recvGhostIds[i][1] + 2 ; j++ ) { */
-
-    /* 		printf( "%d\n", info->parallel.recvGhostIds[i][j] ); */
-
-    /* 	    } */
-    /* 	    printf( "\n"); */
-
-    /* 	} */
-
-    /* }     */
-    
-
     
     // Send information
 
@@ -54,7 +26,7 @@ void syncScalarField( const struct solverInfo* info, double* fld ) {
     	// Send data
     	MPI_Send (buf, info->parallel.sendGhostIds[i][1], MPI_DOUBLE, info->parallel.sendGhostIds[i][0], info->parallel.pid, MPI_COMM_WORLD);
 
-	/* MPI_Send (&buf,count,datatype,dest,tag,comm) */
+
 
     }
 
@@ -81,7 +53,7 @@ void syncScalarField( const struct solverInfo* info, double* fld ) {
     	}
 
 	    
-    	/* MPI_Recv (&buf,count,datatype,source,tag,comm,&status) */
+
     }
 
 
