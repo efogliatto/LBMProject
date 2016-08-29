@@ -6,7 +6,7 @@ add_library(lbe SHARED
   scalarFieldLaplacian.c
   scalarFieldGradient.c
   density.c
-  swap.c
+  lbstream.c
   syncScalarField.c
   syncPdfField.c
   chemicalPotential.c

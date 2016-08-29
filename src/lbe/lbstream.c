@@ -1,21 +1,21 @@
-#include <swap.h>
+#include <lbstream.h>
 
-void swap( struct twoPhasesFields* fields, const struct solverInfo* info, double** fld ) {
+void lbstream( struct twoPhasesFields* fields, const struct solverInfo* info, double** fld ) {
 
     unsigned int id, k;
 
 
-    /* // Move over points */
-    /* for( id = 0 ; id < info->lattice.nlocal ; id++ ) { */
+    // Move over points
+    for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
 
-    /* 	// Move over velocities */
-    /* 	for( k = 0 ; k < info->lattice.Q ; k++ ) { */
+    	// Move over velocities
+    	for( k = 0 ; k < info->lattice.Q ; k++ ) {
 
-    /* 	    fields->swp[id][k] = fld[id][k]; */
+    	    fields->swp[id][k] = fld[id][k];
 	    
-    /* 	} */
+    	}
 
-    /* } */
+    }
     
     
     // Move over points
@@ -28,7 +28,7 @@ void swap( struct twoPhasesFields* fields, const struct solverInfo* info, double
 
 	    if( neighId != -1 ) {
 
-		fields->swp[id][k] = fld[id][neighId];
+		fields->swp[id][k] = fld[neighId][k];
 
 	    }
 	    

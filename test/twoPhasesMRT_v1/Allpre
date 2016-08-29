@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Compute lattice
+latticeMesh -d D2Q9 --semiPeriodicBox
+latticeMeshPartition -n $1 -d D2Q9
+
+# Copy initial folder
+for ((i=0; i<$1; i++)); do
+    cp -rf start/ processor$i/0/
+done
+
+# Set initial fields
+mpiexec -n $1 setField -f phi

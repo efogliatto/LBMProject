@@ -1,0 +1,30 @@
+Shapes
+{
+    Box
+}
+
+Fields
+{
+    valuesList
+    {
+        1
+	phi
+    }
+}
+
+
+Box
+{
+    type box;
+    min ( 0 0 0 );
+    max ( 2.5 5 0 );
+    inside true;
+}
+
+phi
+{
+    type latticeScalarField;
+    function none;    
+    inside -1;
+    outside 1;
+}

@@ -9,6 +9,7 @@
 #include <orderParameter.h>
 #include <syncScalarField.h>
 #include <syncPdfField.h>
+#include <lbstream.h>
 
 int main( int argc, char **argv ) {
 
@@ -95,8 +96,8 @@ int main( int argc, char **argv ) {
     	liangCollision(&fields, &info);
 
 	// Swap fields
-	swap( &fields, &info, fields.h );
-	swap( &fields, &info, fields.g );
+	lbstream( &fields, &info, fields.h );
+	lbstream( &fields, &info, fields.g );
 	
 
 	
