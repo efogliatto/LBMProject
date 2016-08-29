@@ -47,7 +47,7 @@ extern "C" {
 	}
 
 	if( info->time.stp > info->time.writeInterval) {
-	    info->time.stp = 0;
+	    info->time.stp = 1;
 	}
 
 	

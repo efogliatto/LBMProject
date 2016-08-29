@@ -4,6 +4,6 @@
 #include <basicSolverInfo.h>
 #include <twoPhasesFields.h>
 
-void liangSource(struct twoPhasesFields* fields, const struct solverInfo* info, double* sourceTerm, const unsigned int id);
+void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, double* sourceTerm, unsigned int id);
 
 #endif // LIANGSOURCE_H

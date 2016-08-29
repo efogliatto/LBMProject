@@ -4,7 +4,7 @@
 #include <liangEquilibrium.h>
 #include <liangSource.h>
 
-void liangCollision(struct twoPhasesFields* fields, const struct solverInfo* info) {
+void liangCollision(struct twoPhasesFields* fields, struct solverInfo* info) {
 
 
     // Create equilibrium distribution vector

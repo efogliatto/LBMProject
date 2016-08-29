@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#define MPI_BUFF_SIZE 100
+#define MPI_BUFF_SIZE 500
 
-void syncScalarField( const struct solverInfo* info, double* fld ) {
+void syncScalarField( struct solverInfo* info, double* fld ) {
 
     unsigned int i, j, k, pid;
     
@@ -55,7 +55,7 @@ void syncScalarField( const struct solverInfo* info, double* fld ) {
 	
 
 
-    MPI_Barrier(MPI_COMM_WORLD);
+    /* MPI_Barrier(MPI_COMM_WORLD); */
 
     
     // Receive information. Divide by blocks

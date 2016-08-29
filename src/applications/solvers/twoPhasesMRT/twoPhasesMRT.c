@@ -137,6 +137,12 @@ int main( int argc, char **argv ) {
 	// Pressure
 	pressureWithU( &fields, &info, fields.p );
 
+
+	syncScalarField(&info, fields.phi );
+	syncScalarField(&info, fields.muPhi );
+	syncScalarField(&info, fields.p );
+	syncScalarField(&info, fields.rho );
+	syncPdfField(&info, fields.U, 3 );
 	
 	
     	// Write fields

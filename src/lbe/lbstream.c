@@ -1,6 +1,6 @@
 #include <lbstream.h>
 
-void lbstream( struct twoPhasesFields* fields, const struct solverInfo* info, double** fld ) {
+void lbstream( struct twoPhasesFields* fields, struct solverInfo* info, double** fld ) {
 
     unsigned int id, k;
 

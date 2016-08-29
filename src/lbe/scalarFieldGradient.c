@@ -1,7 +1,7 @@
 #include <scalarFieldGradient.h>
 #include <stdlib.h>
 
-double* scalarFieldGradient( struct twoPhasesFields* fields, const struct solverInfo* info, double* fld, const int id ) {
+double* scalarFieldGradient( struct twoPhasesFields* fields, struct solverInfo* info, double* fld, int id ) {
 
     double* grad = (double*)malloc( 3 * sizeof(double));
     grad[0] = 0;

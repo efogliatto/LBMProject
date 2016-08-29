@@ -4,6 +4,6 @@
 #include <basicSolverInfo.h>
 #include <twoPhasesFields.h>
 
-void orderParameter( struct twoPhasesFields* fields, const struct solverInfo* info, double* fld );
+void orderParameter( struct twoPhasesFields* fields, struct solverInfo* info, double* fld );
 
 #endif // ORDERPARAMETER_H

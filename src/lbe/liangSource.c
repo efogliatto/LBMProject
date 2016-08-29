@@ -5,7 +5,7 @@
 #include <scalarFieldGradient.h>
 #include <scalarFieldLaplacian.h>
 
-void liangSource(struct twoPhasesFields* fields, const struct solverInfo* info, double* sourceTerm, const unsigned int id) {
+void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, double* sourceTerm, unsigned int id) {
 
     unsigned int i, j, k;
 

@@ -4,6 +4,6 @@
 #include <basicSolverInfo.h>
 #include <twoPhasesFields.h>
 
-void liangEquilibrium(struct twoPhasesFields* fields, const struct solverInfo* info, double* eq, const unsigned int id);
+void liangEquilibrium(struct twoPhasesFields* fields, struct solverInfo* info, double* eq, unsigned int id);
 
 #endif // LIANGEQUILIBRIUM_H

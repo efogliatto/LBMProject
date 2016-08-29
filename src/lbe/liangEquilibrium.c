@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void liangEquilibrium(struct twoPhasesFields* fields, const struct solverInfo* info, double* eq, const unsigned int id) {
+void liangEquilibrium(struct twoPhasesFields* fields, struct solverInfo* info, double* eq, unsigned int id) {
 
     // Source term
     double* st = (double*)malloc( info->lattice.Q * sizeof(double) );

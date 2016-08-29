@@ -6,6 +6,6 @@
 #include <cahnHilliardEquilibrium.h>
 #include <syncPdfField.h>
 
-void cahnHilliardCollision(struct twoPhasesFields* fields, const struct solverInfo* info);
+void cahnHilliardCollision(struct twoPhasesFields* fields, struct solverInfo* info);
 
 #endif // CAHNHILLIARDCOLLISION_H

@@ -4,6 +4,6 @@
 #include <basicSolverInfo.h>
 #include <twoPhasesFields.h>
 
-void velocity( struct twoPhasesFields* fields, const struct solverInfo* info, double** fld );
+void velocity( struct twoPhasesFields* fields, struct solverInfo* info, double** fld );
 
 #endif // VELOCITY_H

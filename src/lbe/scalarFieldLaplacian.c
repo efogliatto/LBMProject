@@ -1,6 +1,6 @@
 #include <scalarFieldLaplacian.h>
 
-double scalarFieldLaplacian( struct twoPhasesFields* fields, const struct solverInfo* info, double* fld, const int id ) {
+double scalarFieldLaplacian( struct twoPhasesFields* fields, struct solverInfo* info, double* fld, int id ) {
 
     double lap = 0;
 

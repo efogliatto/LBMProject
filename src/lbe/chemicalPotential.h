@@ -5,6 +5,6 @@
 #include <twoPhasesFields.h>
 #include <scalarFieldLaplacian.h>
 
-void chemicalPotential( struct twoPhasesFields* fields, const struct solverInfo* info, double* chfield );
+void chemicalPotential( struct twoPhasesFields* fields, struct solverInfo* info, double* chfield );
 
 #endif // CHEMICALPOTENTIAL_H

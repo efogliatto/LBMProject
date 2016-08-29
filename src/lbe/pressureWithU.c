@@ -1,6 +1,7 @@
 #include <pressureWithU.h>
+#include <stdlib.h>
 
-void pressureWithU( struct twoPhasesFields* fields, const struct solverInfo* info, double* fld ) {
+void pressureWithU( struct twoPhasesFields* fields, struct solverInfo* info, double* fld ) {
 
     unsigned int id, k;
 
@@ -29,16 +30,8 @@ void pressureWithU( struct twoPhasesFields* fields, const struct solverInfo* inf
 	fld[id] = ( info->lattice.cs2 / (1 - info->lattice.omega[0]) )  *  ( red   +  dot  * 0.5 * info->time.tstep   +   fields->rho[id] * s_eq );
 	
 
+	// Deallocate memory
+	free(rhoGrad);
     }
     
 }
-
-
-/* // Pdf reduction (except first value) */
-/* pdf val = (*this).value(); */
-/* const double red = val.reduce() - val[0]; */
-	
-/* // Extra constants */
-/* const double w0 = _field->_lbm->omega(0); */
-	
-/* return ( _field->_cs2 / (1 - w0) )  *  ( red   +   (  (*_U) * _rho.gradient() ) * 0.5 * _field->_time.timeStep()   +   (*_rho) * s_eq(0,U) ); */

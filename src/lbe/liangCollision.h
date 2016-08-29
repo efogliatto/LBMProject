@@ -6,6 +6,6 @@
 #include <liangEquilibrium.h>
 #include <syncPdfField.h>
 
-void liangCollision(struct twoPhasesFields* fields, const struct solverInfo* info);
+void liangCollision(struct twoPhasesFields* fields, struct solverInfo* info);
 
 #endif // LIANGCOLLISION_H

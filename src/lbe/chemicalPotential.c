@@ -1,7 +1,7 @@
 #include <chemicalPotential.h>
 #include <stdio.h>
 
-void chemicalPotential( struct twoPhasesFields* fields, const struct solverInfo* info, double* chfield ) {
+void chemicalPotential( struct twoPhasesFields* fields, struct solverInfo* info, double* chfield ) {
 
     unsigned int id;
 

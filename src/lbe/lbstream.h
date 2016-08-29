@@ -5,6 +5,6 @@
 #include <twoPhasesFields.h>
 #include <syncPdfField.h>
 
-void lbstream( struct twoPhasesFields* fields, const struct solverInfo* info, double** fld );
+void lbstream( struct twoPhasesFields* fields,  struct solverInfo* info, double** fld );
 
 #endif // LBSTREAM_H

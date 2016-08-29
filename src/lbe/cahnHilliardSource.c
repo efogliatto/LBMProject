@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void cahnHilliardSource(struct twoPhasesFields* fields, const struct solverInfo* info, double* sourceTerm, const unsigned int id) {
+void cahnHilliardSource(struct twoPhasesFields* fields, struct solverInfo* info, double* sourceTerm, unsigned int id) {
 
 
     // Temporal derivative

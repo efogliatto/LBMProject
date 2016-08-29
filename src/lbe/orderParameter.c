@@ -1,6 +1,6 @@
 #include <orderParameter.h>
 
-void orderParameter( struct twoPhasesFields* fields, const struct solverInfo* info, double* fld ) {
+void orderParameter( struct twoPhasesFields* fields, struct solverInfo* info, double* fld ) {
 
     unsigned int id, k;
 

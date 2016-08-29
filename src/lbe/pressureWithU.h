@@ -5,6 +5,6 @@
 #include <twoPhasesFields.h>
 #include <scalarFieldGradient.h>
 
-void pressureWithU( struct twoPhasesFields* fields, const struct solverInfo* info, double* fld );
+void pressureWithU( struct twoPhasesFields* fields, struct solverInfo* info, double* fld );
 
 #endif // PRESSUREWITHU_U

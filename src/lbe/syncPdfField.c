@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#define MPI_BUFF_SIZE 100
+#define MPI_BUFF_SIZE 500
 
-void syncPdfField( const struct solverInfo* info, double** fld, int sz ){
+void syncPdfField( struct solverInfo* info, double** fld, int sz ){
 
     unsigned int i, j, k, pid;
     
@@ -59,7 +59,7 @@ void syncPdfField( const struct solverInfo* info, double** fld, int sz ){
     }
 
 
-    MPI_Barrier(MPI_COMM_WORLD);
+    /* MPI_Barrier(MPI_COMM_WORLD); */
 
     
     // Receive information. Divide by blocks

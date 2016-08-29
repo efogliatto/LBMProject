@@ -4,6 +4,6 @@
 #include <basicSolverInfo.h>
 #include <twoPhasesFields.h>
 
-void cahnHilliardEquilibrium(struct twoPhasesFields* fields, const struct solverInfo* info, double* eq, const unsigned int id);
+void cahnHilliardEquilibrium(struct twoPhasesFields* fields, struct solverInfo* info, double* eq, unsigned int id);
 
 #endif // CAHNHILLIARDEQUILIBRIUM_H

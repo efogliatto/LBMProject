@@ -1,7 +1,7 @@
 #include <cahnHilliardEquilibrium.h>
 #include <stdio.h>
 
-void cahnHilliardEquilibrium(struct twoPhasesFields* fields, const struct solverInfo* info, double* eq, const unsigned int id) {
+void cahnHilliardEquilibrium(struct twoPhasesFields* fields, struct solverInfo* info, double* eq, unsigned int id) {
 
     eq[0] = fields->phi[id] + (info->lattice.omega[0] - 1) * info->fields.eta * fields->muPhi[id];
 

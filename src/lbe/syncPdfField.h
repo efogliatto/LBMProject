@@ -5,6 +5,6 @@
 #include <twoPhasesFields.h>
 #include <mpi.h>
 
-void syncPdfField( const struct solverInfo* info, double** fld, int sz );
+void syncPdfField( struct solverInfo* info, double** fld, int sz );
 
 #endif // SYNCPDFFIELD_H

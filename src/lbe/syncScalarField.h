@@ -5,6 +5,6 @@
 #include <twoPhasesFields.h>
 #include <mpi.h>
 
-void syncScalarField( const struct solverInfo* info, double* fld );
+void syncScalarField( struct solverInfo* info, double* fld );
 
 #endif // SYNCSCALARFIELD_H

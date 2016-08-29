@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void cahnHilliardCollision(struct twoPhasesFields* fields, const struct solverInfo* info) {
+void cahnHilliardCollision(struct twoPhasesFields* fields, struct solverInfo* info) {
 
 
     // Create equilibrium distribution vector

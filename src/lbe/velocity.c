@@ -1,8 +1,9 @@
 #include <velocity.h>
 #include <scalarFieldGradient.h>
 #include <scalarFieldLaplacian.h>
+#include <stdlib.h>
 
-void velocity( struct twoPhasesFields* fields, const struct solverInfo* info, double** fld ) {
+void velocity( struct twoPhasesFields* fields, struct solverInfo* info, double** fld ) {
 
     unsigned int id, k;
 
@@ -43,6 +44,8 @@ void velocity( struct twoPhasesFields* fields, const struct solverInfo* info, do
 	    fld[id][k] = ( red[k]  +  (Fs[k] + Fb[k]) * 0.5 * info->time.tstep )    /    ( fields->rho[id]  -  0.5 * info->time.tstep * (info->fields.rho_A - info->fields.rho_B) * info->fields.M_phi * lap / (info->fields.phi_A - info->fields.phi_B) );
 
 	}
+
+	free(Fs);
 
 	
     }
