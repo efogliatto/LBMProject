@@ -4,6 +4,7 @@
 #include <basicSolverInfo.h>
 #include <twoPhasesFields.h>
 #include <cahnHilliardEquilibrium.h>
+#include <syncPdfField.h>
 
 void cahnHilliardCollision(struct twoPhasesFields* fields, const struct solverInfo* info);
 

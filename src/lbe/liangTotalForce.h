@@ -4,6 +4,6 @@
 #include <basicSolverInfo.h>
 #include <twoPhasesFields.h>
 
-void liangtOTALfORCE(struct twoPhasesFields* fields, const struct solverInfo* info, double* eq, const unsigned int id);
+void liangTotalForce(struct twoPhasesFields* fields, const struct solverInfo* info, double* eq, const unsigned int id);
 
 #endif // LIANGTOTALFORCE_H

@@ -15,7 +15,7 @@ void writeVectorField(const char* fname, const double** field, const struct solv
 
     // Create folder if it does not exist
     std::ostringstream fileName;
-    fileName << "processor0/" << info->time.current << "/";
+    fileName << "processor" << info->parallel.pid << "/" << info->time.current << "/";
     system( ("mkdir -p " + fileName.str()).c_str() );
     
     // Open file
@@ -29,10 +29,10 @@ void writeVectorField(const char* fname, const double** field, const struct solv
 
     
     // Total number of points
-    outFile << info->lattice.nlocal << std::endl;
+    outFile << info->lattice.nlocal + info->parallel.nghosts << std::endl;
     
     // Write elements
-    for(uint i = 0 ; i < info->lattice.nlocal ; i++) {
+    for(uint i = 0 ; i < info->lattice.nlocal + info->parallel.nghosts ; i++) {
 	outFile << field[i][0] << " ";
 	outFile << field[i][1] << " ";
 	outFile << field[i][2] << std::endl;

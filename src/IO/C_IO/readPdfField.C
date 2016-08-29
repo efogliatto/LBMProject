@@ -18,7 +18,7 @@ double** readPdfField(const char* fname, const struct solverInfo* info) {
     // Open file
     std::ifstream inFile;
     std::ostringstream fileName;
-    fileName << "processor0/" << info->time.start << "/" << fname;
+    fileName << "processor" << info->parallel.pid << "/" << info->time.start << "/" << fname;
     inFile.open( fileName.str().c_str() );
     if( !inFile.is_open() ) {
 	std::cout << "Unable to open file " << fileName << std::endl;

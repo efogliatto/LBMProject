@@ -44,7 +44,14 @@ void cahnHilliardCollision(struct twoPhasesFields* fields, const struct solverIn
 
     }
 
+
+
+    free(st);
+    free(R);
+    free(eq);
     
+    // Sync fields
+    syncPdfField( info, fields->h, info->lattice.Q );
     
     
 }

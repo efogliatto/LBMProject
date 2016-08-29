@@ -74,13 +74,39 @@ struct fieldsInfo {
 };
 
 
+
+struct mpiInfo {
+
+    // Process id
+    unsigned int pid;
+
+    // Total number of ghosts
+    unsigned int nghosts;
+
+    // Send ghosts
+    unsigned int nSendGhosts;
+
+    // Recv ghosts
+    unsigned int nRecvGhosts;
+
+    // Send ghost ids
+    unsigned int** sendGhostIds;
+
+    // Recv ghost ids. Id = nlocal + id
+    unsigned int** recvGhostIds;
+    
+};
+
+
 struct solverInfo {
 
     struct timeInfo time;
 
     struct latticeInfo lattice;
 
-    struct fieldsInfo fields;    
+    struct fieldsInfo fields;
+
+    struct mpiInfo parallel;
 };
 
 

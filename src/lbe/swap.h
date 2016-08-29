@@ -3,6 +3,7 @@
 
 #include <basicSolverInfo.h>
 #include <twoPhasesFields.h>
+#include <syncPdfField.h>
 
 void swap( struct twoPhasesFields* fields, const struct solverInfo* info, double** fld );
 
