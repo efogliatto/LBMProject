@@ -127,12 +127,12 @@ int main( int argc, char **argv ) {
 	
 	// Chemical potential
 	chemicalPotential( &fields, &info, fields.muPhi );
-	
-	// Density
-	density( &fields, &info, fields.rho );
 
 	// Velocity
 	velocity( &fields, &info, fields.U );
+	
+	// Density
+	density( &fields, &info, fields.rho );
 
 	// Pressure
 	pressureWithU( &fields, &info, fields.p );

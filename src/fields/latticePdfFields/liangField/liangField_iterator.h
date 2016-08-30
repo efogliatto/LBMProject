@@ -140,6 +140,7 @@ public :
 	
 	// Extra constants
 	const double w0 = _field->_lbm->omega(0);
+
 	
 	return ( _field->_cs2 / (1 - w0) )  *  ( red   +   (  (*_U) * _rho.gradient() ) * 0.5 * _field->_time.timeStep()   +   (*_rho) * s_eq(0,U) );
 
