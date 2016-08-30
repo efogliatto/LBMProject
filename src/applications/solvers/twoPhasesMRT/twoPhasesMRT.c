@@ -130,12 +130,13 @@ int main( int argc, char **argv ) {
 
 	// Velocity
 	velocity( &fields, &info, fields.U );
+
+	// Pressure
+	pressureWithU( &fields, &info, fields.p );	
 	
 	// Density
 	density( &fields, &info, fields.rho );
 
-	// Pressure
-	pressureWithU( &fields, &info, fields.p );
 
 
 	syncScalarField(&info, fields.phi );

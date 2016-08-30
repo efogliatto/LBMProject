@@ -1,5 +1,7 @@
 #include <pressureWithU.h>
+#include <scalarFieldGradient.h>
 #include <stdlib.h>
+
 
 void pressureWithU( struct twoPhasesFields* fields, struct solverInfo* info, double* fld ) {
 
