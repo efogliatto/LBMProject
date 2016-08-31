@@ -12,6 +12,9 @@
     
 /*     // Send information. Divide by blocks */
 
+/*     MPI_Request request; */
+/*     MPI_Status status; */
+
     
 /*     // Copy data to send buffer */
     
@@ -23,7 +26,6 @@
 /*     	/\* Move ovel blocks per send ghost *\/ */
 /*     	unsigned int bid; */
 /*     	for( bid = 0 ; bid < info->parallel.sendScalarBlocks[pid] ; bid++ ) { */
-	    
 
 /*     	    // Move inside blocks */
 /*     	    unsigned int i, */
@@ -44,11 +46,6 @@
 /*     		    info->parallel.scalarSendBuff[gid] = fld[ info->parallel.sendGhostIds[pid][lid+2] ]; */
 
 /*     		} */
-
-/* 		/\* if(info->parallel.pid == 0){ *\/ */
-/* 		/\*     printf("%f\n", info->parallel.scalarSendBuff[gid] ); *\/ */
-/* 		/\* } *\/ */
-		
 		
 /*     	    } */
 	    
@@ -56,14 +53,9 @@
 
 /*     } */
 	
-/*     /\* if(info->parallel.pid == 0){ *\/ */
-/*     /\* 	printf("\n"); *\/ */
-/*     /\* } *\/ */
+
     
 /*     // Send data in send buffer */
-
-/*     MPI_Request request; */
-/*     MPI_Status status; */
 
     
 /*     // Move over send ghosts */
@@ -77,7 +69,7 @@
 /*     	    unsigned int gid = pid * info->parallel.sendScalarBlocks[pid] * MPI_BUFF_SIZE +  bid * MPI_BUFF_SIZE; */
 
 /*             // Send data. tag = bid */
-/* 	    MPI_Isend (&info->parallel.scalarSendBuff[gid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request); */
+/*     	    MPI_Isend (&info->parallel.scalarSendBuff[gid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request); */
 
 	    
 /*     	} */
@@ -141,10 +133,6 @@
 /*     		    fld[ info->lattice.nlocal + info->parallel.recvGhostIds[pid][lid+2] ] = info->parallel.scalarRecvBuff[gid]; */
 
 /*     		} */
-
-/* 		/\* if(info->parallel.pid == 1){ *\/ */
-/* 		/\*     printf("%f\n", info->parallel.scalarRecvBuff[gid] ); *\/ */
-/* 		/\* }		 *\/ */
 		
 /*     	    } */
 	    
