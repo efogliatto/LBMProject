@@ -4,7 +4,7 @@
 #include <time.h>
 #include <sys/time.h>
 
-#define MPI_BUFF_SIZE 10
+#define MPI_BUFF_SIZE 100
 
 struct timeInfo {
 
@@ -105,14 +105,6 @@ struct mpiInfo {
     double* scalarRecvBuff;
     int* sendScalarBlocks;
     int* recvScalarBlocks;
-
-    /* // Vectors */
-    /* double* vectorSendBuff; */
-    /* double* vectorRecvBuff; */
-
-    /* // Pdf */
-    /* double* pdfSendBuff; */
-    /* double* pdfRecvBuff; */
     
 };
 

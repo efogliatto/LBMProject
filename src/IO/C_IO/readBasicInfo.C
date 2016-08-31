@@ -278,7 +278,7 @@ struct solverInfo readBasicInfo( int pid ) {
     
 
 
-    // Compute send blocks per process
+    // Compute scalar send blocks per process
     info.parallel.sendScalarBlocks = (int*)malloc( info.parallel.nSendGhosts * sizeof(int) );
 
     int nsb(0);
@@ -296,9 +296,25 @@ struct solverInfo readBasicInfo( int pid ) {
     // Resize send buffer
     info.parallel.scalarSendBuff = (double*)malloc( nsb * sizeof(double) );
 
+
+    // // Compute vector send blocks per process
+    // info.parallel.sendVectorBlocks = (int*)malloc( info.parallel.nSendGhosts * sizeof(int) );
+
+    // nsb = 0;
     
-    // info.parallel.vectorSendBuff = (double*)malloc( info.parallel.nSendGhosts * 3 * sizeof(double) );
-    // info.parallel.pdfSendBuff    = (double*)malloc( info.parallel.nSendGhosts * info.lattice.Q * sizeof(double) );
+    // for(uint i = 0 ; i < info.parallel.nSendGhosts ; i++) {
+
+    // 	const int buffBlocks = ceil (3.0 * info.parallel.sendGhostIds[i][1] / MPI_BUFF_SIZE );
+	
+    // 	info.parallel.sendVectorBlocks[i] = buffBlocks;
+
+    // 	nsb += buffBlocks * MPI_BUFF_SIZE;
+	
+    // }
+
+    // // Resize send buffer
+    // info.parallel.vectorSendBuff = (double*)malloc( nsb * sizeof(double) );    
+    
 
 
 
@@ -369,6 +385,24 @@ struct solverInfo readBasicInfo( int pid ) {
     info.parallel.scalarRecvBuff = (double*)malloc( nrb * sizeof(double) );
 
 
+    // // Compute vector send blocks per process
+    // info.parallel.recvVectorBlocks = (int*)malloc( info.parallel.nRecvGhosts * sizeof(int) );
+
+    // nrb = 0;
+    
+    // for(uint i = 0 ; i < info.parallel.nRecvGhosts ; i++) {
+
+    // 	const int buffBlocks = ceil( 3.0 * info.parallel.recvGhostIds[i][1] / MPI_BUFF_SIZE );
+	
+    // 	info.parallel.recvVectorBlocks[i] = buffBlocks;
+
+    // 	nrb += buffBlocks * MPI_BUFF_SIZE;
+	
+    // }
+
+    
+    // // Resize send buffer
+    // info.parallel.vectorRecvBuff = (double*)malloc( nrb * sizeof(double) );    
     
 
     

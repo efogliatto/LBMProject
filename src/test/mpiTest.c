@@ -53,21 +53,21 @@ int main( int argc, char **argv ) {
 
     // Synchronize fields
     unsigned int id, k;
-    for( id = 0 ; id < info.lattice.nlocal ; id++) { fields.phi[id] = id/* fields.phi[id]*pid*1000 */; }
+    for( id = 0 ; id < info.lattice.nlocal ; id++) { fields.phi[id] = id; }
     syncScalarField( &info, fields.phi );
 
 
 
     for( id = 0 ; id < info.lattice.nlocal ; id++) {
     	for( k = 0 ; k < 3 ; k++ ) {
-    	    fields.U[id][k] = fields.U[id][k]*pid*1000;
+    	    fields.U[id][k] = id;
     	}
     }
     syncPdfField( &info, fields.U, 3 );
 
     for( id = 0 ; id < info.lattice.nlocal ; id++) {
     	for( k = 0 ; k < info.lattice.Q ; k++ ) {
-    	    fields.g[id][k] = pid*1000;
+    	    fields.g[id][k] = id;
     	}
     }
     syncPdfField( &info, fields.g, info.lattice.Q );
