@@ -2,7 +2,7 @@
 
 # Compute lattice
 latticeMesh -d D2Q9 --semiPeriodicBox
-cp ../twoPhasesMRT/D2Q9_lattice/D2Q9_neighbours D2Q9_lattice/
+# cp ../twoPhasesMRT/D2Q9_lattice/D2Q9_neighbours D2Q9_lattice/
 latticeMeshPartition -n $1 -d D2Q9
 
 # Copy initial folder
