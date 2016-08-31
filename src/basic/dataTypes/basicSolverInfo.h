@@ -106,6 +106,9 @@ struct mpiInfo {
     double* scalarRecvBuff;
     int* sendScalarBlocks;
     int* recvScalarBlocks;
+
+    double** ssbuf;
+    double** srbuf;
     
 };
 
