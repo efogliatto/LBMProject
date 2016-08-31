@@ -4,6 +4,8 @@ void lbstream( struct twoPhasesFields* fields, struct solverInfo* info, double**
 
     unsigned int id, k;
 
+    
+    // Copy all values to swap
 
     // Move over points
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
@@ -17,6 +19,9 @@ void lbstream( struct twoPhasesFields* fields, struct solverInfo* info, double**
 
     }
     
+
+
+    // Copy only neighbours to swap
     
     // Move over points
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
@@ -31,6 +36,12 @@ void lbstream( struct twoPhasesFields* fields, struct solverInfo* info, double**
 		fields->swp[id][k] = fld[neighId][k];
 
 	    }
+
+	    else {
+
+		fields->swp[id][k] = fld[id][ info->lattice.reverse[k] ];
+		
+	    }
 	    
 	}
 
@@ -38,6 +49,8 @@ void lbstream( struct twoPhasesFields* fields, struct solverInfo* info, double**
 
 
 
+    // Copy back from swap
+    
     // Move over points
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
 
@@ -51,6 +64,8 @@ void lbstream( struct twoPhasesFields* fields, struct solverInfo* info, double**
     }
 
 
+
+    
     // Sync fields
     syncPdfField( info, fld, info->lattice.Q );
     

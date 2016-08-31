@@ -45,6 +45,7 @@ struct latticeInfo {
     int d;
     int Q;
     int** vel;
+    int* reverse;
     double* omega;
     
 };

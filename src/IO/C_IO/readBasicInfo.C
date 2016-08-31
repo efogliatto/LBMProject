@@ -69,6 +69,12 @@ struct solverInfo readBasicInfo( int pid ) {
 	info.lattice.omega[i] = omega[i];
 
 
+    // Lattice reverse indices
+    info.lattice.reverse = (int*)malloc( lbm->Q() * sizeof(int));
+    for(uint i = 0 ; i < lbm->Q() ; i++)
+	info.lattice.reverse[i] = lbm->reverse(i);
+    
+
     // Lattice velocities
     const vector<Vector3> vel = lbm->latticeVel();
     info.lattice.vel = (int**)malloc( lbm->Q() * sizeof(int*));
