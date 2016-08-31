@@ -51,13 +51,15 @@ int main( int argc, char **argv ) {
     
 
 
-    // Synchronize fields
+    // Synchronize phi
     unsigned int id, k;
-    for( id = 0 ; id < info.lattice.nlocal ; id++) { fields.phi[id] = id; }
+    for( id = 0 ; id < info.lattice.nlocal ; id++) {
+	fields.phi[id] = id;
+    }
     syncScalarField( &info, fields.phi );
 
-
-
+    
+    // Synchronize U
     for( id = 0 ; id < info.lattice.nlocal ; id++) {
     	for( k = 0 ; k < 3 ; k++ ) {
     	    fields.U[id][k] = id;
@@ -65,6 +67,7 @@ int main( int argc, char **argv ) {
     }
     syncPdfField( &info, fields.U, 3 );
 
+    // Synchronize g
     for( id = 0 ; id < info.lattice.nlocal ; id++) {
     	for( k = 0 ; k < info.lattice.Q ; k++ ) {
     	    fields.g[id][k] = id;

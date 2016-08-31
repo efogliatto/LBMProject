@@ -19,6 +19,9 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
     unsigned int pid;
     for( pid = 0 ; pid < info->parallel.nSendGhosts ; pid++ ) {
 
+	/* if(info->parallel.pid == 1) { */
+	/*     printf("%d\n\n",info->parallel.sendGhostIds[pid][0]); */
+	/* } */
 	
     	/* Move ovel blocks per send ghost */
     	unsigned int bid;
@@ -85,6 +88,10 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
     // Move over send ghosts
     for( pid = 0 ; pid < info->parallel.nRecvGhosts ; pid++ ) {
 
+	/* if(info->parallel.pid == 1) { */
+	/*     printf("%d\n\n",info->parallel.recvGhostIds[pid][0]); */
+	/* } */
+	
     	// Move ovel blocks per send ghost
     	unsigned int bid;
     	for( bid = 0 ; bid < info->parallel.recvScalarBlocks[pid] ; bid++ ) {
@@ -149,7 +156,11 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
 }
 
 
-// Blocking version
+
+
+
+
+/* // Blocking version */
 
 /* void syncScalarField( struct solverInfo* info, double* fld ) { */
 
