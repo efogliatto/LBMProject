@@ -40,13 +40,18 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
 
     		// Local index inside processor list
     		lid = bid * MPI_BUFF_SIZE + i;
-
+		
     		// Copy data
     		if( lid < info->parallel.sendGhostIds[pid][1]) {
 
-    		    info->parallel.scalarSendBuff[gid] = fld[ info->parallel.sendGhostIds[pid][lid+2] ];
+    		    info->parallel.scalarSendBuff[gid] = fld[ info->parallel.sendGhostIds[pid][lid+2] ];		    
 
     		}
+
+		/* if(info->parallel.pid == 0){ */
+		/*     printf("%f\n", info->parallel.scalarSendBuff[gid] ); */
+		/* } */
+		
 		
     	    }
 	    
@@ -54,8 +59,10 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
 
     }
 	
-
-
+    /* if(info->parallel.pid == 0){ */
+    /* 	printf("\n"); */
+    /* } */
+    
     // Send data in send buffer
 
     MPI_Request request;
@@ -88,10 +95,6 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
     // Move over send ghosts
     for( pid = 0 ; pid < info->parallel.nRecvGhosts ; pid++ ) {
 
-	/* if(info->parallel.pid == 1) { */
-	/*     printf("%d\n\n",info->parallel.recvGhostIds[pid][0]); */
-	/* } */
-	
     	// Move ovel blocks per send ghost
     	unsigned int bid;
     	for( bid = 0 ; bid < info->parallel.recvScalarBlocks[pid] ; bid++ ) {
@@ -101,17 +104,18 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
 
             // Send data. tag = bid
     	    MPI_Irecv (&info->parallel.scalarRecvBuff[gid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
-
 	    
     	}
 
     }
 
 
+    
     // Finish communication between processors
     MPI_Wait(&request, &status);
     
 
+    
     // Copy data from buffer
     
     // Move over send ghosts
@@ -133,13 +137,17 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
 
     		// Local index inside processor list
     		lid = bid * MPI_BUFF_SIZE + i;
-
+		
     		// Copy data
     		if( lid < info->parallel.recvGhostIds[pid][1]) {
-
+		    
     		    fld[ info->lattice.nlocal + info->parallel.recvGhostIds[pid][lid+2] ] = info->parallel.scalarRecvBuff[gid];
 
     		}
+
+		/* if(info->parallel.pid == 1){ */
+		/*     printf("%f\n", info->parallel.scalarRecvBuff[gid] ); */
+		/* }		 */
 		
     	    }
 	    
