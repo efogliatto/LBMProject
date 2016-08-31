@@ -236,23 +236,23 @@ const vector< vector<int> > semiPeriodicBox::neighbours(const basicLBModel* lbm,
 
 
 
-    // Assign bounce-back in other boundaries
-    for(uint pointId = 0 ; pointId < points.size() ; pointId++) {
+    // // Assign bounce-back in other boundaries
+    // for(uint pointId = 0 ; pointId < points.size() ; pointId++) {
 
-	for(uint velId = 0 ; velId < lbm->Q() ; velId++) {
+    // 	for(uint velId = 0 ; velId < lbm->Q() ; velId++) {
 
-	    if(neigh[pointId][velId] == -1) {
+    // 	    if(neigh[pointId][velId] == -1) {
 
-		// Reverse index
-		const uint revId = lbm->reverse( velId );
+    // 		// Reverse index
+    // 		const uint revId = lbm->reverse( velId );
 
-		neigh[pointId][velId] = neigh[pointId][revId];
+    // 		neigh[pointId][velId] = neigh[pointId][revId];
 
-	    }
+    // 	    }
 
-	}
+    // 	}
 	
-    }
+    // }
     
 
 
