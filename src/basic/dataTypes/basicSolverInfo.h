@@ -4,6 +4,8 @@
 #include <time.h>
 #include <sys/time.h>
 
+#define MPI_BUFF_SIZE 10
+
 struct timeInfo {
 
     // Simulation parameters
@@ -96,11 +98,13 @@ struct mpiInfo {
     unsigned int** recvGhostIds;
 
 
-    /* // Buffers */
+    // Buffers
 
-    /* // Scalars */
-    /* double* scalarSendBuff; */
-    /* double* scalarRecvBuff; */
+    // Scalars
+    double* scalarSendBuff;
+    double* scalarRecvBuff;
+    int* sendScalarBlocks;
+    int* recvScalarBlocks;
 
     /* // Vectors */
     /* double* vectorSendBuff; */

@@ -53,21 +53,22 @@ int main( int argc, char **argv ) {
 
     // Synchronize fields
     unsigned int id, k;
-    for( id = 0 ; id < info.lattice.nlocal ; id++) { fields.phi[id] = fields.phi[id]*pid*1000; }
+    for( id = 0 ; id < info.lattice.nlocal ; id++) { fields.phi[id] = id/* fields.phi[id]*pid*1000 */; }
     syncScalarField( &info, fields.phi );
 
 
+
     for( id = 0 ; id < info.lattice.nlocal ; id++) {
-	for( k = 0 ; k < 3 ; k++ ) {
-	    fields.U[id][k] = fields.U[id][k]*pid*1000;
-	}
+    	for( k = 0 ; k < 3 ; k++ ) {
+    	    fields.U[id][k] = fields.U[id][k]*pid*1000;
+    	}
     }
     syncPdfField( &info, fields.U, 3 );
 
     for( id = 0 ; id < info.lattice.nlocal ; id++) {
-	for( k = 0 ; k < info.lattice.Q ; k++ ) {
-	    fields.g[id][k] = pid*1000;
-	}
+    	for( k = 0 ; k < info.lattice.Q ; k++ ) {
+    	    fields.g[id][k] = pid*1000;
+    	}
     }
     syncPdfField( &info, fields.g, info.lattice.Q );
     
@@ -78,10 +79,10 @@ int main( int argc, char **argv ) {
     	// Write fields
     	if( writeFlag(&info) ) {
 	    
-	    if(pid == 0) {
-		printf("Time = %.2f\n", info.time.current);
-		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) );
-	    }
+    	    if(pid == 0) {
+    		printf("Time = %.2f\n", info.time.current);
+    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) );
+    	    }
 	    
     	    // ScalarFields
     	    writeScalarField("phi", fields.phi, &info);
@@ -100,7 +101,7 @@ int main( int argc, char **argv ) {
     
     // Print info
     if(pid == 0) {
-	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info) );
+	printf("\n  Finished in %.3f seconds \n\n", elapsed(&info) );
     }
 
 

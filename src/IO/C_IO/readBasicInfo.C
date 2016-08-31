@@ -254,10 +254,7 @@ struct solverInfo readBasicInfo( int pid ) {
     inFile >> info.parallel.nSendGhosts;
 
     // Resize Send ghost ids
-    info.parallel.sendGhostIds = (uint**)malloc( info.parallel.nSendGhosts * sizeof(unsigned int*) );
-    // info.parallel.scalarSendBuff = (double*)malloc( info.parallel.nSendGhosts * sizeof(double) );
-    // info.parallel.vectorSendBuff = (double*)malloc( info.parallel.nSendGhosts * 3 * sizeof(double) );
-    // info.parallel.pdfSendBuff    = (double*)malloc( info.parallel.nSendGhosts * info.lattice.Q * sizeof(double) );
+    info.parallel.sendGhostIds = (uint**)malloc( info.parallel.nSendGhosts * sizeof(unsigned int*) );  
     
 
     for(uint i = 0 ; i < info.parallel.nSendGhosts ; i++) {
@@ -281,6 +278,35 @@ struct solverInfo readBasicInfo( int pid ) {
     
 
 
+    // Compute send blocks per process
+    info.parallel.sendScalarBlocks = (int*)malloc( info.parallel.nSendGhosts * sizeof(int) );
+
+    int nsb(0);
+    
+    for(uint i = 0 ; i < info.parallel.nSendGhosts ; i++) {
+
+	const int buffBlocks = ceil (1.0 * info.parallel.sendGhostIds[i][1] / MPI_BUFF_SIZE );
+	
+	info.parallel.sendScalarBlocks[i] = buffBlocks;
+
+	nsb += buffBlocks * MPI_BUFF_SIZE;
+	
+    }
+
+    // Resize send buffer
+    info.parallel.scalarSendBuff = (double*)malloc( nsb * sizeof(double) );
+
+    
+    // info.parallel.vectorSendBuff = (double*)malloc( info.parallel.nSendGhosts * 3 * sizeof(double) );
+    // info.parallel.pdfSendBuff    = (double*)malloc( info.parallel.nSendGhosts * info.lattice.Q * sizeof(double) );
+
+
+
+
+
+
+
+    
 
     // Read total recv ghosts
     fileName = latticeFolder.str() + "recvMapIds" ;     
@@ -323,9 +349,27 @@ struct solverInfo readBasicInfo( int pid ) {
     inFile.close();
 
     
+    // Compute send blocks per process
+    info.parallel.recvScalarBlocks = (int*)malloc( info.parallel.nRecvGhosts * sizeof(int) );
+
+    int nrb(0);
+    
+    for(uint i = 0 ; i < info.parallel.nRecvGhosts ; i++) {
+
+	const int buffBlocks = ceil( 1.0 * info.parallel.recvGhostIds[i][1] / MPI_BUFF_SIZE );
+	
+	info.parallel.recvScalarBlocks[i] = buffBlocks;
+
+	nrb += buffBlocks * MPI_BUFF_SIZE;
+	
+    }
+
+    
+    // Resize send buffer
+    info.parallel.scalarRecvBuff = (double*)malloc( nrb * sizeof(double) );
 
 
-
+    
 
     
     

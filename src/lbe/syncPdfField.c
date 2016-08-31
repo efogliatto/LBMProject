@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define MPI_BUFF_SIZE 500
+/* #define MPI_BUFF_SIZE 500 */
 
 void syncPdfField( struct solverInfo* info, double** fld, int sz ){
 
