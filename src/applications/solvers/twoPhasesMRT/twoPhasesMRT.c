@@ -133,7 +133,7 @@ int main( int argc, char **argv ) {
 	velocity( &fields, &info, fields.U );
 
 	// Pressure
-	pressureWithU( &fields, &info, fields.p );	
+	pressureWithU( &fields, &info, fields.p );
 	
 	// Density
 	density( &fields, &info, fields.rho );
