@@ -72,15 +72,15 @@ void syncPdfField( struct solverInfo* info, double** fld, int sz ){
 
 		// Send data. tag = bid
 		if(  bid != (info->parallel.sendScalarBlocks[pid] - 1)  ) {
-		    MPI_Isend (&info->parallel.ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
-		    /* MPI_Send (&info->parallel.ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD); */
+		    /* MPI_Isend (&info->parallel.ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request); */
+		    MPI_Send (&info->parallel.ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD);
 		}
 		else {
 
 		    int msg = info->parallel.sendScalarBlocks[pid] * MPI_BUFF_SIZE - info->parallel.sendGhostIds[pid][1];
 		    msg = MPI_BUFF_SIZE - msg;
-		    MPI_Isend (&info->parallel.ssbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
-		    /* MPI_Send (&info->parallel.ssbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD); */
+		    /* MPI_Isend (&info->parallel.ssbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request); */
+		    MPI_Send (&info->parallel.ssbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD);
 
 		}
 	    
@@ -105,14 +105,14 @@ void syncPdfField( struct solverInfo* info, double** fld, int sz ){
 
 		// Send data. tag = bid
 		if(  bid != (info->parallel.recvScalarBlocks[pid] - 1)  ) {
-		    MPI_Irecv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
-		    /* MPI_Recv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status); */
+		    /* MPI_Irecv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request); */
+		    MPI_Recv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status);
 		}
 		else {
 		    int msg = info->parallel.recvScalarBlocks[pid] * MPI_BUFF_SIZE - info->parallel.recvGhostIds[pid][1];
 		    msg = MPI_BUFF_SIZE - msg;
-		    MPI_Irecv (&info->parallel.srbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
-		    /* MPI_Recv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status); */
+		    /* MPI_Irecv (&info->parallel.srbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request); */
+		    MPI_Recv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status);
 		}
 
 	    }
@@ -120,8 +120,8 @@ void syncPdfField( struct solverInfo* info, double** fld, int sz ){
 	}
 
     
-	// Finish communication between processors
-	MPI_Wait(&request, &status);
+	/* // Finish communication between processors */
+	/* MPI_Wait(&request, &status); */
     
 
     
