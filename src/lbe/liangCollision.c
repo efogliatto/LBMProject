@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <liangEquilibrium.h>
 #include <liangSource.h>
+#include <matVecMult.h>
 
 void liangCollision(struct twoPhasesFields* fields, struct solverInfo* info) {
 

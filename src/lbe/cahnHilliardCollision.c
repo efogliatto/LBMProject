@@ -1,5 +1,7 @@
 #include <cahnHilliardCollision.h>
 #include <cahnHilliardEquilibrium.h>
+#include <cahnHilliardSource.h>
+#include <matVecMult.h>
 #include <stdlib.h>
 #include <stdio.h>
 
