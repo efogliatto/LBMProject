@@ -6,6 +6,7 @@
 #include <writeScalarField.h>
 #include <writeVectorField.h>
 #include <writePdfField.h>
+#include <lbstream.h>
 
 int main( int argc, char **argv ) {
 

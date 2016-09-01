@@ -18,7 +18,6 @@ void lbstream( struct twoPhasesFields* fields, struct solverInfo* info, double**
     	}
 
     }
-    
 
 
     // Copy only neighbours to swap
