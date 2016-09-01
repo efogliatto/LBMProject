@@ -38,8 +38,8 @@ extern "C" {
     basicLBModel* lbm = creator.create( lp.lookUpEntry<string>("LBModel") );
     
     info.lattice.size = lp.lookUpEntry<double>("latticeSize");
-    info.lattice.c = info.lattice.size / info.time.tstep;
-    info.lattice.cs2 = info.lattice.c * info.lattice.c * lbm->cs2();
+    info.lattice.c = info.lattice.size / info.time.tstep; 
+    info.lattice.cs2 = info.lattice.c * info.lattice.c * lbm->cs2(); 
     info.lattice.d = lbm->D();
     info.lattice.Q = lbm->Q();
 

@@ -74,15 +74,15 @@ int main( int argc, char **argv ) {
     
 
 
-    // Synchronize initial fields
-    syncScalarField(&info, fields.phi );
-    syncScalarField(&info, fields.muPhi );
-    syncScalarField(&info, fields.p );
-    syncScalarField(&info, fields.rho );
+    /* // Synchronize initial fields */
+    /* syncScalarField(&info, fields.phi ); */
+    /* syncScalarField(&info, fields.muPhi ); */
+    /* syncScalarField(&info, fields.p ); */
+    /* syncScalarField(&info, fields.rho ); */
 
-    syncPdfField(&info, fields.U, 3 );
-    syncPdfField(&info, fields.h, info.lattice.Q );
-    syncPdfField(&info, fields.g, info.lattice.Q );
+    /* syncPdfField(&info, fields.U, 3 ); */
+    /* syncPdfField(&info, fields.h, info.lattice.Q ); */
+    /* syncPdfField(&info, fields.g, info.lattice.Q ); */
 
 
     
@@ -96,55 +96,55 @@ int main( int argc, char **argv ) {
     	// Collide g
     	liangCollision(&fields, &info);
 
-	// Swap fields
-	lbstream( &fields, &info, fields.h );
-	lbstream( &fields, &info, fields.g );
+	/* // Swap fields */
+	/* lbstream( &fields, &info, fields.h ); */
+	/* lbstream( &fields, &info, fields.g ); */
 	
 
-	// Old values
-	{
+	/* // Old values */
+	/* { */
 
-	    unsigned int id, k;
+	/*     unsigned int id, k; */
 
-	    for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
+	/*     for( id = 0 ; id < info.lattice.nlocal ; id++ ) { */
 
-		fields.phi_old[id] = fields.phi[id];
+	/* 	fields.phi_old[id] = fields.phi[id]; */
 		
-		for( k = 0 ; k < 3 ; k++ ) {
+	/* 	for( k = 0 ; k < 3 ; k++ ) { */
 
-		    fields.U_old[id][k] = fields.U[id][k];
+	/* 	    fields.U_old[id][k] = fields.U[id][k]; */
 
-		}
+	/* 	} */
 
-	    }
+	/*     } */
 	    
-	}
+	/* } */
 	
 	
-	// Update macroscopic fields
+	/* // Update macroscopic fields */
 
-	// Order parameter
-	orderParameter( &fields, &info, fields.phi );
+	/* // Order parameter */
+	/* orderParameter( &fields, &info, fields.phi ); */
 	
-	// Chemical potential
-	chemicalPotential( &fields, &info, fields.muPhi );
+	/* // Chemical potential */
+	/* chemicalPotential( &fields, &info, fields.muPhi ); */
 
-	// Velocity
-	velocity( &fields, &info, fields.U );
+	/* // Velocity */
+	/* velocity( &fields, &info, fields.U ); */
 
-	// Pressure
-	pressureWithU( &fields, &info, fields.p );	
+	/* // Pressure */
+	/* pressureWithU( &fields, &info, fields.p );	 */
 	
-	// Density
-	density( &fields, &info, fields.rho );
+	/* // Density */
+	/* density( &fields, &info, fields.rho ); */
 
 
 
-	syncScalarField(&info, fields.phi );
-	syncScalarField(&info, fields.muPhi );
-	syncScalarField(&info, fields.p );
-	syncScalarField(&info, fields.rho );
-	syncPdfField(&info, fields.U, 3 );
+	/* syncScalarField(&info, fields.phi ); */
+	/* syncScalarField(&info, fields.muPhi ); */
+	/* syncScalarField(&info, fields.p ); */
+	/* syncScalarField(&info, fields.rho ); */
+	/* syncPdfField(&info, fields.U, 3 ); */
 	
 	
     	// Write fields

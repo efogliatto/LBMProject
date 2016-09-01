@@ -7,9 +7,9 @@ void cahnHilliardSource(struct twoPhasesFields* fields, struct solverInfo* info,
 
 
     // Temporal derivative
-    const double ddt_x = (fields->U[id][0] * fields->phi[id])  -  (fields->U_old[id][0] * fields->phi_old[id]) / info->time.tstep;
-    const double ddt_y = (fields->U[id][1] * fields->phi[id])  -  (fields->U_old[id][1] * fields->phi_old[id]) / info->time.tstep;
-    const double ddt_z = (fields->U[id][2] * fields->phi[id])  -  (fields->U_old[id][2] * fields->phi_old[id]) / info->time.tstep;
+    const double ddt_x = ( (fields->U[id][0] * fields->phi[id])  -  (fields->U_old[id][0] * fields->phi_old[id]) ) / info->time.tstep;
+    const double ddt_y = ( (fields->U[id][1] * fields->phi[id])  -  (fields->U_old[id][1] * fields->phi_old[id]) ) / info->time.tstep;
+    const double ddt_z = ( (fields->U[id][2] * fields->phi[id])  -  (fields->U_old[id][2] * fields->phi_old[id]) ) / info->time.tstep;
 
     // First source term
     double* st = (double*)malloc( info->lattice.Q * sizeof(double) );
