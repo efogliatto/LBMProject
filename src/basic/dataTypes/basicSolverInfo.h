@@ -4,7 +4,7 @@
 #include <time.h>
 #include <sys/time.h>
 
-#define MPI_BUFF_SIZE 10
+#define MPI_BUFF_SIZE 100
 
 struct timeInfo {
 
