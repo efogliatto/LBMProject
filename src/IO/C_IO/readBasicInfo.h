@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-struct solverInfo readBasicInfo( int pid );
+    struct solverInfo readBasicInfo( int pid, int sz );
     
 #ifdef __cplusplus
 }

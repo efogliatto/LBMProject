@@ -83,6 +83,9 @@ struct mpiInfo {
     // Process id
     unsigned int pid;
 
+    // Total number of processes
+    unsigned int worldSize;    
+
     // Total number of ghosts
     unsigned int nghosts;
 

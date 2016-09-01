@@ -7,146 +7,150 @@
 
 void syncPdfField( struct solverInfo* info, double** fld, int sz ){ 
 
+    if( info->parallel.worldSize > 1 ) {
 
-    MPI_Barrier(MPI_COMM_WORLD);
+	MPI_Barrier(MPI_COMM_WORLD);
 
-    // Send information. Divide by blocks
+	// Send information. Divide by blocks
 
-    MPI_Request request;
-    MPI_Status status;
+	MPI_Request request;
+	MPI_Status status;
 
     
-    // Send information. Divide by blocks and columns
+	// Send information. Divide by blocks and columns
 
-    unsigned int k;
-    for( k = 0 ; k < sz ; k++ ) {
+	unsigned int k;
+	for( k = 0 ; k < sz ; k++ ) {
      
-	// Copy data to send buffer
+	    // Copy data to send buffer
     
-	// Move over send ghosts
-	unsigned int pid;
-	for( pid = 0 ; pid < info->parallel.nSendGhosts ; pid++ ) {
+	    // Move over send ghosts
+	    unsigned int pid;
+	    for( pid = 0 ; pid < info->parallel.nSendGhosts ; pid++ ) {
 
 	
-	    /* Move ovel blocks per send ghost */
-	    unsigned int bid;
-	    for( bid = 0 ; bid < info->parallel.sendScalarBlocks[pid] ; bid++ ) {
+		/* Move ovel blocks per send ghost */
+		unsigned int bid;
+		for( bid = 0 ; bid < info->parallel.sendScalarBlocks[pid] ; bid++ ) {
 
-		// Move inside blocks
-		unsigned int i,
-		    lid;
+		    // Move inside blocks
+		    unsigned int i,
+			lid;
 	    
-		for( i = 0 ; i < MPI_BUFF_SIZE ; i++ ) {
+		    for( i = 0 ; i < MPI_BUFF_SIZE ; i++ ) {
 
-		    // Local index inside processor list
-		    lid = bid * MPI_BUFF_SIZE + i;
+			// Local index inside processor list
+			lid = bid * MPI_BUFF_SIZE + i;
 		
-		    // Copy data
-		    if( lid < info->parallel.sendGhostIds[pid][1]) {
+			// Copy data
+			if( lid < info->parallel.sendGhostIds[pid][1]) {
 
-			info->parallel.ssbuf[pid][lid] = fld[ info->parallel.sendGhostIds[pid][lid+2] ][k];
+			    info->parallel.ssbuf[pid][lid] = fld[ info->parallel.sendGhostIds[pid][lid+2] ][k];
+
+			}
+		
+		    }
+	    
+		}
+
+	    }
+	
+
+
+    
+	    // Send data in send buffer
+
+    
+	    // Move over send ghosts
+	    for( pid = 0 ; pid < info->parallel.nSendGhosts ; pid++ ) {
+
+		// Move ovel blocks per send ghost
+		unsigned int bid;
+		for( bid = 0 ; bid < info->parallel.sendScalarBlocks[pid] ; bid++ ) {
+
+		    // Start position of each block
+		    unsigned int lid = bid * MPI_BUFF_SIZE;
+
+		    // Send data. tag = bid
+		    if(  bid != (info->parallel.sendScalarBlocks[pid] - 1)  ) {
+			MPI_Isend (&info->parallel.ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
+			/* MPI_Send (&info->parallel.ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD); */
+		    }
+		    else {
+
+			int msg = info->parallel.sendScalarBlocks[pid] * MPI_BUFF_SIZE - info->parallel.sendGhostIds[pid][1];
+			msg = MPI_BUFF_SIZE - msg;
+			MPI_Isend (&info->parallel.ssbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
+			/* MPI_Send (&info->parallel.ssbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD); */
 
 		    }
+	    
+		}
+
+	    }
+
+
+
+	    MPI_Barrier(MPI_COMM_WORLD);	
+
+
+	    // Receive data in recv buffer
+    
+	    // Move over recv ghosts
+	    for( pid = 0 ; pid < info->parallel.nRecvGhosts ; pid++ ) {
+
+		// Move ovel blocks per recv ghost
+		unsigned int bid;
+		for( bid = 0 ; bid < info->parallel.recvScalarBlocks[pid] ; bid++ ) {
+
+		    // Start position of each block
+		    unsigned int lid =  bid * MPI_BUFF_SIZE;
+
+		    // Send data. tag = bid
+		    if(  bid != (info->parallel.recvScalarBlocks[pid] - 1)  ) {
+			MPI_Irecv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
+			/* MPI_Recv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status); */
+		    }
+		    else {
+			int msg = info->parallel.recvScalarBlocks[pid] * MPI_BUFF_SIZE - info->parallel.recvGhostIds[pid][1];
+			msg = MPI_BUFF_SIZE - msg;
+			MPI_Irecv (&info->parallel.srbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
+			/* MPI_Recv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status); */
+		    }
+
+		}
+
+	    }
+
+    
+	    // Finish communication between processors
+	    MPI_Wait(&request, &status);
+    
+
+    
+	    // Copy data from buffer
+    
+	    // Move over send ghosts
+	    for( pid = 0 ; pid < info->parallel.nRecvGhosts ; pid++ ) {
+	    
+		unsigned int i;
+		for( i = 0 ; i < info->parallel.recvGhostIds[pid][1] ; i++ ) {
+		
+		    // Copy data
+		    fld[ info->lattice.nlocal + info->parallel.recvGhostIds[pid][i+2] ][k] = info->parallel.srbuf[pid][i];
 		
 		}
 	    
-	    }
-
-	}
-	
-
-
-    
-	// Send data in send buffer
-
-    
-	// Move over send ghosts
-	for( pid = 0 ; pid < info->parallel.nSendGhosts ; pid++ ) {
-
-	    // Move ovel blocks per send ghost
-	    unsigned int bid;
-	    for( bid = 0 ; bid < info->parallel.sendScalarBlocks[pid] ; bid++ ) {
-
-		// Start position of each block
-		unsigned int lid = bid * MPI_BUFF_SIZE;
-
-		// Send data. tag = bid
-		if(  bid != (info->parallel.sendScalarBlocks[pid] - 1)  ) {
-		    MPI_Isend (&info->parallel.ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
-		    /* MPI_Send (&info->parallel.ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD); */
-		}
-		else {
-
-		    int msg = info->parallel.sendScalarBlocks[pid] * MPI_BUFF_SIZE - info->parallel.sendGhostIds[pid][1];
-		    msg = MPI_BUFF_SIZE - msg;
-		    MPI_Isend (&info->parallel.ssbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
-		    /* MPI_Send (&info->parallel.ssbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD); */
-
-		}
-	    
-	    }
-
-	}
-
-
-
-	MPI_Barrier(MPI_COMM_WORLD);	
-
-
-	// Receive data in recv buffer
-    
-	// Move over recv ghosts
-	for( pid = 0 ; pid < info->parallel.nRecvGhosts ; pid++ ) {
-
-	    // Move ovel blocks per recv ghost
-	    unsigned int bid;
-	    for( bid = 0 ; bid < info->parallel.recvScalarBlocks[pid] ; bid++ ) {
-
-		// Start position of each block
-		unsigned int lid =  bid * MPI_BUFF_SIZE;
-
-		// Send data. tag = bid
-		if(  bid != (info->parallel.recvScalarBlocks[pid] - 1)  ) {
-		    MPI_Irecv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
-		    /* MPI_Recv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status); */
-		}
-		else {
-		    int msg = info->parallel.recvScalarBlocks[pid] * MPI_BUFF_SIZE - info->parallel.recvGhostIds[pid][1];
-		    msg = MPI_BUFF_SIZE - msg;
-		    MPI_Irecv (&info->parallel.srbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request);
-		    /* MPI_Recv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status); */
-		}
 
 	    }
-
-	}
-
-    
-	// Finish communication between processors
-	MPI_Wait(&request, &status);
-    
-
-    
-	// Copy data from buffer
-    
-	// Move over send ghosts
-	for( pid = 0 ; pid < info->parallel.nRecvGhosts ; pid++ ) {
-	    
-	    unsigned int i;
-	    for( i = 0 ; i < info->parallel.recvGhostIds[pid][1] ; i++ ) {
-		
-		// Copy data
-		fld[ info->lattice.nlocal + info->parallel.recvGhostIds[pid][i+2] ][k] = info->parallel.srbuf[pid][i];
-		
-	    }
-	    
-
-	}
    
 
-    }
+	}
 
-    MPI_Barrier(MPI_COMM_WORLD);
+	MPI_Barrier(MPI_COMM_WORLD);
+
+
+    }
     
 }
 
