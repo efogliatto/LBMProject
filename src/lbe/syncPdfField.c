@@ -91,7 +91,7 @@ void syncPdfField( struct solverInfo* info, double** fld, int sz ){
 
 
 
-	    MPI_Barrier(MPI_COMM_WORLD);	
+	    /* MPI_Barrier(MPI_COMM_WORLD); */	
 
 
 	    // Receive data in recv buffer
@@ -122,6 +122,8 @@ void syncPdfField( struct solverInfo* info, double** fld, int sz ){
 
 	    }
 
+
+	    MPI_Barrier(MPI_COMM_WORLD);	    
     
 	    // Finish communication between processors
 	    MPI_Wait(&request, &status);

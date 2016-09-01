@@ -86,7 +86,7 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
 	}
 
 
-	MPI_Barrier(MPI_COMM_WORLD);
+	/* MPI_Barrier(MPI_COMM_WORLD); */
     
 
 	// Receive data in recv buffer
@@ -117,7 +117,9 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
 
 	}
 
-    
+
+	MPI_Barrier(MPI_COMM_WORLD);
+	
 	// Finish communication between processors
 	MPI_Wait(&request, &status);
     
