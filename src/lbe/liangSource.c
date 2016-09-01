@@ -7,7 +7,7 @@
 
 void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, double* sourceTerm, unsigned int id) {
 
-    unsigned int i, j, k;
+    unsigned int j, k;
 
 /* 	vector<Vector3> lvel = _p->_lat.lbmodel()->latticeVel(); */
 /* 	for(uint i = 0 ; i < lvel.size() ; i++) */

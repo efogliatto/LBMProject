@@ -15,7 +15,7 @@ void cahnHilliardSource(struct twoPhasesFields* fields, struct solverInfo* info,
     double* st = (double*)malloc( info->lattice.Q * sizeof(double) );
     
     // Compute source term
-    unsigned int i,j,k;
+    unsigned int k;
     
     for( k = 0 ; k < info->lattice.Q ; k++ ) {
 	
