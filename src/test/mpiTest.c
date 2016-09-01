@@ -3,6 +3,9 @@
 #include <timeOptions.h>
 #include <syncScalarField.h>
 #include <syncPdfField.h>
+#include <writeScalarField.h>
+#include <writeVectorField.h>
+#include <writePdfField.h>
 
 int main( int argc, char **argv ) {
 
