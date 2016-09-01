@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-    void writeScalarField(const char* fname, const double* field, const struct solverInfo* info);
+    void writeScalarField( char* fname, double* field, struct solverInfo* info);
     
 #ifdef __cplusplus
 }

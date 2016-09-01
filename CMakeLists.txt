@@ -19,5 +19,8 @@ include_directories(include ${MPI_INCLUDE_PATH} ${Boost_INCLUDE_DIRS})
 # Compiler options for Cpp
 SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} --std=c++11 -Wall -fopenmp" )
 
+# Compiler options for C
+SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -fopenmp" )
+
 # Directorio con fuentes
 add_subdirectory (src)

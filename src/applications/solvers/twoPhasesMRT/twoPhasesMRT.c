@@ -4,12 +4,16 @@
 #include <liangCollision.h>
 #include <timeOptions.h>
 #include <density.h>
+#include <velocity.h>
 #include <pressureWithU.h>
 #include <chemicalPotential.h>
 #include <orderParameter.h>
 #include <syncScalarField.h>
 #include <syncPdfField.h>
 #include <lbstream.h>
+#include <writeScalarField.h>
+#include <writeVectorField.h>
+#include <writePdfField.h>
 
 int main( int argc, char **argv ) {
 
