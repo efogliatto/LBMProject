@@ -31,7 +31,7 @@ public:
     const void writeLocalValues(const std::string& fileName, const std::string& folderName) const;
 
     // All values
-    const void writeAllValues(const std::string& fileName, const std::string& folderName) const;    
+    const void writeAllValues(const std::string& fileName, const std::string& folderName, const bool& writeAscii = true) const;    
 
     // Neighbour local indices
     const void writeNeighboursIds(const std::string& fileName, const std::string& folderName) const;
@@ -140,35 +140,68 @@ const void IOPatch<T>::writeLocalValues(const std::string& fileName, const std::
 
 // All values
 template<typename T>
-const void IOPatch<T>::writeAllValues(const std::string& fileName, const std::string& folderName) const {
+const void IOPatch<T>::writeAllValues(const std::string& fileName, const std::string& folderName, const bool& writeAscii) const {
 
     // Create folder if it does not exist
     system( ("mkdir -p " + folderName).c_str() );
-    
-    // Open file
+
     std::ofstream outFile;
-    outFile.open( (folderName + "/" + fileName).c_str() );
-    if( !outFile.is_open() ) {
-    	std::cout << "Unable to open file " << fileName << std::endl;
-    	exit(1);
-    }
+    
+    /* // Write in ascii format */
+    /* if( writeAscii ) { */
+    
+	// Open file
+	outFile.open( (folderName + "/" + fileName).c_str() );
+	if( !outFile.is_open() ) {
+	    std::cout << "Unable to open file " << fileName << std::endl;
+	    exit(1);
+	}
 
-    // Write total number of elements
-    outFile << this->_localValues.size() + this->_ghostValues.size() << std::endl;
+	// Write total number of elements
+	outFile << this->_localValues.size() + this->_ghostValues.size() << std::endl;
 
-    // Write values
-    for(typename std::vector<T>::const_iterator it = this->_localValues.begin() ; it != this->_localValues.end() ; it++) {
-	outFile << *it << std::endl;
-    }
+	// Write values
+	for(typename std::vector<T>::const_iterator it = this->_localValues.begin() ; it != this->_localValues.end() ; it++) {
+	    outFile << *it << std::endl;
+	}
 
-    for(typename std::vector<T>::const_iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) {
-	outFile << *it << std::endl;
-    }    
+	for(typename std::vector<T>::const_iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) {
+	    outFile << *it << std::endl;
+	}    
+
+    /* } */
+
+    /* // Write in binary format */
+    /* else { */
+
+    /* 	// Open file */
+    /* 	outFile.open( (folderName + "/" + fileName).c_str(), std::ios::out | std::ios::binary ); */
+    /* 	if( !outFile.is_open() ) { */
+    /* 	    std::cout << "Unable to open file " << fileName << std::endl; */
+    /* 	    exit(1); */
+    /* 	} */
+
+    /* 	if( std::type_info(T) == std::type_info(double) ) { */
+	
+    /* 	    // Write values */
+    /* 	    for(typename std::vector<T>::const_iterator it = this->_localValues.begin() ; it != this->_localValues.end() ; it++) { */
+    /* 		/\* outFile.write( *it,sizeof(T) ); *\/ */
+    /* 	    } */
+
+    /* 	    for(typename std::vector<T>::const_iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) { */
+    /* 		/\* outFile.write(*it,sizeof(T)); *\/ */
+    /* 	    } */
+
+    /* 	} */
+
+    /* } */
 
     // Close file
     outFile.close();
     
 }
+
+
 
 
 // Local values
