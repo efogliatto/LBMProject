@@ -1,0 +1,17 @@
+Shapes
+{
+    semiPeriodicBox
+}
+
+semiPeriodicBox
+{
+    type box;
+    min ( 0 0 0 );
+    max ( 256 1024 0 );
+    inside true;
+}
+
+// Lattice characteristic length
+latticeSize 1;
+
+LBModel D2Q9;
