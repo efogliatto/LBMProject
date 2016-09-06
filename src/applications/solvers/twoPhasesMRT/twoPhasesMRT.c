@@ -93,13 +93,39 @@ int main( int argc, char **argv ) {
     // Advance in time. Collide, stream, update and write
     while( updateTime(&info) ) {
 
+	// Collide h
+	cahnHilliardCollision(&fields, &info);
 	
-    	// Collide h
-    	cahnHilliardCollision(&fields, &info);
+	// Collide g
+	liangCollision(&fields, &info);
 	
-    	// Collide g
-    	liangCollision(&fields, &info);
+	// Internal iterations
+	{
+	    unsigned int iter;
+	    for( iter = 1 ; iter <= 0 ; iter++ ) {
 
+		// Update macro
+		orderParameter( &fields, &info, fields.phi );
+		chemicalPotential( &fields, &info, fields.muPhi );
+		velocity( &fields, &info, fields.U );
+		pressureWithU( &fields, &info, fields.p );
+		density( &fields, &info, fields.rho );
+
+		// Sync macro
+		syncScalarField(&info, fields.phi );
+		syncScalarField(&info, fields.muPhi );
+		syncScalarField(&info, fields.p );
+		syncScalarField(&info, fields.rho );
+		syncPdfField(&info, fields.U, 3 );
+
+		// Collide again
+		cahnHilliardCollision(&fields, &info);
+		liangCollision(&fields, &info);		
+
+	    }
+
+	}
+	
 	// Swap fields
 	lbstream( &fields, &info, fields.h );
 	lbstream( &fields, &info, fields.g );
