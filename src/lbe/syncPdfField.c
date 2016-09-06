@@ -5,7 +5,7 @@
 
 
 
-void syncPdfField( struct solverInfo* info, double** fld, int sz ){ 
+void syncPdfField( struct solverInfo* info, c_scalar** fld, int sz ){ 
 
     if( info->parallel.worldSize > 1 ) {
 
@@ -13,7 +13,7 @@ void syncPdfField( struct solverInfo* info, double** fld, int sz ){
 
 	// Send information. Divide by blocks
 
-	MPI_Request request;
+	/* MPI_Request request; */
 	MPI_Status status;
 
     

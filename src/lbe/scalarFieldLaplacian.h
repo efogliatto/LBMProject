@@ -4,6 +4,6 @@
 #include <basicSolverInfo.h>
 #include <twoPhasesFields.h>
 
-double scalarFieldLaplacian( struct twoPhasesFields* fields, struct solverInfo* info, double* fld, int id );
+c_scalar scalarFieldLaplacian( struct twoPhasesFields* fields, struct solverInfo* info, c_scalar* fld, int id );
 
 #endif // SCALARFIELDLAPLACIAN_H

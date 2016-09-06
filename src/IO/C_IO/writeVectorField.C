@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 
-void writeVectorField( char* fname, double** field, struct solverInfo* info) {
+void writeVectorField( char* fname, c_scalar** field, struct solverInfo* info) {
 
     // Create folder if it does not exist
     std::ostringstream fileName;

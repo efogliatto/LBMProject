@@ -1,8 +1,8 @@
 #include <scalarFieldLaplacian.h>
 
-double scalarFieldLaplacian( struct twoPhasesFields* fields, struct solverInfo* info, double* fld, int id ) {
+c_scalar scalarFieldLaplacian( struct twoPhasesFields* fields, struct solverInfo* info, c_scalar* fld, int id ) {
 
-    double lap = 0;
+    c_scalar lap = 0;
 
     unsigned int k;
 

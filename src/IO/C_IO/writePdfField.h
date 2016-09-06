@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-    void writePdfField( char* fname,  double** field,  struct solverInfo* info);
+    void writePdfField( char* fname,  c_scalar** field,  struct solverInfo* info);
     
 #ifdef __cplusplus
 }

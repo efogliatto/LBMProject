@@ -18,9 +18,9 @@ extern "C" {
     // Read time properties
     dictionary tp("properties/simulation");
 
-    info.time.start = tp.lookUpEntry<double>("startTime");
-    info.time.end = tp.lookUpEntry<double>("endTime");
-    info.time.tstep = tp.lookUpEntry<double>("timeStep");
+    info.time.start = (c_scalar)tp.lookUpEntry<double>("startTime");
+    info.time.end = (c_scalar)tp.lookUpEntry<double>("endTime");
+    info.time.tstep = (c_scalar)tp.lookUpEntry<double>("timeStep");
     info.time.writeInterval = (unsigned int)tp.lookUpEntry<double>("writeInterval");
     info.time.current = info.time.start;
     info.time.stp = 0;
@@ -37,7 +37,7 @@ extern "C" {
     LBModelCreator creator;
     basicLBModel* lbm = creator.create( lp.lookUpEntry<string>("LBModel") );
     
-    info.lattice.size = lp.lookUpEntry<double>("latticeSize");
+    info.lattice.size = (c_scalar)lp.lookUpEntry<double>("latticeSize");
     info.lattice.c = info.lattice.size / info.time.tstep; 
     info.lattice.cs2 = info.lattice.c * info.lattice.c * lbm->cs2(); 
     info.lattice.d = lbm->D();
@@ -64,7 +64,7 @@ extern "C" {
 
     // Lattice weights
     const vector<double> omega = lbm->omega();
-    info.lattice.omega = (double*)malloc( lbm->Q() * sizeof(double));
+    info.lattice.omega = (c_scalar*)malloc( lbm->Q() * sizeof(c_scalar));
     for(uint i = 0 ; i < lbm->Q() ; i++)
 	info.lattice.omega[i] = omega[i];
 
@@ -94,9 +94,9 @@ extern "C" {
 
     pdf Sh = mp.lookUpEntry<pdf>("h/S");
 
-    info.fields.colMat = (double**)malloc( lbm->Q() * sizeof(double*));
+    info.fields.colMat = (c_scalar**)malloc( lbm->Q() * sizeof(c_scalar*));
     for(uint i = 0 ; i < lbm->Q() ; i++)
-	info.fields.colMat[i] = (double*)malloc( lbm->Q() * sizeof(double));
+	info.fields.colMat[i] = (c_scalar*)malloc( lbm->Q() * sizeof(c_scalar));
 
     Matrix SS( Sh.size() );
     for(uint i = 0 ; i < Sh.size() ; i++)
@@ -111,9 +111,9 @@ extern "C" {
     }
     
 
-    info.fields.srcMat = (double**)malloc( lbm->Q() * sizeof(double*));
+    info.fields.srcMat = (c_scalar**)malloc( lbm->Q() * sizeof(c_scalar*));
     for(uint i = 0 ; i < lbm->Q() ; i++)
-	info.fields.srcMat[i] = (double*)malloc( lbm->Q() * sizeof(double));    
+	info.fields.srcMat[i] = (c_scalar*)malloc( lbm->Q() * sizeof(c_scalar));    
 
     for(uint i = 0 ; i < Sh.size() ; i++)
 	SS[i][i] = 1.0 - (0.5 * Sh[i]);
@@ -130,9 +130,9 @@ extern "C" {
 
     pdf Sg_a = mp.lookUpEntry<pdf>("g/S_a");
     
-    info.fields.colMatA = (double**)malloc( lbm->Q() * sizeof(double*));
+    info.fields.colMatA = (c_scalar**)malloc( lbm->Q() * sizeof(c_scalar*));
     for(uint i = 0 ; i < lbm->Q() ; i++)
-	info.fields.colMatA[i] = (double*)malloc( lbm->Q() * sizeof(double));
+	info.fields.colMatA[i] = (c_scalar*)malloc( lbm->Q() * sizeof(c_scalar));
 
     for(uint i = 0 ; i < Sg_a.size() ; i++)
 	SS[i][i] = Sg_a[i];
@@ -146,9 +146,9 @@ extern "C" {
     }
     
     
-    info.fields.srcMatA = (double**)malloc( lbm->Q() * sizeof(double*));
+    info.fields.srcMatA = (c_scalar**)malloc( lbm->Q() * sizeof(c_scalar*));
     for(uint i = 0 ; i < lbm->Q() ; i++)
-	info.fields.srcMatA[i] = (double*)malloc( lbm->Q() * sizeof(double));    
+	info.fields.srcMatA[i] = (c_scalar*)malloc( lbm->Q() * sizeof(c_scalar));    
 
     for(uint i = 0 ; i < Sg_a.size() ; i++)
 	SS[i][i] = 1.0 - (0.5 * Sg_a[i]);
@@ -165,9 +165,9 @@ extern "C" {
     
     pdf Sg_b = mp.lookUpEntry<pdf>("g/S_b");
 
-    info.fields.colMatB = (double**)malloc( lbm->Q() * sizeof(double*));
+    info.fields.colMatB = (c_scalar**)malloc( lbm->Q() * sizeof(c_scalar*));
     for(uint i = 0 ; i < lbm->Q() ; i++)
-	info.fields.colMatB[i] = (double*)malloc( lbm->Q() * sizeof(double));
+	info.fields.colMatB[i] = (c_scalar*)malloc( lbm->Q() * sizeof(c_scalar));
 
     for(uint i = 0 ; i < Sg_b.size() ; i++)
 	SS[i][i] = Sg_b[i];
@@ -180,9 +180,9 @@ extern "C" {
 	}
     }
     
-    info.fields.srcMatB = (double**)malloc( lbm->Q() * sizeof(double*));
+    info.fields.srcMatB = (c_scalar**)malloc( lbm->Q() * sizeof(c_scalar*));
     for(uint i = 0 ; i < lbm->Q() ; i++)
-	info.fields.srcMatB[i] = (double*)malloc( lbm->Q() * sizeof(double));    
+	info.fields.srcMatB[i] = (c_scalar*)malloc( lbm->Q() * sizeof(c_scalar));    
 
 
     for(uint i = 0 ; i < Sg_b.size() ; i++)
@@ -197,19 +197,19 @@ extern "C" {
     }
     
 
-    info.fields.sigma = mp.lookUpEntry<double>("h/sigma");
+    info.fields.sigma = (c_scalar)mp.lookUpEntry<double>("h/sigma");
     
-    info.fields.D = mp.lookUpEntry<double>("h/D");
+    info.fields.D = (c_scalar)mp.lookUpEntry<double>("h/D");
     
-    info.fields.phi_A = mp.lookUpEntry<double>("Macro/phi_A");
+    info.fields.phi_A = (c_scalar)mp.lookUpEntry<double>("Macro/phi_A");
 
-    info.fields.phi_B = mp.lookUpEntry<double>("Macro/phi_B");
+    info.fields.phi_B = (c_scalar)mp.lookUpEntry<double>("Macro/phi_B");
 
-    info.fields.M_phi = mp.lookUpEntry<double>("Macro/M_phi");
+    info.fields.M_phi = (c_scalar)mp.lookUpEntry<double>("Macro/M_phi");
 
-    info.fields.rho_A = mp.lookUpEntry<double>("Macro/rho_A");
+    info.fields.rho_A = (c_scalar)mp.lookUpEntry<double>("Macro/rho_A");
     
-    info.fields.rho_B = mp.lookUpEntry<double>("Macro/rho_B");
+    info.fields.rho_B = (c_scalar)mp.lookUpEntry<double>("Macro/rho_B");
 
     Vector3 g = mp.lookUpEntry<Vector3>("g/G");
 
@@ -262,7 +262,7 @@ extern "C" {
 
     // Resize Send ghost ids
     info.parallel.sendGhostIds = (uint**)malloc( info.parallel.nSendGhosts * sizeof(unsigned int*) );  
-    info.parallel.ssbuf = (double**)malloc( info.parallel.nSendGhosts * sizeof(double*) );
+    info.parallel.ssbuf = (c_scalar**)malloc( info.parallel.nSendGhosts * sizeof(c_scalar*) );
     
 
     for(uint i = 0 ; i < info.parallel.nSendGhosts ; i++) {
@@ -272,7 +272,7 @@ extern "C" {
 	inFile >> nel;
 
 	info.parallel.sendGhostIds[i] = (uint*)malloc( (nel + 2) * sizeof(uint) );
-	info.parallel.ssbuf[i] = (double*)malloc( nel * sizeof(double) );
+	info.parallel.ssbuf[i] = (c_scalar*)malloc( nel * sizeof(c_scalar) );
 
 	info.parallel.sendGhostIds[i][0] = pid;
 	info.parallel.sendGhostIds[i][1] = nel;
@@ -303,7 +303,7 @@ extern "C" {
     }
 
     // Resize send buffer
-    info.parallel.scalarSendBuff = (double*)malloc( nsb * sizeof(double) );
+    info.parallel.scalarSendBuff = (c_scalar*)malloc( nsb * sizeof(c_scalar) );
 
 
 
@@ -321,7 +321,7 @@ extern "C" {
 
     // Resize Recv ghost ids
     info.parallel.recvGhostIds   = (uint**)malloc( info.parallel.nRecvGhosts * sizeof(uint*) );
-    info.parallel.srbuf = (double**)malloc( info.parallel.nRecvGhosts * sizeof(double*) );
+    info.parallel.srbuf = (c_scalar**)malloc( info.parallel.nRecvGhosts * sizeof(c_scalar*) );
     
     for(uint i = 0 ; i < info.parallel.nRecvGhosts ; i++) {
 	
@@ -330,7 +330,7 @@ extern "C" {
 	inFile >> nel;
 
 	info.parallel.recvGhostIds[i] = (uint*)malloc( (nel + 2) * sizeof(uint) );
-	info.parallel.srbuf[i] = (double*)malloc( nel * sizeof(double) );
+	info.parallel.srbuf[i] = (c_scalar*)malloc( nel * sizeof(c_scalar) );
 
 	info.parallel.recvGhostIds[i][0] = pid;
 	info.parallel.recvGhostIds[i][1] = nel;
@@ -366,7 +366,7 @@ extern "C" {
 
     
     // Resize send buffer
-    info.parallel.scalarRecvBuff = (double*)malloc( nrb * sizeof(double) );
+    info.parallel.scalarRecvBuff = (c_scalar*)malloc( nrb * sizeof(c_scalar) );
    
     
     return info;

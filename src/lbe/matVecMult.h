@@ -2,7 +2,8 @@
 #define MATVECMULT_H
 
 #include <stdio.h>
+#include <basicSolverInfo.h>
 
-void matVecMult(double** M, double* v, double* res, unsigned int n);
+void matVecMult(c_scalar** M, c_scalar* v, c_scalar* res, unsigned int n);
 
 #endif // MATVECMULT_H

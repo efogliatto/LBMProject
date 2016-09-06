@@ -11,9 +11,9 @@ extern "C" {
 #endif
 
 
-double** readVectorField(const char* fname, const struct solverInfo* info) {
+c_scalar** readVectorField(const char* fname, const struct solverInfo* info) {
 
-    double** field;
+    c_scalar** field;
     
     // Open file
     std::ifstream inFile;
@@ -31,9 +31,9 @@ double** readVectorField(const char* fname, const struct solverInfo* info) {
     inFile >> np;
 
     // Resize field
-    field = (double**)malloc( np * sizeof(double*) );
+    field = (c_scalar**)malloc( np * sizeof(c_scalar*) );
     for(uint i = 0 ; i < np ; i++)
-	field[i] = (double*)malloc( 3 * sizeof(double) );
+	field[i] = (c_scalar*)malloc( 3 * sizeof(c_scalar) );
     
     // Read elements
     for(uint i = 0 ; i < np ; i++){

@@ -2,24 +2,24 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void liangEquilibrium(struct twoPhasesFields* fields, struct solverInfo* info, double* eq, unsigned int id) {
+void liangEquilibrium(struct twoPhasesFields* fields, struct solverInfo* info, c_scalar* eq, unsigned int id) {
 
     // Source term
-    double* st = (double*)malloc( info->lattice.Q * sizeof(double) );
+    c_scalar* st = (c_scalar*)malloc( info->lattice.Q * sizeof(c_scalar) );
 
     // Compute source term
     unsigned int j, k;
     for( k = 0 ; k < info->lattice.Q ; k++) {
 
 	// Dot product
-	double dot = 0;
+	c_scalar dot = 0;
 	for( j = 0 ; j < 3 ; j++ ) {
 	    dot += info->lattice.c * info->lattice.vel[k][j] * fields->U[id][j];
 	}
 
 
 	// Velocity magnitude
-	double Umag = 0;
+	c_scalar Umag = 0;
 	for( j = 0 ; j < 3 ; j++ ) {
 	    Umag += fields->U[id][j] * fields->U[id][j];
 	}
