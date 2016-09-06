@@ -102,7 +102,7 @@ int main( int argc, char **argv ) {
 	// Internal iterations
 	{
 	    unsigned int iter;
-	    for( iter = 1 ; iter <= 0 ; iter++ ) {
+	    for( iter = 1 ; iter <= info.time.extraIter ; iter++ ) {
 
 		// Update macro
 		orderParameter( &fields, &info, fields.phi );
