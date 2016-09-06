@@ -95,36 +95,26 @@ int main( int argc, char **argv ) {
 
 	// Collide h
 	cahnHilliardCollision(&fields, &info);
+
 	
+	// Update macro
+	orderParameter( &fields, &info, fields.phi );
+	chemicalPotential( &fields, &info, fields.muPhi );
+	velocity( &fields, &info, fields.U );
+	pressureWithU( &fields, &info, fields.p );
+	density( &fields, &info, fields.rho );
+
+	// Sync macro
+	syncScalarField(&info, fields.phi );
+	syncScalarField(&info, fields.muPhi );
+	syncScalarField(&info, fields.p );
+	syncScalarField(&info, fields.rho );
+	syncPdfField(&info, fields.U, 3 );	
+
+
 	// Collide g
 	liangCollision(&fields, &info);
 	
-	// Internal iterations
-	{
-	    unsigned int iter;
-	    for( iter = 1 ; iter <= info.time.extraIter ; iter++ ) {
-
-		// Update macro
-		orderParameter( &fields, &info, fields.phi );
-		chemicalPotential( &fields, &info, fields.muPhi );
-		velocity( &fields, &info, fields.U );
-		pressureWithU( &fields, &info, fields.p );
-		density( &fields, &info, fields.rho );
-
-		// Sync macro
-		syncScalarField(&info, fields.phi );
-		syncScalarField(&info, fields.muPhi );
-		syncScalarField(&info, fields.p );
-		syncScalarField(&info, fields.rho );
-		syncPdfField(&info, fields.U, 3 );
-
-		// Collide again
-		cahnHilliardCollision(&fields, &info);
-		liangCollision(&fields, &info);		
-
-	    }
-
-	}
 	
 	// Swap fields
 	lbstream( &fields, &info, fields.h );

@@ -24,7 +24,7 @@ extern "C" {
     info.time.writeInterval = (unsigned int)tp.lookUpEntry<double>("writeInterval");
     info.time.current = info.time.start;
     info.time.stp = 0;
-    info.time.extraIter = (unsigned int)tp.lookUpEntry<double>("extraIterations");
+    // info.time.extraIter = (unsigned int)tp.lookUpEntry<double>("extraIterations");
 
     info.time.st = time( NULL );
     
