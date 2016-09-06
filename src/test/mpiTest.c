@@ -6,6 +6,7 @@
 #include <writeScalarField.h>
 #include <writeVectorField.h>
 #include <writePdfField.h>
+#include <lbstream.h>
 
 int main( int argc, char **argv ) {
 
@@ -87,7 +88,7 @@ int main( int argc, char **argv ) {
     	if( writeFlag(&info) ) {
 	    
     	    if(pid == 0) {
-    		printf("Time = %.2f\n", info.time.current);
+    		printf("Time = %.2f\n", (double)info.time.current);
     		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) );
     	    }
 	    

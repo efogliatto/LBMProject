@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-    double** readVectorField(const char* fname, const struct solverInfo* info);
+    c_scalar** readVectorField(const char* fname, const struct solverInfo* info);
     
 #ifdef __cplusplus
 }

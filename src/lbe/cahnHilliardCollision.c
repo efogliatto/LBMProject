@@ -9,11 +9,11 @@ void cahnHilliardCollision(struct twoPhasesFields* fields, struct solverInfo* in
 
 
     // Create equilibrium distribution vector
-    double* eq = (double*)malloc( info->lattice.Q * sizeof(double) );
-    double* st = (double*)malloc( info->lattice.Q * sizeof(double) );
+    c_scalar* eq = (c_scalar*)malloc( info->lattice.Q * sizeof(c_scalar) );
+    c_scalar* st = (c_scalar*)malloc( info->lattice.Q * sizeof(c_scalar) );
 
     // Source term
-    double* R = (double*)malloc( info->lattice.Q * sizeof(double) );
+    c_scalar* R = (c_scalar*)malloc( info->lattice.Q * sizeof(c_scalar) );
 
     // Move over local points
     unsigned int id, k;

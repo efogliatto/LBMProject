@@ -1,27 +1,29 @@
 #ifndef TWOPHASESFIELDS_H
 #define TWOPHASESFIELDS_H
 
+#include <scalars_C.h>
+
 struct twoPhasesFields {
 
-    double* phi;
+    c_scalar* phi;
 
-    double* phi_old;
+    c_scalar* phi_old;
 
-    double* muPhi;
+    c_scalar* muPhi;
 
-    double* rho;
+    c_scalar* rho;
 
-    double* p;
+    c_scalar* p;
 
-    double** U;
+    c_scalar** U;
     
-    double** U_old;
+    c_scalar** U_old;
 
-    double** h;
+    c_scalar** h;
 
-    double** g;
+    c_scalar** g;
 
-    double** swp;
+    c_scalar** swp;
 
     int** nb;
     

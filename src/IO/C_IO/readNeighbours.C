@@ -6,6 +6,8 @@
 #include <sstream>
 #include <iostream>
 
+#include <scalars_C.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

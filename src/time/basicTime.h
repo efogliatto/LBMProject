@@ -40,6 +40,9 @@ protected:
     // Start time for elapsed time
     std::chrono::time_point<std::chrono::system_clock> _start;
 
+    // Format. ascii or binary
+    std::string _format;
+
 
 
 public:
@@ -96,6 +99,9 @@ public:
     const void updateVTK();
 
     const int countVTK() const;
+
+    // Write in ascii format
+    const bool ascii() const;
 
 };
 

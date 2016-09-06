@@ -4,7 +4,7 @@
 #include <math.h>
 
 
-void syncScalarField( struct solverInfo* info, double* fld ) {
+void syncScalarField( struct solverInfo* info, c_scalar* fld ) {
 
 
     if( info->parallel.worldSize > 1 ) {
@@ -15,7 +15,7 @@ void syncScalarField( struct solverInfo* info, double* fld ) {
     
 	// Send information. Divide by blocks
 
-	MPI_Request request;
+	/* MPI_Request request; */
 	MPI_Status status;
 
     

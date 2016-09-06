@@ -3,7 +3,7 @@
 #include <scalarFieldLaplacian.h>
 #include <stdlib.h>
 
-void velocity( struct twoPhasesFields* fields, struct solverInfo* info, double** fld ) {
+void velocity( struct twoPhasesFields* fields, struct solverInfo* info, c_scalar** fld ) {
 
     unsigned int id, k;
 
@@ -11,21 +11,21 @@ void velocity( struct twoPhasesFields* fields, struct solverInfo* info, double**
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
 
 	// Surface tension force
-	double* Fs = scalarFieldGradient( fields, info, fields->phi, id );
+	c_scalar* Fs = scalarFieldGradient( fields, info, fields->phi, id );
 	for( k = 0 ; k < 3 ; k++) {
 	    Fs[k] = Fs[k] * fields->muPhi[id];
 	}
 	
 
 	// Body force
-	double Fb[3];
+	c_scalar Fb[3];
 	Fb[0] = info->fields.gx * fields->rho[id];
 	Fb[1] = info->fields.gy * fields->rho[id];
 	Fb[2] = info->fields.gz * fields->rho[id];
 
 
 	// Pdf reduction
-	double red[3];
+	c_scalar red[3];
 	red[0] = 0;
 	red[1] = 0;
 	red[2] = 0;
@@ -37,7 +37,7 @@ void velocity( struct twoPhasesFields* fields, struct solverInfo* info, double**
 	}
 
 
-	double lap = scalarFieldLaplacian( fields, info, fields->muPhi, id );
+	c_scalar lap = scalarFieldLaplacian( fields, info, fields->muPhi, id );
 
 	for( k = 0 ; k < 3 ; k++ ) {
 	

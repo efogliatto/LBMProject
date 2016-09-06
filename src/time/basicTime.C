@@ -30,6 +30,8 @@ basicTime::basicTime() :  _start(std::chrono::system_clock::now() )  {
     string prop = dict.lookUpEntry<string>("writeVTK");
     _writeVTK = (prop.compare("true") == 0) ? true : false;
 
+    // _format = dict.lookUpEntry<string>("format");
+
     _countTs = 0;
     _countVTK = 0;
 
@@ -157,4 +159,17 @@ const void basicTime::updateVTK() {
 
 const int basicTime::countVTK() const {
     return _countVTK;
+}
+
+
+// Write in ascii format
+const bool basicTime::ascii() const {
+
+    bool f = false;
+    
+    if ( _format.compare("ascii") == 0 )
+	f = true;
+
+    return f;
+    
 }

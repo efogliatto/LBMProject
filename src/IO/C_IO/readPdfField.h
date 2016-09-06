@@ -3,11 +3,12 @@
 
 #include <basicSolverInfo.h>
 
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-    double** readPdfField(const char* fname, const struct solverInfo* info);
+    c_scalar** readPdfField(const char* fname, const struct solverInfo* info);
     
 #ifdef __cplusplus
 }

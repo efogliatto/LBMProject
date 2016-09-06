@@ -1,7 +1,7 @@
 #include <density.h>
 #include <stdio.h>
 
-void density( struct twoPhasesFields* fields, struct solverInfo* info, double* fld ) {
+void density( struct twoPhasesFields* fields, struct solverInfo* info, c_scalar* fld ) {
 
     unsigned int id;
 

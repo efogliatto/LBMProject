@@ -11,9 +11,9 @@ extern "C" {
 #endif
 
 
-double* readScalarField(const char* fname, const struct solverInfo* info) {
+c_scalar* readScalarField(const char* fname, const struct solverInfo* info) {
 
-    double* field;
+    c_scalar* field;
     
     // Open file
     std::ifstream inFile;
@@ -31,7 +31,7 @@ double* readScalarField(const char* fname, const struct solverInfo* info) {
     inFile >> np;
 
     // Resize field
-    field = (double*)malloc( np * sizeof(double) );
+    field = (c_scalar*)malloc( np * sizeof(c_scalar) );
     
     // Read elements
     for(uint i = 0 ; i < np ; i++)
