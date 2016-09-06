@@ -33,6 +33,9 @@ struct timeInfo {
 
     // Time step
     unsigned int stp;
+
+    // Extra internal iterations
+    unsigned int extraIter;
     
 };
 
