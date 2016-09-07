@@ -118,3 +118,42 @@ void latticeVectorField::readAllValues() {
         
 
 }
+
+
+
+
+// Write values in binary format to current time
+void latticeVectorField::writeBinary() {
+
+    std::ostringstream fldName;
+    fldName << "processor" << this->_id << "/" << _time.currentTime() << "/" << _name << ".bin";
+
+    // Open file
+    ofstream outFile;
+    outFile.open( fldName.str().c_str(), ios::out | ios::binary );
+    if( !outFile.is_open() ) {
+    	cout << "Unable to open file " << fldName.str() << endl;
+    	exit(1);
+    }
+
+
+    // Write local  values
+    for(vector<Vector3>::iterator it = this->_localValues.begin() ; it != this->_localValues.end() ; it++) {
+    	Vector3 val = *it;
+    	outFile.write( (char*)&val.x(), sizeof(double) );
+    	outFile.write( (char*)&val.y(), sizeof(double) );
+	outFile.write( (char*)&val.z(), sizeof(double) );
+    }
+
+    
+    // Write ghost values
+    for(vector<Vector3>::iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) {
+    	Vector3 val = *it;
+    	outFile.write( (char*)&val.x(), sizeof(double) );
+    	outFile.write( (char*)&val.y(), sizeof(double) );
+	outFile.write( (char*)&val.z(), sizeof(double) );
+    }    
+
+    outFile.close();
+    
+}
