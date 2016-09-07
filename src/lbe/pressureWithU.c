@@ -1,5 +1,6 @@
 #include <pressureWithU.h>
 #include <scalarFieldGradient.h>
+#include <syncScalarField.h>
 #include <stdlib.h>
 
 
@@ -35,5 +36,9 @@ void pressureWithU( struct twoPhasesFields* fields, struct solverInfo* info, c_s
 	// Deallocate memory
 	free(rhoGrad);
     }
+
+
+    // Sync field
+    syncScalarField( info, fld );    
     
 }

@@ -1,4 +1,5 @@
 #include <orderParameter.h>
+#include <syncScalarField.h>
 
 void orderParameter( struct twoPhasesFields* fields, struct solverInfo* info, c_scalar* fld ) {
 
@@ -16,8 +17,11 @@ void orderParameter( struct twoPhasesFields* fields, struct solverInfo* info, c_
 
 	}
 
-	fields->phi[id] = ph;
+	fld[id] = ph;
 
     }
+
+    // Sync field
+    syncScalarField( info, fld );
     
 }
