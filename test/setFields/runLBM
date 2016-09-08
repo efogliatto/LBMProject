@@ -1,0 +1,15 @@
+#!/bin/bash 
+
+#SBATCH -J runLBM
+#SBATCH --partition mecqueue
+#SBATCH --nodes 4
+#SBATCH --ntasks 16
+#SBATCH --exclusive
+echo "working directory:" 
+pwd 
+echo "SLURM_SUBMIT_DIR:" 
+echo $SLURM_SUBMIT_DIR 
+HOSTFILE=hosts.$SLURM_JOB_ID 
+srun hostname -s > $HOSTFILE
+mpiexec -machinefile $HOSTFILE twoPhasesMRT > log.lbm
+mpiexec -machinefile $HOSTFILE setTwoPhasesFields > log.setFields
