@@ -2,44 +2,11 @@ Fields
 {
     valuesList
     {
-        1
+        2
 	phi
 	U
     }
 }
-
-
-phi
-{
-    type latticeScalarField;
-    function none;    
-    inside 1;
-    outside -1;
-
-    shapesList
-    {
-        1
-        Box
-    }
-    
-}
-
-
-U
-{
-    type latticeVectorField;
-    function none;    
-    inside (0 -0.005 0);
-    outside (0 0 0);
-
-    shapesList
-    {
-        1
-        Cyl
-    }
-    
-}
-
 
 Cyl
 {
@@ -58,4 +25,35 @@ Box
     min ( -100 0 0 );
     max ( 100 3 0 );
     inside true;
+}
+
+
+phi
+{
+    type latticeScalarField;
+    function none;    
+    inside 1;
+
+    shapesList
+    {
+        2
+	Cyl
+        Box
+    }
+    
+}
+
+
+U
+{
+    type latticeVectorField;
+    function none;    
+    inside (0 -0.005 0);
+
+    shapesList
+    {
+        1
+        Cyl
+    }
+    
 }

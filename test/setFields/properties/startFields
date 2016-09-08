@@ -17,7 +17,7 @@ fields
 phi
 {
     type latticeScalarField;
-    value 1;
+    value -1;
 }
 
 muPhi
