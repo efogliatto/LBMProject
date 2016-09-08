@@ -127,36 +127,46 @@ int main(int argc, char** argv) {
 		fld.readNeighboursIds(  "neighbours", folderName.str() );
 		fld.readGlobalIdGhost(  "globalGhostsIds", folderName.str() );
 
+		// Set local values
+		for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt)
+		    *pt = value;
+
+		// Set ghost values
+		for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
+		    *pt = value;
+		
 		// Set uniform value
 		if(  find( changeFields.begin(), changeFields.end(), fieldsList[fid] ) == changeFields.end()  ) {
 		    
-		    // Set local values
-		    for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt)
-			*pt = value;
-
-		    // Set ghost values
-		    for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
-			*pt = value;
 
 		}
+
 
 		// Set value using shapes
 		else {
 
-		    fieldShape shape;
+		    // Read list of shapes for this field
+		    vector<string> snames = setFieldsDict.lookUpEntryList<string>( fieldsList[fid] + "/shapesList");
 
-		    uint pointId(0);
+		    // Set values for each shape
+		    for(auto sn : snames) {
+		    
+			fieldShape shape("properties/setFieldDict", sn);
 
-		    // Set local values
-		    for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt) {
-			*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], value);
-			pointId++;
-		    }
+			uint pointId(0);
 
-		    // Set ghost values
-		    for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
-			*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], value);
-			pointId++;
+			// Set local values
+			for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt) {
+				*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+				pointId++;
+			}
+
+			// Set ghost values
+			for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
+				*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+				pointId++;
+			}			
+
 		    }
 
 		}
@@ -184,37 +194,45 @@ int main(int argc, char** argv) {
 		    fld.readNeighboursIds(  "neighbours", folderName.str() );
 		    fld.readGlobalIdGhost(  "globalGhostsIds", folderName.str() );
 
+		    // Set local values
+		    for(lbPatch_iterator<Vector3> pt = fld.begin() ; pt != fld.end() ; ++pt)
+			*pt = value;
+
+		    // Set ghost values
+		    for(vector<Vector3>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
+			*pt = value;		    
 
 		    // Set uniform value
 		    if(  find( changeFields.begin(), changeFields.end(), fieldsList[fid] ) == changeFields.end()  ) {			
 			
-			// Set local values
-			for(lbPatch_iterator<Vector3> pt = fld.begin() ; pt != fld.end() ; ++pt)
-			    *pt = value;
-
-			// Set ghost values
-			for(vector<Vector3>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
-			    *pt = value;
 
 		    }
 
 		    // Set value using shapes
 		    else {
 
-			fieldShape shape;
+			// Read list of shapes for this field
+			vector<string> snames = setFieldsDict.lookUpEntryList<string>( fieldsList[fid] + "/shapesList");
 
-			uint pointId(0);
+			// Set values for each shape
+			for(auto sn : snames) {
+		    
+			    fieldShape shape("properties/setFieldDict", sn);			
 
-			// Set local values
-			for(lbPatch_iterator<Vector3> pt = fld.begin() ; pt != fld.end() ; ++pt) {
-			    *pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], value);
-			    pointId++;
-			}
+			    uint pointId(0);
 
-			// Set ghost values
-			for(vector<Vector3>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
-			    *pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], value);
-			    pointId++;
+			    // Set local values
+			    for(lbPatch_iterator<Vector3> pt = fld.begin() ; pt != fld.end() ; ++pt) {
+				*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+				pointId++;
+			    }
+
+			    // Set ghost values
+			    for(vector<Vector3>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
+				*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+				pointId++;
+			    }
+
 			}
 			
 		    }

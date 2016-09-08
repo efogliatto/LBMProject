@@ -65,6 +65,56 @@ polyShapes::polyShapes(const string& dictName) : _bbox_min(Vector3(1000000,10000
 
 
 
+
+// Constructor with dictionary and shape name (only one shape)
+polyShapes::polyShapes(const string& dictName, const std::string& shapeName) : _bbox_min(Vector3(1000000,1000000,1000000)), _bbox_max(Vector3(-1000000,-1000000,-1000000)) {
+
+    // Load dictionary properties
+    dictionary dict(dictName);
+
+	
+    // Search shape type
+    string stype = dict.lookUpEntry<string>(shapeName + "/type");
+	
+    // Create shape
+    shapesCreator creator;
+    basicShape* bShape = creator.create(stype, shapeName);
+
+    // Read properties
+    bShape->readProperties(dictName);
+
+    // Update Overall bounding box
+    double minX = _bbox_min.x(),
+	minY = _bbox_min.y(),
+	minZ = _bbox_min.z(),
+	maxX = _bbox_max.x(),
+	maxY = _bbox_max.y(),
+	maxZ = _bbox_max.z();
+
+    // Compare with local bounding box
+    tuple<Vector3, Vector3> bbox = bShape->boundingBox();
+	
+    if( get<0>(bbox).x() <= minX ) { minX = get<0>(bbox).x(); }
+    if( get<0>(bbox).y() <= minY ) { minY = get<0>(bbox).y(); }
+    if( get<0>(bbox).z() <= minZ ) { minZ = get<0>(bbox).z(); }
+
+    if( get<1>(bbox).x() >= maxX ) { maxX = get<1>(bbox).x(); }
+    if( get<1>(bbox).y() >= maxY ) { maxY = get<1>(bbox).y(); }
+    if( get<1>(bbox).z() >= maxZ ) { maxZ = get<1>(bbox).z(); }
+
+    _bbox_min = Vector3(minX, minY, minZ);
+    _bbox_max = Vector3(maxX, maxY, maxZ);
+
+
+    // Add to list
+    _shapes.push_back(bShape);
+
+
+}
+
+
+
+
 // Default destructor
 polyShapes::~polyShapes() {}
 

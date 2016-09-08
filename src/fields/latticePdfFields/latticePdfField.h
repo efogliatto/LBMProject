@@ -42,7 +42,9 @@ public:
     
     // Read values from current time
     void readAllValues();
-    
+
+    // Write values in binary format to current time
+    void writeBinary();        
 };
 
 

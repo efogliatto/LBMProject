@@ -7,6 +7,8 @@ fieldShape::fieldShape() : polyShapes("properties/setFieldDict"), _dict("propert
 
 fieldShape::fieldShape(const string& dictName) : polyShapes(dictName), _dict("properties/setFieldDict") {}
 
+fieldShape::fieldShape(const std::string& dictName, const std::string& shapeName) : polyShapes(dictName, shapeName), _dict("properties/setFieldDict") {}
+
 // Default destructor
 fieldShape::~fieldShape() {}
 
@@ -25,19 +27,22 @@ const double fieldShape::fieldValue( const string& fieldName, const Vector3& poi
     // No function, only inside out
     if( ffunc.compare("none") == 0 ) {
 
-	double in(0),
-	    out(0);
+	double in(0);//,
+	    // out(0);
 	in  = _dict.lookUpEntry<double>( fieldName + "/inside" );
-	out = _dict.lookUpEntry<double>( fieldName + "/outside" );
+	// out = _dict.lookUpEntry<double>( fieldName + "/outside" );
 
 	if ( locatePoint( point ) ) {
-	    val = in * value( point );
+	    val = in;// * value( point );
 	}
 	else {
-	    val = out * value( point );
+	    // val = out * value( point );
+	    val = nval;
 	}
 	    
     }
+
+
 
     
     else {
@@ -81,16 +86,36 @@ const Vector3 fieldShape::fieldValue( const string& fieldName, const Vector3& po
     const string ffunc = _dict.lookUpEntry<string>( fieldName + "/function");
 
     // No function, only inside out
-    if( ffunc.compare("zalesaksDisk") == 0 ) {
+    if( ffunc.compare("none") == 0 ) {
 
-	const double w = 0.025 * M_PI / 200,
-    	ux = -w*(point.y() - 100),
-    	uy = w*(point.x() - 100);
-    
-	val = Vector3(ux, uy, 0);
-    
+	Vector3 in  = _dict.lookUpEntry<Vector3>( fieldName + "/inside" );
+
+	if ( locatePoint( point ) ) {
+	    val = in;
+	}
+	else {
+	    val = nval;
+	}
+	    
     }
 
+
+
+    
+    else {
+    
+	// No function, only inside out
+	if( ffunc.compare("zalesaksDisk") == 0 ) {
+
+	    const double w = 0.025 * M_PI / 200,
+		ux = -w*(point.y() - 100),
+		uy = w*(point.x() - 100);
+    
+	    val = Vector3(ux, uy, 0);
+    
+	}
+
+    }
 
     return val;
 

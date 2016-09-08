@@ -182,3 +182,45 @@ void latticePdfField::readAllValues() {
         
 
 }
+
+
+
+// Write values in binary format to current time
+void latticePdfField::writeBinary() {
+
+    std::ostringstream fldName;
+    fldName << "processor" << this->_id << "/" << _time.currentTime() << "/" << _name << ".bin";
+
+    // Open file
+    ofstream outFile;
+    outFile.open( fldName.str().c_str(), ios::out | ios::binary );
+    if( !outFile.is_open() ) {
+    	cout << "Unable to open file " << fldName.str() << endl;
+    	exit(1);
+    }
+
+
+    // Write local  values
+    for(vector<pdf>::iterator it = this->_localValues.begin() ; it != this->_localValues.end() ; it++) {
+	
+    	pdf val = *it;
+	
+	for(uint j = 0 ; j < val.size() ; j++)
+	    outFile.write( (char*)&val[j], sizeof(double) );
+	
+    }
+
+    
+    // Write ghost values
+    for(vector<pdf>::iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) {
+	
+    	pdf val = *it;
+	
+	for(uint j = 0 ; j < val.size() ; j++)
+	    outFile.write( (char*)&val[j], sizeof(double) );
+	
+    }    
+
+    outFile.close();
+    
+}

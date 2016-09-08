@@ -110,9 +110,7 @@ int main(int argc, char** argv) {
     writer.add(&p, "p");
     writer.add(&rho, "rho");
     writer.add(&g, "g");
-
-
-
+    
 
     if( vm["initialFields"].as<bool>() == true ) {
 
@@ -155,6 +153,16 @@ int main(int argc, char** argv) {
 	U.syncGhostValues();
 	
 	writer.write();
+
+
+	// Write in binary format
+	h.writeBinary();
+	U.writeBinary();
+	phi.writeBinary();
+	muPhi.writeBinary();
+	p.writeBinary();
+	rho.writeBinary();
+	g.writeBinary();	
 
 	
     }

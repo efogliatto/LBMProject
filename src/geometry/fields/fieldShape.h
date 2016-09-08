@@ -25,6 +25,9 @@ public:
     // Constructor with dictionary name
     fieldShape(const std::string& dictName);
 
+    // Constructor with dictionary and shape name (only one shape)
+    fieldShape(const std::string& dictName, const std::string& shapeName);    
+
     // Default destructor
     ~fieldShape();
 

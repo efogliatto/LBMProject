@@ -28,6 +28,9 @@ public:
     // Default constructor
     polyShapes(const std::string& dictName);
 
+    // Constructor with dictionary and shape name (only one shape)
+    polyShapes(const std::string& dictName, const std::string& shapeName);    
+
     // Default destructor
     ~polyShapes();
 

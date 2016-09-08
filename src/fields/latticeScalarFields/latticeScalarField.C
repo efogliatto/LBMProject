@@ -96,6 +96,42 @@ void latticeScalarField::readAllValues() {
     for(vector<double>::iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) {
 	inFile >> *it;
     }
+
+    inFile.close();
         
 
+}
+
+
+
+// Write values in binary format to current time
+void latticeScalarField::writeBinary() {
+
+    std::ostringstream fldName;
+    fldName << "processor" << this->_id << "/" << _time.currentTime() << "/" << _name << ".bin";
+
+    // Open file
+    ofstream outFile;
+    outFile.open( fldName.str().c_str(), ios::out | ios::binary );
+    if( !outFile.is_open() ) {
+    	cout << "Unable to open file " << fldName.str() << endl;
+    	exit(1);
+    }
+
+
+    // Write local  values
+    for(vector<double>::iterator it = this->_localValues.begin() ; it != this->_localValues.end() ; it++) {
+    	double val = *it;
+    	outFile.write( (char*)&val, sizeof(double) );
+    }
+
+    
+    // Write ghost values
+    for(vector<double>::iterator it = this->_ghostValues.begin() ; it != this->_ghostValues.end() ; it++) {
+    	double val = *it;
+    	outFile.write( (char*)&val, sizeof(double) );
+    }    
+
+    outFile.close();
+    
 }
