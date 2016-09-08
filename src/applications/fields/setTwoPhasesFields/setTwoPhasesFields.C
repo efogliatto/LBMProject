@@ -155,14 +155,15 @@ int main(int argc, char** argv) {
 	writer.write();
 
 
-	// Write in binary format
-	h.writeBinary();
-	U.writeBinary();
-	phi.writeBinary();
-	muPhi.writeBinary();
-	p.writeBinary();
-	rho.writeBinary();
-	g.writeBinary();	
+	// // Write in binary format
+	// h.writeBinary();
+	// U.writeBinary();
+	// phi.writeBinary();
+	// muPhi.writeBinary();
+	// p.writeBinary();
+	// rho.writeBinary();
+	// g.writeBinary();
+	
 
 	
     }
