@@ -44,7 +44,14 @@ int main(int argc, char** argv) {
     // Start MPI communicator
     mpi::environment env;
     mpi::communicator world;
-   
+
+
+    if(world.rank() == 0) {
+
+	cout << endl << "SETTING FIELDS FOR TWOPHASESMRT" << endl;
+	
+    }
+    
 
     // Lattice creation
     LBModelCreator creator;
@@ -191,7 +198,13 @@ int main(int argc, char** argv) {
 	
     }
 
-    
+
+
+    if(world.rank() == 0) {
+
+	cout << endl << "    Finished in " << runTime.elapsedTime() << "seconds" << endl << endl;
+	
+    }    
     
     return 0;
 }
