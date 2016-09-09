@@ -190,6 +190,15 @@ int main(int argc, char** argv) {
 		p.readAllValues();
 		g.readAllValues();
 
+		// Synchronize ghost nodes
+		h.syncGhostValues();
+		g.syncGhostValues();
+		p.syncGhostValues();
+		rho.syncGhostValues();
+		phi.syncGhostValues();
+		muPhi.syncGhostValues();
+		U.syncGhostValues();
+		
 		writer.write();
 
 	    }

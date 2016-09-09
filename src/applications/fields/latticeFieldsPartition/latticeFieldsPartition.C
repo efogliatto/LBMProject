@@ -222,6 +222,10 @@ int main(int argc, char** argv) {
 		    
 	    }
 
+
+
+
+	    
 	    else {
 
 		if( fieldsType[fid].compare("latticeVectorField") == 0 ) {
@@ -273,13 +277,32 @@ int main(int argc, char** argv) {
 			    // Set values for each shape
 			    for(uint shid = 0 ; shid < shMap.size() ; shid++) {
 		    
-				val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+			    	val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
 
 			    }
 			
 			
 			    *pt = val / snames.size();
+
+
+			    
+			    // double vx(0),vy(0),vz(0);
+
+			    // // Set values for each shape
+			    // for(uint shid = 0 ; shid < shMap.size() ; shid++) {
+		    
+			    // 	vx += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], (*pt).x() );
+			    // 	vy += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], (*pt).y() );
+			    // 	vz += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], (*pt).z() );
+				
+
+			    // }
 			
+			
+			    // *pt = Vector3(vx,vy,vz) / snames.size();
+
+
+			    
 			    pointId++;
 			
 			}
@@ -293,12 +316,30 @@ int main(int argc, char** argv) {
 			    // Set values for each shape
 			    for(uint shid = 0 ; shid < shMap.size() ; shid++) {
 		    
-				val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+			    	val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
 
 			    }
 			
 			
 			    *pt = val / snames.size();
+
+
+			    // double vx(0),vy(0),vz(0);
+
+			    // // Set values for each shape
+			    // for(uint shid = 0 ; shid < shMap.size() ; shid++) {
+		    
+			    // 	vx += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], (*pt).x() );
+			    // 	vy += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], (*pt).y() );
+			    // 	vz += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], (*pt).z() );
+				
+
+			    // }
+			
+			
+			    // *pt = Vector3(vx,vy,vz) / snames.size();
+			    
+			    
 			
 			    pointId++;
 			
