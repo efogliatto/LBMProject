@@ -8,6 +8,16 @@ Fields
     }
 }
 
+Bubble
+{
+    type bubble;
+    origin ( 0 13 0 );
+    radius 10;
+    inside true;
+    width 4;
+}
+
+
 Cyl
 {
     type cylinder;
@@ -37,8 +47,8 @@ phi
     shapesList
     {
         2
-	Cyl
-        Box
+	Bubble
+	Box
     }
     
 }

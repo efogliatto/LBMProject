@@ -27,17 +27,21 @@ const double fieldShape::fieldValue( const string& fieldName, const Vector3& poi
     // No function, only inside out
     if( ffunc.compare("none") == 0 ) {
 
-	double in(0);//,
-	    // out(0);
+	double in(0);
+	
 	in  = _dict.lookUpEntry<double>( fieldName + "/inside" );
-	// out = _dict.lookUpEntry<double>( fieldName + "/outside" );
 
+	
 	if ( locatePoint( point ) ) {
-	    val = in;// * value( point );
+	    
+	    val = _shapes[0]->value( point, in );
+	    
 	}
+	
 	else {
-	    // val = out * value( point );
+	    
 	    val = nval;
+	    
 	}
 	    
     }

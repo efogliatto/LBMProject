@@ -46,7 +46,7 @@ public:
     const std::tuple<Vector3, Vector3> boundingBox() const;
 
     // Check if point is inside the shape
-    const bool locatePoint(const Vector3& v) const;
+    virtual const bool locatePoint(const Vector3& v) const;
 
     // Boundary names
     const std::vector<std::string> boundaryNames() const;

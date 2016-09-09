@@ -7,6 +7,8 @@
 class polyShapes {
 
 
+protected:
+    
     /* ----------------------  Private members ----------------------  */
 
     // List of shapes

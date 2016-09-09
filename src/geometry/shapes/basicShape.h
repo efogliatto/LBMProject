@@ -80,6 +80,9 @@ public:
 
     // Value
     virtual const double value(const Vector3& v) const;
+
+    // Value
+    virtual const double value(const Vector3& v, const double& val) const;    
     
 };
 

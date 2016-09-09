@@ -45,3 +45,19 @@ void bubble::readProperties(const std::string& dictName) {
 const double bubble::value(const Vector3& v) const {
     return tanh(2 * ( sqrt((v-_origin).sqMag()) - _radius) / _width);
 }
+
+
+// Value
+const double bubble::value(const Vector3& v, const double& val) const {
+    return -val*tanh(2 * ( sqrt((v-_origin).sqMag()) - _radius) / _width);
+}
+
+
+
+// Check if point is inside(outside) the shape
+const bool bubble::locatePoint(const Vector3& v) const {
+
+    bool is_inside = ( (v - _origin).sqMag()  <= ( (_radius+_width) * (_radius+_width) ) );
+    
+    return is_inside == _inside;
+}

@@ -35,6 +35,13 @@ public:
     // Value
     const double value(const Vector3& v) const;
 
+    // Value
+    const double value(const Vector3& v, const double& val) const;
+
+    
+    // Check if point is inside the shape
+    const bool locatePoint(const Vector3& v) const;    
+
 };
 
 

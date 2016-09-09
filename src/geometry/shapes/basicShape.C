@@ -73,3 +73,8 @@ void basicShape::readProperties(const string& dictName) {}
 const double basicShape::value(const Vector3& v) const {
     return 1.0;
 }
+
+// Value
+const double basicShape::value(const Vector3& v, const double& val) const {
+    return val;
+}
