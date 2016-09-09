@@ -172,6 +172,24 @@ int main(int argc, char** argv) {
 		    }
 
 
+		    // Set ghost values
+		    for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
+
+			double val(0);
+
+			// Set values for each shape
+			for(uint shid = 0 ; shid < shMap.size() ; shid++) {
+		    
+			    val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+
+			}
+			
+			
+			*pt = val / snames.size();
+			
+			pointId++;
+			
+		    }
 		    
 		    
 		    // // Set values for each shape
@@ -266,6 +284,26 @@ int main(int argc, char** argv) {
 			
 			}
 
+
+			// Set Ghost values
+			for(vector<Vector3>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
+
+			    Vector3 val(0,0,0);
+
+			    // Set values for each shape
+			    for(uint shid = 0 ; shid < shMap.size() ; shid++) {
+		    
+				val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+
+			    }
+			
+			
+			    *pt = val / snames.size();
+			
+			    pointId++;
+			
+			}			
+
 		    }
 
 		    
@@ -275,6 +313,10 @@ int main(int argc, char** argv) {
 		    
 		}
 
+
+
+
+		
 		else {
 
 		    if( fieldsType[fid].compare("latticePdfField") == 0 ) {
