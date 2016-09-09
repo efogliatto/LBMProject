@@ -223,3 +223,16 @@ const string box::pointOverBoundary(const Vector3& v, const double& tol) const {
 
     return patch;
 }
+
+
+
+
+// Value
+const double box::value(const Vector3& v) const {
+    return 1.0;
+}
+
+// Value
+const double box::value(const Vector3& v, const double& val) const {
+    return val;
+}

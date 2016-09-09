@@ -12,5 +12,6 @@ add_library(geometry SHARED
   shapes/shapesCreator.C
   shapes/semiPeriodicBox.C
   shapes/periodicBox.C
+  shapes/profileBox.C
   fields/fieldShape.C
   )

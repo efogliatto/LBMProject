@@ -25,28 +25,35 @@ public:
     // Access members
 
     // Shape volume
-    const double& vol() const;
+    virtual const double& vol() const;
 
     // Shape area
-    const double& area() const;
+    virtual const double& area() const;
 
     // Shape name
-    const std::string& name() const;
+    virtual const std::string& name() const;
 
     // Bounding box limits
-    const std::tuple<Vector3, Vector3> boundingBox() const;
+    virtual const std::tuple<Vector3, Vector3> boundingBox() const;
 
     // Check if point is inside the shape
-    const bool locatePoint(const Vector3& v) const;
+    virtual const bool locatePoint(const Vector3& v) const;
 
     // Boundary names
-    const std::vector<std::string> boundaryNames() const;
+    virtual const std::vector<std::string> boundaryNames() const;
 
     // Check the boundary that contains a point
-    const std::string pointOverBoundary(const Vector3& v, const double& tol = 0) const;
+    virtual const std::string pointOverBoundary(const Vector3& v, const double& tol = 0) const;
 
 
 
+    // Value
+    virtual const double value(const Vector3& v) const;
+
+    // Value
+    virtual const double value(const Vector3& v, const double& val) const;
+
+    
 
     // Member modification
 

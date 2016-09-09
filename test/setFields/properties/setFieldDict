@@ -31,9 +31,10 @@ Cyl
 
 Box
 {
-    type box;
+    type profileBox;
     min ( -100 0 0 );
     max ( 100 3 0 );
+    width 4;
     inside true;
 }
 

@@ -6,6 +6,7 @@
 #include <bubble.h>
 #include <semiPeriodicBox.h>
 #include <periodicBox.h>
+#include <profileBox.h>
 
 class shapesCreator {
 

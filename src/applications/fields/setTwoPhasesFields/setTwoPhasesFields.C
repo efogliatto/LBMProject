@@ -201,8 +201,8 @@ int main(int argc, char** argv) {
 
 
     if(world.rank() == 0) {
-
-	cout << endl << "    Finished in " << runTime.elapsedTime() << "seconds" << endl << endl;
+	cout << setprecision(3);
+	cout << endl << "    Finished in " << runTime.elapsedTime() << " seconds" << endl << endl;
 	
     }    
     
