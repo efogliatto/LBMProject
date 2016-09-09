@@ -134,41 +134,67 @@ int main(int argc, char** argv) {
 		// Set ghost values
 		for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
 		    *pt = value;
+
 		
-		// Set uniform value
-		if(  find( changeFields.begin(), changeFields.end(), fieldsList[fid] ) == changeFields.end()  ) {
+		// Set values using shapes
+		if(  find( changeFields.begin(), changeFields.end(), fieldsList[fid] ) != changeFields.end()  ) {
 		    
-
-		}
-
-
-		// Set value using shapes
-		else {
-
+		    
 		    // Read list of shapes for this field
 		    vector<string> snames = setFieldsDict.lookUpEntryList<string>( fieldsList[fid] + "/shapesList");
 
+		    // Create map for this shapes
+		    vector<fieldShape> shMap;
+
 		    // Set values for each shape
-		    for(auto sn : snames) {
+		    for(auto sn : snames) {    shMap.push_back( fieldShape("properties/setFieldDict", sn) );     }
+
 		    
-			fieldShape shape("properties/setFieldDict", sn);
+		    uint pointId(0);
+		    
+		    // Set local values
+		    for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt) {
 
-			uint pointId(0);
+			double val(0);
 
-			// Set local values
-			for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt) {
-				*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
-				pointId++;
+			// Set values for each shape
+			for(uint shid = 0 ; shid < shMap.size() ; shid++) {
+		    
+			    val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+
 			}
-
-			// Set ghost values
-			for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
-				*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
-				pointId++;
-			}			
-
+			
+			
+			*pt = val / snames.size();
+			
+			pointId++;
+			
 		    }
 
+
+		    
+		    
+		    // // Set values for each shape
+		    // for(auto sn : snames) {
+		    
+		    // 	fieldShape shape("properties/setFieldDict", sn);
+
+		    // 	uint pointId(0);
+
+		    // 	// Set local values
+		    // 	for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt) {
+		    // 		*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+		    // 		pointId++;
+		    // 	}
+
+		    // 	// Set ghost values
+		    // 	for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
+		    // 		*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+		    // 		pointId++;
+		    // 	}			
+
+		    // }
+		    
 		}
 		
 		
@@ -202,40 +228,47 @@ int main(int argc, char** argv) {
 		    for(vector<Vector3>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
 			*pt = value;		    
 
-		    // Set uniform value
-		    if(  find( changeFields.begin(), changeFields.end(), fieldsList[fid] ) == changeFields.end()  ) {			
-			
 
-		    }
 
-		    // Set value using shapes
-		    else {
-
+		    
+		    // Set values using shapes
+		    if(  find( changeFields.begin(), changeFields.end(), fieldsList[fid] ) != changeFields.end()  ) {
+		    
+		    
 			// Read list of shapes for this field
 			vector<string> snames = setFieldsDict.lookUpEntryList<string>( fieldsList[fid] + "/shapesList");
 
+			// Create map for this shapes
+			vector<fieldShape> shMap;
+
 			// Set values for each shape
-			for(auto sn : snames) {
+			for(auto sn : snames) {    shMap.push_back( fieldShape("properties/setFieldDict", sn) );     }
+
 		    
-			    fieldShape shape("properties/setFieldDict", sn);			
+			uint pointId(0);
+		    
+			// Set local values
+			for(lbPatch_iterator<Vector3> pt = fld.begin() ; pt != fld.end() ; ++pt) {
 
-			    uint pointId(0);
+			    Vector3 val(0,0,0);
 
-			    // Set local values
-			    for(lbPatch_iterator<Vector3> pt = fld.begin() ; pt != fld.end() ; ++pt) {
-				*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
-				pointId++;
+			    // Set values for each shape
+			    for(uint shid = 0 ; shid < shMap.size() ; shid++) {
+		    
+				val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+
 			    }
-
-			    // Set ghost values
-			    for(vector<Vector3>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
-				*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
-				pointId++;
-			    }
-
-			}
 			
+			
+			    *pt = val / snames.size();
+			
+			    pointId++;
+			
+			}
+
 		    }
+
+		    
 
 		    // Add field to container
 		    vectorFields.push_back( std::make_pair(fieldsList[fid],fld) );
