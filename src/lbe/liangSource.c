@@ -13,6 +13,7 @@ void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, c_scal
     c_scalar* Fs = scalarFieldGradient( fields, info, fields->phi, id );
     for( k = 0 ; k < 3 ; k++) {
 	Fs[k] = Fs[k] * fields->muPhi[id];
+	/* Fs[k] = 0; */
     }
 
     
@@ -21,6 +22,7 @@ void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, c_scal
     c_scalar* Fa = (c_scalar*)malloc( 3 * sizeof(c_scalar) );
     for( k = 0 ; k < 3 ; k++) {
 	Fa[k] = fields->U[id][k]* info->fields.M_phi * lap * (info->fields.rho_A - info->fields.rho_B) / (info->fields.phi_A - info->fields.phi_B);
+	/* Fa[k] = 0; */
     }
     
 
@@ -35,6 +37,7 @@ void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, c_scal
     c_scalar* rhoGrad = scalarFieldGradient( fields, info, fields->rho, id );
     for( k = 0 ; k < 3 ; k++) {
 	rhoGrad[k] = rhoGrad[k] * info->lattice.cs2;
+	/* rhoGrad[k] = 0; */
     }
 
 

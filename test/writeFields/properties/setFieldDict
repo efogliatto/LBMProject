@@ -1,0 +1,70 @@
+Fields
+{
+    valuesList
+    {
+        2
+	phi
+	U
+    }
+}
+
+Bubble
+{
+    type bubble;
+    origin ( 0 13 0 );
+    radius 10;
+    inside true;
+    width 4;
+}
+
+
+Cyl
+{
+    type cylinder;
+    origin ( 0 13 0 );
+    axis ( 0 0 1 );
+    radius 10;
+    height 0;
+    inside true;
+}
+
+
+Box
+{
+    type profileBox;
+    min ( -100 0 0 );
+    max ( 100 3 0 );
+    width 4;
+    inside true;
+}
+
+
+phi
+{
+    type latticeScalarField;
+    function none;    
+    inside 1;
+
+    shapesList
+    {
+        2
+	Bubble
+	Box
+    }
+    
+}
+
+
+U
+{
+    type latticeVectorField;
+    function none;    
+    inside (0 -0.005 0);
+
+    shapesList
+    {
+        1
+        Cyl
+    }
+    
+}

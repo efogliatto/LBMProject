@@ -257,9 +257,11 @@ const void vtkPatchWriter::writeVTK() const {
 
     outFile << "      <Points>" << endl;
     outFile << "        <DataArray type=\"Float32\" NumberOfComponents=\"3\" format=\"ascii\">" << endl;
+    // outFile << "        <DataArray type=\"Float64\" NumberOfComponents=\"3\" format=\"binary\">" << endl;
 
-    for(vector<Vector3>::const_iterator pt = _points.begin() ; pt != _points.end() ; pt++) 
+    for(vector<Vector3>::const_iterator pt = _points.begin() ; pt != _points.end() ; pt++) {
 	outFile << "          " << pt->x() << "  " <<  pt->y() << "  " << pt->z() << endl;
+    }
 
     outFile << "        </DataArray>" << endl;
     outFile << "      </Points>" << endl;
