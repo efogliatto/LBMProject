@@ -182,6 +182,12 @@ int main(int argc, char** argv) {
 
 	    if( runTime.write() ) {
 
+		if(world.rank() == 0) {
+		    cout << setprecision(3);
+		    cout << endl << "  Writing fields for time " << runTime.currentTime() << endl << endl;
+	
+		}  
+		
 		phi.readAllValues();
 		muPhi.readAllValues();
 		rho.readAllValues();
