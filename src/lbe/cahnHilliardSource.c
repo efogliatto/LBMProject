@@ -22,7 +22,6 @@ void cahnHilliardSource(struct twoPhasesFields* fields, struct solverInfo* info,
     	c_scalar dot = info->lattice.vel[k][0] * ddt_x   +   info->lattice.vel[k][1] * ddt_y   +   info->lattice.vel[k][2] * ddt_z;
 	
 	st[k] = info->time.tstep * info->lattice.omega[k] * info->lattice.c * dot / info->lattice.cs2;
-	/* st[k] = 0; */
 
     }
     
