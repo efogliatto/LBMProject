@@ -41,7 +41,6 @@ extern "C" {
     	// Update time
     	info->time.current += info->time.tstep;
 	++info->time.stp;
-	++info->time.nts;
 
 	if ( info->time.current > info->time.end ) {
 	    upd = 0;
