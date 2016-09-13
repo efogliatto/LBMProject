@@ -17,7 +17,8 @@ latticePdfField::latticePdfField( basicLBModel* lbm,
     if( read == false ) {
 
 	ostringstream fileName;
-	fileName << "processor" << _id << "/" << _time.currentTime() << "/fields.vtu";
+	// fileName << "processor" << _id << "/" << _time.currentTime() << "/fields.vtu";
+	fileName << "processor" << _id << "/" << _time.countTs() << "/fields.vtu";
 
 	// Open file
 	ifstream inFile;
@@ -146,7 +147,8 @@ void latticePdfField::readAllValues() {
 
     
     std::ostringstream fldName;
-    fldName << "processor" << this->_id << "/" << _time.currentTime() << "/" << _name;
+    // fldName << "processor" << this->_id << "/" << _time.currentTime() << "/" << _name;
+    fldName << "processor" << this->_id << "/" << _time.countTs() << "/" << _name;
 
     // Open file
     std::ifstream inFile;
@@ -189,7 +191,8 @@ void latticePdfField::readAllValues() {
 void latticePdfField::writeBinary() {
 
     std::ostringstream fldName;
-    fldName << "processor" << this->_id << "/" << _time.currentTime() << "/" << _name << ".bin";
+    // fldName << "processor" << this->_id << "/" << _time.currentTime() << "/" << _name << ".bin";
+    fldName << "processor" << this->_id << "/" << _time.countTs() << "/" << _name;
 
     // Open file
     ofstream outFile;

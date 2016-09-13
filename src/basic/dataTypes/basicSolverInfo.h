@@ -18,8 +18,11 @@ struct timeInfo {
     // End time
     c_scalar end;
 
-    // Time step
+    // Time step (dt)
     c_scalar tstep;
+
+    // number of current time step
+    unsigned int nts;
 
     // Write interval (write every writeInterval steps)
     unsigned int writeInterval;

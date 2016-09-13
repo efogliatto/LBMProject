@@ -146,7 +146,8 @@ const void vtkPatchWriter::write() const {
 		outCaseFile << fileLines[i] << endl;
 	    }
 	    ostringstream caseInfo;
-	    caseInfo << "    <DataSet part=\"0\"  timestep=\"" << _time.currentTime() << "\" file=\"" << _time.currentTime() << "/fields.pvtu\" />";
+	    // caseInfo << "    <DataSet part=\"0\"  timestep=\"" << _time.currentTime() << "\" file=\"" << _time.currentTime() << "/fields.pvtu\" />";
+	    caseInfo << "    <DataSet part=\"0\"  timestep=\"" << _time.countTs() << "\" file=\"" << _time.countTs() << "/fields.pvtu\" />";
 	    outCaseFile << caseInfo.str() << endl;
 	    outCaseFile << fileLines[ fileLines.size() - 3 ] << endl;
 	    outCaseFile << fileLines[ fileLines.size() - 2 ] << endl;	    
@@ -155,13 +156,15 @@ const void vtkPatchWriter::write() const {
 	    
 	    // Create time folder
 	    ostringstream folder;
-	    folder << "mkdir -p " << _time.currentTime();
+	    // folder << "mkdir -p " << _time.currentTime();
+	    folder << "mkdir -p " << _time.countTs();
 	    int status = system( folder.str().c_str() );
 	    if(status) {}
 
 	    // Open file
 	    ostringstream fileName;
-	    fileName << _time.currentTime() << "/fields.pvtu";
+	    // fileName << _time.currentTime() << "/fields.pvtu";
+	    fileName << _time.countTs() << "/fields.pvtu";
 	    ofstream outFile;
 	    outFile.open( fileName.str().c_str() );
 	    if( outFile.is_open() == false ){
@@ -214,7 +217,8 @@ const void vtkPatchWriter::write() const {
 
 	    for(uint pid = 0 ; pid < _worldSize ; pid++) {
 	    	ostringstream fname;
-	    	fname << "../processor" << pid << "/" << _time.currentTime() << "/fields.vtu";
+	    	// fname << "../processor" << pid << "/" << _time.currentTime() << "/fields.vtu";
+		fname << "../processor" << pid << "/" << _time.countTs() << "/fields.vtu";
 	    	outFile << "    <Piece Source=\"" << fname.str() << "\"/>" << endl;
 	    }
 	    outFile << "  </PUnstructuredGrid>" << endl;
@@ -238,11 +242,13 @@ const void vtkPatchWriter::writeVTK() const {
 
     // Create folder if it doesnt exist
     ostringstream folder;
-    folder << "processor" << _pid << "/" << _time.currentTime();    
+    // folder << "processor" << _pid << "/" << _time.currentTime();
+    folder << "processor" << _pid << "/" << _time.countTs();       
     system( ("mkdir -p " + folder.str()).c_str() );
     
     ostringstream fname;
-    fname << "processor" << _pid << "/" << _time.currentTime() << "/fields.vtu";
+    // fname << "processor" << _pid << "/" << _time.currentTime() << "/fields.vtu";
+    folder << "processor" << _pid << "/" << _time.countTs();   
     ofstream outFile( fname.str().c_str() );
 
     outFile << "<?xml version=\"1.0\"?>" << endl;
@@ -257,7 +263,6 @@ const void vtkPatchWriter::writeVTK() const {
 
     outFile << "      <Points>" << endl;
     outFile << "        <DataArray type=\"Float32\" NumberOfComponents=\"3\" format=\"ascii\">" << endl;
-    // outFile << "        <DataArray type=\"Float64\" NumberOfComponents=\"3\" format=\"binary\">" << endl;
 
     for(vector<Vector3>::const_iterator pt = _points.begin() ; pt != _points.end() ; pt++) {
 	outFile << "          " << pt->x() << "  " <<  pt->y() << "  " << pt->z() << endl;
@@ -426,7 +431,8 @@ const void vtkPatchWriter::writeRAW() const {
 
     // Create folder if it doesnt exist
     ostringstream folder;
-    folder << "processor" << _pid << "/" << _time.currentTime();    
+    // folder << "processor" << _pid << "/" << _time.currentTime();
+    folder << "processor" << _pid << "/" << _time.countTs();    
     system( ("mkdir -p " + folder.str()).c_str() );
     
 
@@ -434,7 +440,8 @@ const void vtkPatchWriter::writeRAW() const {
     for(uint i = 0 ; i < _scalarFields.size() ; i++) {
 
 	ostringstream fname;
-	fname << "processor" << _pid << "/" << _time.currentTime() << "/" << _scalarFields[i].first;
+	// fname << "processor" << _pid << "/" << _time.currentTime() << "/" << _scalarFields[i].first;
+	folder << "processor" << _pid << "/" << _time.countTs();    
 	ofstream outFile( fname.str().c_str() );
 
 	// Total number of elements
@@ -454,7 +461,8 @@ const void vtkPatchWriter::writeRAW() const {
     for(uint i = 0 ; i < _vectorFields.size() ; i++) {
 
 	ostringstream fname;
-	fname << "processor" << _pid << "/" << _time.currentTime() << "/" << _vectorFields[i].first;
+	// fname << "processor" << _pid << "/" << _time.currentTime() << "/" << _vectorFields[i].first;
+	fname << "processor" << _pid << "/" << _time.countTs() << "/" << _vectorFields[i].first;
 	ofstream outFile( fname.str().c_str() );
 
         // Total number of elements
@@ -476,7 +484,8 @@ const void vtkPatchWriter::writeRAW() const {
 
 
 	ostringstream fname;
-	fname << "processor" << _pid << "/" << _time.currentTime() << "/" << _lbFields[i].first;
+	// fname << "processor" << _pid << "/" << _time.currentTime() << "/" << _lbFields[i].first;
+	fname << "processor" << _pid << "/" << _time.countTs() << "/" << _lbFields[i].first;	
 	ofstream outFile( fname.str().c_str() );
 
         // Total number of elements

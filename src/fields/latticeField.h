@@ -79,7 +79,8 @@ latticeField<T>::latticeField(  basicLBModel* lbm,
     
     // Read values from start time
     if(read) {
-	mpiPatch<T>::readValues( this->_name, this->_time.startTime() );
+	/* mpiPatch<T>::readValues( this->_name, this->_time.startTime() ); */
+	mpiPatch<T>::readValues( this->_name, this->_time.countTs() );
 	mpiPatch<T>::syncGhostValues();
     }
 	
