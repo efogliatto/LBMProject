@@ -23,7 +23,7 @@ latticeScalarField::latticeScalarField( basicLBModel* lbm,
     	ifstream inFile;
     	inFile.open( fileName.str().c_str() );
     	if( !inFile.is_open() ) {
-    	    cout << "Unable to open file " << fileName << endl;
+    	    cout << "Unable to open file " << fileName.str() << endl;
     	    exit(1);
     	}
 
