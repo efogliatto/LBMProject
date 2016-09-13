@@ -11,26 +11,25 @@ using namespace std;
 basicTime::basicTime() :  _start(std::chrono::system_clock::now() )  {
 
 
-    // // Read simulation properties
-    // cout << endl;
-    // cout << "Reading time properties" << endl;
-    // cout << endl;
-    
+    // Read simulation properties
     dictionary dict("properties/simulation");
 
-    _startTime = dict.lookUpEntry<scalar>("startTime");
+    // Start time
+    _startTime = (uint)dict.lookUpEntry<double>("startTime");
     _currentTime = _startTime;
 
-    _endTime = dict.lookUpEntry<scalar>("endTime");
+    // End time
+    _endTime = (uint)dict.lookUpEntry<double>("endTime");
 
-    _writeInterval = dict.lookUpEntry<scalar>("writeInterval");
-
+    // Write interval
+    _writeInterval = (uint)dict.lookUpEntry<double>("writeInterval");
+    
+    // Time step (dt)
     _timeStep = dict.lookUpEntry<scalar>("timeStep");
 
+    // Flag to enable VTK writing
     string prop = dict.lookUpEntry<string>("writeVTK");
     _writeVTK = (prop.compare("true") == 0) ? true : false;
-
-    // _format = dict.lookUpEntry<string>("format");
 
     _countTs = 0;
     _countVTK = 0;
@@ -60,23 +59,23 @@ basicTime::basicTime(const basicTime& t) {
 // Access members
     
 // StartTime
-const double basicTime::startTime() const {
+const uint basicTime::startTime() const {
     return _startTime;
 }
 
 // End time
-const double basicTime::endTime() const {
+const uint basicTime::endTime() const {
     return _endTime;
 }
 
 // Write interval
-const int basicTime::writeInterval() const {
+const uint basicTime::writeInterval() const {
     return _writeInterval;
 }
 
 
 // Current time
-const double basicTime::currentTime() const {
+const uint basicTime::currentTime() const {
     return _currentTime;
 }
 
@@ -88,32 +87,42 @@ const double basicTime::timeStep() const {
 // Move one time step
 const bool basicTime::update() {
 
-    _currentTime += _timeStep;
+    // Update time indices
+    _currentTime++;
     _countTs++;
 
-    if(  _currentTime >= (_endTime + _timeStep)  ) {
-	return false;
-    }
-    else{
-	return true;
-    }
+    // Update write index
+    if( _countTs > _writeInterval) {
+	_countTs = 1;
+    }    
+
+    return ( _currentTime > _endTime ) ? false : true;
+    // if(  _currentTime > _endTime  ) {
+    // 	return false;
+    // }
+    // else{
+    // 	return true;
+    // }    
 
 }
 
 // Detect if time is at the end
 const bool basicTime::end() const{
-    if(_currentTime + _timeStep > _endTime) {
-	return true;
-    }
-    else{
-	return false;
-    }
+
+    return ( _currentTime > _endTime ) ? true : false;
+    
+    // if(_currentTime + _timeStep > _endTime) {
+    // 	return true;
+    // }
+    // else{
+    // 	return false;
+    // }
 }
 
 
 
 // Number of time steps
-const int basicTime::countTs() const {
+const uint basicTime::countTs() const {
     return _countTs;
 }
 
@@ -122,13 +131,14 @@ const int basicTime::countTs() const {
 // Flag that enables writing
 const bool basicTime::write() const {
 
-    // if ( ((_countTs % _writeInterval) == 0 )  &&  (_currentTime != _startTime) ) {
-    if ( ((_countTs % _writeInterval) == 0 ) ) {
-	return true;
-    }
-    else {
-	return false;
-    }
+    return( _countTs == _writeInterval) ? true : false;
+    
+    // if ( ((_countTs % _writeInterval) == 0 ) ) {
+    // 	return true;
+    // }
+    // else {
+    // 	return false;
+    // }
 
 }
 
@@ -157,7 +167,7 @@ const void basicTime::updateVTK() {
     _countVTK++;
 }
 
-const int basicTime::countVTK() const {
+const uint basicTime::countVTK() const {
     return _countVTK;
 }
 

@@ -18,13 +18,14 @@ extern "C" {
     // Read time properties
     dictionary tp("properties/simulation");
 
-    info.time.start = (c_scalar)tp.lookUpEntry<double>("startTime");
-    info.time.end = (c_scalar)tp.lookUpEntry<double>("endTime");
+    info.time.start = (unsigned int)tp.lookUpEntry<double>("startTime");
+    info.time.end = (unsigned int)tp.lookUpEntry<double>("endTime");
     info.time.tstep = (c_scalar)tp.lookUpEntry<double>("timeStep");
     info.time.writeInterval = (unsigned int)tp.lookUpEntry<double>("writeInterval");
     info.time.current = info.time.start;
     info.time.stp = 0;
-    // info.time.extraIter = (unsigned int)tp.lookUpEntry<double>("extraIterations");
+
+
 
     info.time.st = time( NULL );
     

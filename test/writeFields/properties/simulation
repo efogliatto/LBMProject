@@ -1,5 +1,5 @@
 startTime 0;
-endTime 1;
-writeInterval 1;
-timeStep 1;
+endTime 10;
+writeInterval 5;
+timeStep 0.5;
 writeVTK true;

@@ -39,8 +39,9 @@ extern "C" {
 	int upd = 1;
 	
     	// Update time
-    	info->time.current += info->time.tstep;
+    	++info->time.current;
 	++info->time.stp;
+
 
 	if ( info->time.current > info->time.end ) {
 	    upd = 0;

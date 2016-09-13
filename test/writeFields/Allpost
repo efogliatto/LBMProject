@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Write fields in VTK format
+mpiexec -n $1 setTwoPhasesFields

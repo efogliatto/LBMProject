@@ -13,29 +13,28 @@ struct timeInfo {
     // Simulation parameters
 
     // Start time
-    c_scalar start;
+    unsigned int start;
 
     // End time
-    c_scalar end;
+    unsigned int end;
 
+    // Current time
+    unsigned int current;
+
+    
     // Time step
     c_scalar tstep;
 
     // Write interval (write every writeInterval steps)
     unsigned int writeInterval;
 
-    // Current time
-    c_scalar current;
-
     // Start time (time measurement)
     time_t st;
     struct timeval stt;
 
-    // Time step
+    // Time step (inside write intrval)
     unsigned int stp;
-
-    /* // Extra internal iterations */
-    /* unsigned int extraIter; */
+    
     
 };
 

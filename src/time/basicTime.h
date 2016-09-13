@@ -14,22 +14,22 @@ class basicTime {
 protected:
     
     // Simulation start
-    double _startTime;
+    uint _startTime;
 
     // Simulation end
-    double _endTime;
+    uint _endTime;
 
     // Write interval;
-    int _writeInterval;
+    uint _writeInterval;
 
     // Current time
-    double _currentTime;
+    uint _currentTime;
 
     // Time step
     double _timeStep;
 
-    // Number of time steps
-    int _countTs;
+    // Number of time steps (in write interval)
+    uint _countTs;
 
     // Number of VTK files written
     int _countVTK;
@@ -62,17 +62,17 @@ public:
 
     // Access members
     
-    // StartTime
-    const double startTime() const;
+    // Start Time
+    const uint startTime() const;
 
     // End time
-    const double endTime() const;
+    const uint endTime() const;
 
     // Write interval
-    const int writeInterval() const;
+    const uint writeInterval() const;
 
     // Current time
-    const double currentTime() const;
+    const uint currentTime() const;
 
     // Time step
     const double timeStep() const;
@@ -84,7 +84,7 @@ public:
     const bool end() const;
 
     // Number of time steps
-    const int countTs() const;
+    const uint countTs() const;
 
     // Flag that enables writing
     const bool write() const;
@@ -98,7 +98,7 @@ public:
     // Update vtk count
     const void updateVTK();
 
-    const int countVTK() const;
+    const uint countVTK() const;
 
     // Write in ascii format
     const bool ascii() const;
