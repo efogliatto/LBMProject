@@ -53,6 +53,9 @@ protected:
     Matrix _M;
     Matrix _invM;
 
+    // Principal indices
+    std::vector< std::vector<uint> > _principal;
+
 
 
     /* ----------------------  Public member functions ----------------------  */
@@ -135,6 +138,10 @@ public:
     const Matrix& M() const;
 
     const Matrix& invM() const;
+
+
+    // Principal indices
+    virtual const std::vector< std::vector<uint> >& principal() const;
 
 };
 

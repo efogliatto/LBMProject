@@ -159,3 +159,10 @@ const pdf& basicLBModel::pdfOmega() const {
 const Matrix& basicLBModel::M() const {  return _M;  }
 
 const Matrix& basicLBModel::invM() const {  return _invM;  }
+
+
+
+// Principal indices
+const vector< vector<uint> >& basicLBModel::principal() const {
+    return _principal;
+}

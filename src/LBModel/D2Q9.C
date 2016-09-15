@@ -114,6 +114,20 @@ D2Q9::D2Q9() {
     _invM[7] = {c1,    c1/2,    c1/4,   -c2,   -c2/2,   -c2,   -c2/2,   0,    c3};
     _invM[8] = {c1,    c1/2,    c1/4,    c2,    c2/2,   -c2,   -c2/2,   0,   -c3};
 
+
+
+
+    _principal.resize( 3 );
+    for(uint i = 0 ; i < 3 ; i++)
+	_principal.resize(2);
+
+    _principal[0][0] = 3;
+    _principal[0][1] = 1;
+    _principal[1][0] = 4;
+    _principal[1][1] = 2;
+    _principal[2][0] = -1;
+    _principal[2][1] = -1;
+    
 }
 
 
