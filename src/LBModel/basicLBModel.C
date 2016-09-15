@@ -163,6 +163,6 @@ const Matrix& basicLBModel::invM() const {  return _invM;  }
 
 
 // Principal indices
-const vector< vector<uint> >& basicLBModel::principal() const {
+const vector< vector<int> >& basicLBModel::principal() const {
     return _principal;
 }

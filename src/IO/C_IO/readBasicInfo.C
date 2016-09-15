@@ -89,6 +89,14 @@ extern "C" {
 	info.lattice.vel[i][2] = (int)vel[i].z();
     }
     
+
+    // Principal directions
+    const vector< vector<int> > princ = lbm->principal();
+    for(uint i = 0 ; i < 3 ; i++) {
+	for(uint j = 0 ; j < 2 ; j++) {
+	    info.lattice.principal[i][j] = princ[i][j];
+	}
+    }
     
 
     // Read macroscopic properties

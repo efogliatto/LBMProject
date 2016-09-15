@@ -54,7 +54,7 @@ protected:
     Matrix _invM;
 
     // Principal indices
-    std::vector< std::vector<uint> > _principal;
+    std::vector< std::vector<int> > _principal;
 
 
 
@@ -141,7 +141,7 @@ public:
 
 
     // Principal indices
-    virtual const std::vector< std::vector<uint> >& principal() const;
+    virtual const std::vector< std::vector<int> >& principal() const;
 
 };
 

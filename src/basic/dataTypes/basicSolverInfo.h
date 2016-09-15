@@ -51,6 +51,7 @@ struct latticeInfo {
     int** vel;
     int* reverse;
     c_scalar* omega;
+    int principal[3][2];
     
 };
 
