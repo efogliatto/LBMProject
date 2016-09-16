@@ -19,6 +19,9 @@ add_subdirectory (fields)
 # C library. Equilibirum, collision, streamming, etc
 add_subdirectory (lbe)
 
+# C library. Basic operations
+add_subdirectory (C)
+
 
 
 # Applications
