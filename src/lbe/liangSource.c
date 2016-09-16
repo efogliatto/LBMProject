@@ -32,10 +32,59 @@ void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, c_scal
 
 
     // Density gradient
-    c_scalar* rhoGrad = scalarFieldGradient( fields, info, fields->rho, id );
-    for( k = 0 ; k < 3 ; k++) {
-	rhoGrad[k] = rhoGrad[k] * info->lattice.cs2;
-    }
+    /* c_scalar* rhoGrad = scalarFieldGradient( fields, info, fields->rho, id ); */
+    /* for( k = 0 ; k < 3 ; k++) { */
+    /* 	rhoGrad[k] = rhoGrad[k] * info->lattice.cs2; */
+    /* } */
+
+
+    // Biased version
+    c_scalar rhoGrad[3];
+
+    unsigned int dir;
+    rhoGrad[0] = 0;
+    rhoGrad[1] = 0;
+    rhoGrad[2] = 0;
+
+    for( dir = 0 ; dir < 3 ; dir++ ) {
+	    
+	if( fields->U[id][dir] >= 0 ) {
+	    
+	    int nid = fields->nb[id][ info->lattice.principal[dir][0] ];
+
+	    if( nid != -1 ) {
+	    
+		rhoGrad[dir] = (1/info->lattice.size) * ( fields->rho[nid] - fields->rho[id] );
+
+	    }
+
+	    else {
+
+		rhoGrad[dir] = 0;
+		
+	    }
+	    
+	}
+	
+	else {
+
+	    int nid = fields->nb[id][ info->lattice.principal[dir][1] ];
+
+	    if( nid != -1 ) {
+	    
+		rhoGrad[dir] = (1/info->lattice.size) * ( fields->rho[id] - fields->rho[nid] );
+
+	    }
+
+	    else {
+
+		rhoGrad[dir] = 0;
+		
+	    }
+	    
+	}
+
+    }    
 
 
     // Source term
@@ -116,6 +165,6 @@ void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, c_scal
     free(Gamma);
     free(Gamma0);
     free(Force);
-    free(rhoGrad);
+    /* free(rhoGrad); */
     
 }

@@ -119,14 +119,14 @@ D2Q9::D2Q9() {
 
     _principal.resize( 3 );
     for(uint i = 0 ; i < 3 ; i++)
-	_principal.resize(2);
+    	_principal[i].resize(2);
 
     _principal[0][0] = 3;
     _principal[0][1] = 1;
     _principal[1][0] = 4;
     _principal[1][1] = 2;
-    _principal[2][0] = -1;
-    _principal[2][1] = -1;
+    _principal[2][0] = 0;
+    _principal[2][1] = 0;
     
 }
 
