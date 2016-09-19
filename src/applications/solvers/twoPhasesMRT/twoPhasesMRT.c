@@ -25,6 +25,7 @@ int main( int argc, char **argv ) {
     MPI_Comm_size(MPI_COMM_WORLD,&world);
     
     if(pid == 0) {
+	printf("                    \n");	
 	printf("     o-----o-----o  \n");
 	printf("     | -   |   - |  \n");
 	printf("     |   - | -   |  \n");

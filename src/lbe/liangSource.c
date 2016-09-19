@@ -6,14 +6,24 @@
 #include <scalarFieldLaplacian.h>
 #include <biasedGradient.h>
 #include <stringHash.h>
+#include <string.h>
 
-#define CENTRAL 229461784410318
-#define BIASED  6953352545965
 
 void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, c_scalar* sourceTerm, unsigned int id) {
 
     unsigned int j, k;
 
+    int scheme = -1;
+
+    // Schemes
+    char* dd[] = {"central", "biased"};
+    for( k = 0 ; k < 2 ; k++ ) {
+	if( strcmp(dd[k], info->lattice.dd) == 0 ) {
+	    scheme = k;
+	}
+    }
+
+    
     // Surface tension force
     c_scalar* Fs = scalarFieldGradient( fields, info, fields->phi, id );
     for( k = 0 ; k < 3 ; k++) {
@@ -39,18 +49,18 @@ void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, c_scal
     // Density gradient
     c_scalar* rhoGrad;
     
-    switch( info->lattice.ddx ) {
+    switch( scheme ) {
 
-    case CENTRAL:
-    	rhoGrad = scalarFieldGradient( fields, info, fields->rho, id );
-    	break;
+    case 0:
+	rhoGrad = scalarFieldGradient( fields, info, fields->rho, id );
+	break;
 
-    case BIASED:
-    	rhoGrad = biasedGradient( fields->rho, fields->nb, fields->U, info->lattice.principal, info->lattice.size, id );
-    	break;
+    case 1:
+	rhoGrad = biasedGradient( fields->rho, fields->nb, fields->U, info->lattice.principal, info->lattice.size, id );
+	break;
 
     default:
-	printf("[ERROR]  Unrecognized derivative scheme");
+	if(info->parallel.pid == 0) { printf("[ERROR]  Unrecognized derivative scheme %s\n\n", info->lattice.dd); }
 	exit(1);
 	break;
 	

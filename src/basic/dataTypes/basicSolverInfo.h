@@ -54,7 +54,7 @@ struct latticeInfo {
     int principal[3][2];
 
     // Directional derivatives
-    unsigned long ddx;    
+    char* dd;
     
 };
 

@@ -66,4 +66,4 @@ target_link_libraries(test15 ${PROJECT_LINK_LIBS} ${Boost_LIBRARIES} ${MPI_LIBRA
 
 # mpiTest. Testign mpi functionality in c program
 add_executable(mpiTest "mpiTest.c")
-target_link_libraries(mpiTest ${PROJECT_LINK_LIBS} ${Boost_LIBRARIES} ${MPI_LIBRARIES} ${PROJECT_LINK_LIBS} liblbe.so)
+target_link_libraries(mpiTest ${PROJECT_LINK_LIBS} ${Boost_LIBRARIES} ${MPI_LIBRARIES} ${PROJECT_LINK_LIBS} liblbe.so libC_operations.so)

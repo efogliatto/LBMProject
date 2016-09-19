@@ -6,15 +6,6 @@
 #include <fstream>
 #include <readBasicInfo.h>
 
-const unsigned long c_hash(const char *str) {
-    unsigned long hash = 5381;  
-    int c;
-
-    while ((c = *str++))
-        hash = ((hash << 5) + hash) + c;
-    return hash;
-}
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -111,8 +102,12 @@ extern "C" {
 
     // Read macroscopic properties
     dictionary mp("properties/macroscopicProperties");
-
-    info.lattice.ddx = c_hash( (mp.lookUpEntry<string>("directionalDerivatives/type")).c_str() );
+    string ddx = mp.lookUpEntry<string>("directionalDerivatives/type");
+    info.lattice.dd = new char[ddx.length() + 1];
+    std::strcpy(info.lattice.dd, ddx.c_str());
+		  
+    // info.lattice.ddx = c_hash( ddx.c_str() );
+    
 
 
     pdf Sh = mp.lookUpEntry<pdf>("h/S");

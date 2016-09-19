@@ -15,11 +15,11 @@ c_scalar* biasedGradient( c_scalar* fld, int** nb, c_scalar** vel, int pdir[3][2
 	    
     	if( vel[id][dir] >= 0 ) {
 	    
-    	    int nid = nb[id][ pdir[dir][0] ];
+    	    int nid = nb[id][ pdir[dir][1] ];
 
     	    if( nid != -1 ) {
 	    
-    		grad[dir] = (1/lsize) * ( fld[nid] - fld[id] );
+    		grad[dir] = (1/lsize) * ( fld[id] - fld[nid] );
 
     	    }
 	    
@@ -27,11 +27,11 @@ c_scalar* biasedGradient( c_scalar* fld, int** nb, c_scalar** vel, int pdir[3][2
 	
     	else {
 
-    	    int nid = nb[id][ pdir[dir][1] ];
+    	    int nid = nb[id][ pdir[dir][0] ];
 
     	    if( nid != -1 ) {
 	    
-    		grad[dir] = (1/lsize) * ( fld[id] - fld[nid] );
+    		grad[dir] = (1/lsize) * ( fld[nid] - fld[id] );
 
     	    }
 	    

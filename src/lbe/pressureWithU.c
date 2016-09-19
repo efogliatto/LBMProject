@@ -3,11 +3,23 @@
 #include <biasedGradient.h>
 #include <syncScalarField.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 
 void pressureWithU( struct twoPhasesFields* fields, struct solverInfo* info, c_scalar* fld ) {
 
     unsigned int id, k;
+    int scheme = -1;
+
+    // Schemes
+    char* dd[] = {"central", "biased"};
+    for( k = 0 ; k < 2 ; k++ ) {
+	if( strcmp(dd[k], info->lattice.dd) == 0 ) {
+	    scheme = k;
+	}
+    }
+
 
     // Move over points
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
@@ -22,8 +34,24 @@ void pressureWithU( struct twoPhasesFields* fields, struct solverInfo* info, c_s
 
 
 	// Density gradient
-	c_scalar* rhoGrad = scalarFieldGradient( fields, info, fields->rho, id );
-	/* c_scalar* rhoGrad = biasedGradient( fields->rho, fields->nb, fields->U, info->lattice.principal, info->lattice.size, id ); */
+	c_scalar* rhoGrad;
+    
+	switch( scheme ) {
+
+	case 0:
+	    rhoGrad = scalarFieldGradient( fields, info, fields->rho, id );
+	    break;
+
+	case 1:
+	    rhoGrad = biasedGradient( fields->rho, fields->nb, fields->U, info->lattice.principal, info->lattice.size, id );
+	    break;
+
+	default:
+	    if(info->parallel.pid == 0) { printf("[ERROR]  Unrecognized derivative scheme %s\n\n", info->lattice.dd); }
+	    exit(1);
+	    break;
+	
+	}
 
 
 	// Dot product: U * grad(rho)
