@@ -52,6 +52,9 @@ struct latticeInfo {
     int* reverse;
     c_scalar* omega;
     int principal[3][2];
+
+    // Directional derivatives
+    unsigned long ddx;    
     
 };
 
@@ -131,6 +134,7 @@ struct solverInfo {
 
     struct mpiInfo parallel;
 };
+
 
 
 #endif // BASICSOLVERINFO_H

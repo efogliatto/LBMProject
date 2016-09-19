@@ -22,8 +22,8 @@ void pressureWithU( struct twoPhasesFields* fields, struct solverInfo* info, c_s
 
 
 	// Density gradient
-	/* c_scalar* rhoGrad = scalarFieldGradient( fields, info, fields->rho, id ); */
-	c_scalar* rhoGrad = biasedGradient( fields->rho, fields->nb, fields->U, info->lattice.principal, info->lattice.size, id );
+	c_scalar* rhoGrad = scalarFieldGradient( fields, info, fields->rho, id );
+	/* c_scalar* rhoGrad = biasedGradient( fields->rho, fields->nb, fields->U, info->lattice.principal, info->lattice.size, id ); */
 
 
 	// Dot product: U * grad(rho)

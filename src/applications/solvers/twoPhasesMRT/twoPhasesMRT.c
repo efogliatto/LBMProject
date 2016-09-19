@@ -23,7 +23,7 @@ int main( int argc, char **argv ) {
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD,&pid);
     MPI_Comm_size(MPI_COMM_WORLD,&world);
-
+    
     if(pid == 0) {
 	printf("     o-----o-----o  \n");
 	printf("     | -   |   - |  \n");
@@ -36,7 +36,6 @@ int main( int argc, char **argv ) {
 	
     // Simulation properties
     struct solverInfo info = readBasicInfo( pid, world );
-
     
     // Read Fields
     struct twoPhasesFields fields;

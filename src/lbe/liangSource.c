@@ -5,6 +5,10 @@
 #include <scalarFieldGradient.h>
 #include <scalarFieldLaplacian.h>
 #include <biasedGradient.h>
+#include <stringHash.h>
+
+#define CENTRAL 229461784410318
+#define BIASED  6953352545965
 
 void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, c_scalar* sourceTerm, unsigned int id) {
 
@@ -33,8 +37,26 @@ void liangSource(struct twoPhasesFields* fields, struct solverInfo* info, c_scal
 
 
     // Density gradient
-    /* c_scalar* rhoGrad = scalarFieldGradient( fields, info, fields->rho, id ); */
-    c_scalar* rhoGrad = biasedGradient( fields->rho, fields->nb, fields->U, info->lattice.principal, info->lattice.size, id );
+    c_scalar* rhoGrad;
+    
+    switch( info->lattice.ddx ) {
+
+    case CENTRAL:
+    	rhoGrad = scalarFieldGradient( fields, info, fields->rho, id );
+    	break;
+
+    case BIASED:
+    	rhoGrad = biasedGradient( fields->rho, fields->nb, fields->U, info->lattice.principal, info->lattice.size, id );
+    	break;
+
+    default:
+	printf("[ERROR]  Unrecognized derivative scheme");
+	exit(1);
+	break;
+	
+    }
+    
+   
 
     for( k = 0 ; k < 3 ; k++) {
     	rhoGrad[k] = rhoGrad[k] * info->lattice.cs2;
