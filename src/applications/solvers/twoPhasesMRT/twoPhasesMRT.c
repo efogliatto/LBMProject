@@ -108,7 +108,7 @@ int main( int argc, char **argv ) {
 	chemicalPotential( &fields, &info, fields.muPhi );
 
 	// Density
-	density( &fields, &info, fields.rho );	
+	density( &fields, &info, fields.rho );
 	
 	// Velocity
 	velocity( &fields, &info, fields.U );

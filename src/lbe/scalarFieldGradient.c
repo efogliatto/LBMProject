@@ -19,8 +19,8 @@ c_scalar* scalarFieldGradient( struct twoPhasesFields* fields, struct solverInfo
     	if( nbId != -1 ) {
 
     	    grad[0] +=  -info->lattice.vel[k][0] * info->lattice.omega[k] * fld[nbId] * info->lattice.c;
-	    grad[1] +=  -info->lattice.vel[k][1] * info->lattice.omega[k] * fld[nbId] * info->lattice.c;
-	    grad[2] +=  -info->lattice.vel[k][2] * info->lattice.omega[k] * fld[nbId] * info->lattice.c;
+    	    grad[1] +=  -info->lattice.vel[k][1] * info->lattice.omega[k] * fld[nbId] * info->lattice.c;
+    	    grad[2] +=  -info->lattice.vel[k][2] * info->lattice.omega[k] * fld[nbId] * info->lattice.c;
 	    
     	}
 
@@ -29,7 +29,7 @@ c_scalar* scalarFieldGradient( struct twoPhasesFields* fields, struct solverInfo
 
     grad[0] = grad[0] / ( info->lattice.cs2 * info->time.tstep );
     grad[1] = grad[1] / ( info->lattice.cs2 * info->time.tstep );
-    grad[2] = grad[2] / ( info->lattice.cs2 * info->time.tstep );    
+    grad[2] = grad[2] / ( info->lattice.cs2 * info->time.tstep );
 
     return grad;
     

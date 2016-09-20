@@ -41,3 +41,8 @@ Macro
     M_phi 106.7;
     
 }
+
+directionalDerivatives
+{
+    type biased;
+}

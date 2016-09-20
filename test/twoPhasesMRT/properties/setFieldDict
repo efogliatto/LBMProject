@@ -27,4 +27,9 @@ phi
     function none;    
     inside -1;
     outside 1;
+    shapesList
+    {
+        1
+    	Box
+    }
 }
