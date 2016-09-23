@@ -47,9 +47,9 @@ phi
 
     shapesList
     {
-        2
-	Bubble
+        1
 	Box
+	Bubble
     }
     
 }

@@ -159,7 +159,7 @@ int main(int argc, char** argv) {
 
 			// Set values for each shape
 			for(uint shid = 0 ; shid < shMap.size() ; shid++) {
-		    
+
 			    val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
 
 			}
