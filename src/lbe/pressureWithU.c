@@ -13,7 +13,7 @@ void pressureWithU( struct twoPhasesFields* fields, struct solverInfo* info, c_s
     int scheme = -1;
 
     // Schemes
-    char* dd[] = {"central", "biased"};
+    char* dd[] = {"isotropic", "upwind"};
     for( k = 0 ; k < 2 ; k++ ) {
 	if( strcmp(dd[k], info->lattice.dd) == 0 ) {
 	    scheme = k;
