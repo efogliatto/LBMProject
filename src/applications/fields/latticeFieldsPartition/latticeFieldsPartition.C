@@ -156,16 +156,31 @@ int main(int argc, char** argv) {
 		    for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt) {
 
 			double val(0);
+			int count(0);
 
 			// Set values for each shape
 			for(uint shid = 0 ; shid < shMap.size() ; shid++) {
 
-			    val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+			    if( shMap[shid].locatePoint( meshPoints[pointId] ) ) {
+
+				val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+				count++;
+
+			    }
+
 
 			}
 			
 			
-			*pt = val / snames.size();
+			// *pt = val / snames.size();
+
+			if(count == 0) {
+			    *pt = value;
+			}
+			else {			    
+			    *pt = val / count;
+			}
+						    
 			
 			pointId++;
 			
@@ -175,19 +190,50 @@ int main(int argc, char** argv) {
 		    // Set ghost values
 		    for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
 
+
 			double val(0);
+			int count(0);
 
 			// Set values for each shape
 			for(uint shid = 0 ; shid < shMap.size() ; shid++) {
-		    
-			    val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+
+			    if( shMap[shid].locatePoint( meshPoints[pointId] ) ) {
+
+				val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+				count++;
+
+			    }
+
 
 			}
 			
 			
-			*pt = val / snames.size();
+			// *pt = val / snames.size();
+
+			if(count == 0) {
+			    *pt = value;
+			}
+			else {			    
+			    *pt = val / count;
+			}
+						    
 			
 			pointId++;
+			
+
+                        // double val(0);
+
+			// // Set values for each shape
+			// for(uint shid = 0 ; shid < shMap.size() ; shid++) {
+		    
+			//     val += shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+
+			// }
+			
+			
+			// *pt = val / snames.size();
+			
+			// pointId++;
 			
 		    }
 		    

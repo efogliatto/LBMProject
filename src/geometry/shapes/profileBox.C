@@ -57,8 +57,11 @@ const double profileBox::value(const Vector3& v, const double& val) const {
 // Check if point is inside(outside) the shape
 const bool profileBox::locatePoint(const Vector3& v) const {
 
-
-    bool is_inside = ( v.x() >= (_bbox_min.x()-_width) ) && ( v.x() <= (_bbox_max.x()+_width) )  &&  ( v.y() >= (_bbox_min.y()-_width) ) && ( v.y() <= (_bbox_max.y()+_width) ) && ( v.z() >= (_bbox_min.z()-_width) ) && ( v.z() <= (_bbox_max.z()+_width) );
+    double f(0.25);
+    
+    bool is_inside = ( v.x() >= (_bbox_min.x()-f*_width) ) && ( v.x() <= (_bbox_max.x()+f*_width) )  &&
+	             ( v.y() >= (_bbox_min.y()-f*_width) ) && ( v.y() <= (_bbox_max.y()+f*_width) )  &&
+	             ( v.z() >= (_bbox_min.z()-f*_width) ) && ( v.z() <= (_bbox_max.z()+f*_width) );
     
     return is_inside == _inside;
     

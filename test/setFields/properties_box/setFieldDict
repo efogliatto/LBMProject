@@ -1,0 +1,32 @@
+Fields
+{
+    valuesList
+    {
+        1
+	phi
+    }
+}
+
+Box
+{
+    type profileBox;
+    min ( 0 0 0 );
+    max ( 100 50 0 );
+    width 4;
+    inside true;
+}
+
+
+phi
+{
+    type latticeScalarField;
+    function none;    
+    inside 1;
+
+    shapesList
+    {
+        1
+	Box
+    }
+    
+}

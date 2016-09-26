@@ -57,7 +57,9 @@ const double bubble::value(const Vector3& v, const double& val) const {
 // Check if point is inside(outside) the shape
 const bool bubble::locatePoint(const Vector3& v) const {
 
-    bool is_inside = ( (v - _origin).sqMag()  <= ( (_radius+_width) * (_radius+_width) ) );
+    double f(0.25);
+    
+    bool is_inside = ( (v - _origin).sqMag()  <= ( (_radius+ f*_width) * (_radius+f*_width) ) );
     
     return is_inside == _inside;
 }
