@@ -1,1 +1,1 @@
-../src/lbe/syncScalarField.h
+../src/lbe/liangModel/syncScalarField.h

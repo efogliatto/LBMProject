@@ -1,1 +1,1 @@
-../src/lbe/cahnHilliardSource.h
+../src/lbe/liangModel/cahnHilliardSource.h

@@ -1,1 +1,1 @@
-../src/lbe/cahnHilliardEquilibrium.h
+../src/lbe/liangModel/cahnHilliardEquilibrium.h

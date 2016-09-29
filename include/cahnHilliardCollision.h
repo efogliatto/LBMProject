@@ -1,1 +1,1 @@
-../src/lbe/cahnHilliardCollision.h
+../src/lbe/liangModel/cahnHilliardCollision.h

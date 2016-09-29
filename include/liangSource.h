@@ -1,1 +1,1 @@
-../src/lbe/liangSource.h
+../src/lbe/liangModel/liangSource.h

@@ -1,1 +1,1 @@
-../src/lbe/liangEquilibrium.h
+../src/lbe/liangModel/liangEquilibrium.h

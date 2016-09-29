@@ -3,4 +3,5 @@
 add_library(C_operations SHARED
   stringHash.c
   biasedGradient.c
+  matVecMult.c
   )

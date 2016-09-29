@@ -1,1 +1,1 @@
-../src/lbe/orderParameter.h
+../src/lbe/liangModel/orderParameter.h

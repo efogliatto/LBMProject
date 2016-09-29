@@ -1,1 +1,1 @@
-../src/lbe/liangCollision.h
+../src/lbe/liangModel/liangCollision.h

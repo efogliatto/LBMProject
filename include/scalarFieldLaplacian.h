@@ -1,1 +1,1 @@
-../src/lbe/scalarFieldLaplacian.h
+../src/lbe/liangModel/scalarFieldLaplacian.h

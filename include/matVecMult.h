@@ -1,1 +1,1 @@
-../src/lbe/matVecMult.h
+../src/C/C_operations/matVecMult.h

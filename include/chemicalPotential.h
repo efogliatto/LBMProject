@@ -1,1 +1,1 @@
-../src/lbe/chemicalPotential.h
+../src/lbe/liangModel/chemicalPotential.h

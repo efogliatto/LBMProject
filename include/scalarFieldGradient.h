@@ -1,1 +1,1 @@
-../src/lbe/scalarFieldGradient.h
+../src/lbe/liangModel/scalarFieldGradient.h
