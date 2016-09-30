@@ -5,4 +5,6 @@ add_library(limodel SHARED
   p_eos.c
   potential.c
   interactionForce.c
+  liDensity.c
+  liVelocity.c
   )
