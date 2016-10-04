@@ -42,38 +42,38 @@ int main( int argc, char **argv ) {
     struct twoPhasesFields fields;
 
     // Neighbours indices
-    fields.nb = readNeighbours(&info);
+    fields.nb = readNeighbours(&info.lattice, &info.parallel);
     if(pid == 0) { printf("\nReading neighbour indices\n"); }
     
     // Order parameter
-    fields.phi     = readScalarField("phi", &info);
-    fields.phi_old = readScalarField("phi", &info);
+    fields.phi     = readScalarField("phi", &info.lattice, &info.parallel, &info.time);
+    fields.phi_old = readScalarField("phi", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field phi\n"); }
 
     // Chemical potential
-    fields.muPhi = readScalarField("muPhi", &info);
+    fields.muPhi = readScalarField("muPhi", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field muPhi\n"); }
 
     // Pressure
-    fields.p = readScalarField("p", &info);
+    fields.p = readScalarField("p", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field p\n"); }
 
     // Density
-    fields.rho = readScalarField("rho", &info);
+    fields.rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field rho\n");  }
 
     // Velocity
-    fields.U     = readVectorField("U", &info);
-    fields.U_old = readVectorField("U", &info);
+    fields.U     = readVectorField("U", &info.lattice, &info.parallel, &info.time);
+    fields.U_old = readVectorField("U", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field U\n");  }
 
     // Cahn-Hilliard field
-    fields.h = readPdfField("h", &info);
+    fields.h = readPdfField("h", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field h\n");  }
 
     // Navier-Stokes field
-    fields.g = readPdfField("g", &info);
-    fields.swp = readPdfField("g", &info);
+    fields.g = readPdfField("g", &info.lattice, &info.parallel, &info.time);
+    fields.swp = readPdfField("g", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field g\n\n\n");  }
     
 

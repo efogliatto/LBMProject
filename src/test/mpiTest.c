@@ -36,22 +36,22 @@ int main( int argc, char **argv ) {
     struct twoPhasesFields fields;
 
     // Neighbours indices
-    fields.nb = readNeighbours(&info);
+    fields.nb = readNeighbours(&info.lattice, &info.parallel);
     if(pid == 0) { printf("\nReading neighbour indices\n"); }
     
     // Order parameter
-    fields.phi     = readScalarField("phi", &info);
-    fields.phi_old = readScalarField("phi", &info);
+    fields.phi     = readScalarField("phi", &info.lattice, &info.parallel, &info.time);
+    fields.phi_old = readScalarField("phi", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field phi\n"); }
 
     // Velocity
-    fields.U     = readVectorField("U", &info);
-    fields.U_old = readVectorField("U", &info);
+    fields.U     = readVectorField("U", &info.lattice, &info.parallel, &info.time);
+    fields.U_old = readVectorField("U", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field U\n");  }
 
     // Navier-Stokes field
-    fields.g = readPdfField("g", &info);
-    fields.swp = readPdfField("g", &info);
+    fields.g = readPdfField("g", &info.lattice, &info.parallel, &info.time);
+    fields.swp = readPdfField("g", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field g\n\n\n");  }
     
 

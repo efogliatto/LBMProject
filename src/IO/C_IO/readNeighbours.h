@@ -1,13 +1,14 @@
 #ifndef READNEIGHBOURS_H
 #define READNEIGHBOURS_H
 
-#include <basicSolverInfo.h>
+#include <latticeInfo.h>
+#include <mpiInfo.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-    int** readNeighbours( const struct solverInfo* info );
+    int** readNeighbours( const struct latticeInfo* lattice, const struct mpiInfo* parallel );
     
 #ifdef __cplusplus
 }

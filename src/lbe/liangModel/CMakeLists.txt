@@ -6,8 +6,6 @@ add_library(liangmodel SHARED
   scalarFieldGradient.c
   density.c
   lbstream.c
-  syncScalarField.c
-  syncPdfField.c
   chemicalPotential.c
   pressureWithU.c
   orderParameter.c

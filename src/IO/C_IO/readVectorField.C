@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 
-c_scalar** readVectorField(const char* fname, const struct solverInfo* info) {
+c_scalar** readVectorField(const char* fname, const struct latticeInfo* lattice, const struct mpiInfo* parallel, const struct timeInfo* time) {
 
 
     // c_scalar** field;
@@ -55,7 +55,7 @@ c_scalar** readVectorField(const char* fname, const struct solverInfo* info) {
     // Open file
     std::ifstream inFile;
     std::ostringstream fileName;
-    fileName << "processor" << info->parallel.pid << "/" << info->time.start << "/" << fname;
+    fileName << "processor" << parallel->pid << "/" << time->start << "/" << fname;
     inFile.open( fileName.str().c_str() );
     if( !inFile.is_open() ) {
     	std::cout << "Unable to open file " << fileName << std::endl;

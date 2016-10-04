@@ -11,7 +11,7 @@ extern "C" {
 #endif
 
 
-c_scalar** readPdfField(const char* fname, const struct solverInfo* info) {
+    c_scalar** readPdfField(const char* fname, const struct latticeInfo* lattice, const struct mpiInfo* parallel, const struct timeInfo* time ) {
 
     // c_scalar** field;
     
@@ -56,7 +56,7 @@ c_scalar** readPdfField(const char* fname, const struct solverInfo* info) {
     // Open file
     std::ifstream inFile;
     std::ostringstream fileName;
-    fileName << "processor" << info->parallel.pid << "/" << info->time.start << "/" << fname;
+    fileName << "processor" << parallel->pid << "/" << time->start << "/" << fname;
     inFile.open( fileName.str().c_str() );
     if( !inFile.is_open() ) {
     	std::cout << "Unable to open file " << fileName << std::endl;
@@ -71,11 +71,11 @@ c_scalar** readPdfField(const char* fname, const struct solverInfo* info) {
     // Resize field
     field = (c_scalar**)malloc( np * sizeof(c_scalar*) );
     for(uint i = 0 ; i < np ; i++)
-    	field[i] = (c_scalar*)malloc( info->lattice.Q * sizeof(c_scalar) );
+    	field[i] = (c_scalar*)malloc( lattice->Q * sizeof(c_scalar) );
     
     // Read elements
     for(uint i = 0 ; i < np ; i++){
-    	for(uint j = 0 ; j < (uint)info->lattice.Q ; j++){
+    	for(uint j = 0 ; j < (uint)lattice->Q ; j++){
     	    inFile >> field[i][j];
     	}
     }

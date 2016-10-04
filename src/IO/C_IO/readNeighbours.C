@@ -6,21 +6,19 @@
 #include <sstream>
 #include <iostream>
 
-#include <scalars_C.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-int** readNeighbours( const struct solverInfo* info ) {
+int** readNeighbours( const struct latticeInfo* lattice, const struct mpiInfo* parallel ) {
 
     int** field;
     
     // Open file
     std::ifstream inFile;
     std::ostringstream fileName;
-    fileName << "processor" << info->parallel.pid << "/D" << info->lattice.d << "Q" << info->lattice.Q << "_lattice/neighbours" ;
+    fileName << "processor" << parallel->pid << "/D" << lattice->d << "Q" << lattice->Q << "_lattice/neighbours" ;
     inFile.open( fileName.str().c_str() );
     if( !inFile.is_open() ) {
 	std::cout << "Unable to open file " << fileName << std::endl;
@@ -35,11 +33,11 @@ int** readNeighbours( const struct solverInfo* info ) {
     // Resize field
     field = (int**)malloc( np * sizeof(int*) );
     for(uint i = 0 ; i < np ; i++)
-	field[i] = (int*)malloc( info->lattice.Q * sizeof(int) );
+	field[i] = (int*)malloc( lattice->Q * sizeof(int) );
     
     // Read elements
     for(uint i = 0 ; i < np ; i++){
-	for(uint j = 0 ; j < (uint)info->lattice.Q ; j++){
+	for(uint j = 0 ; j < (uint)lattice->Q ; j++){
 	    inFile >> field[i][j];
 	}
     }
