@@ -9,6 +9,8 @@
 #include <writePdfField.h>
 #include <readLiModelInfo.h>
 #include <readNeighbours.h>
+#include <liVelocity.h>
+#include <liDensity.h>
 
 int main( int argc, char **argv ) {
 
@@ -53,10 +55,10 @@ int main( int argc, char **argv ) {
     
 
 
-    /* // Synchronize initial fields */
-    /* syncScalarField(&info, rho ); */
-    /* syncPdfField(&info, U, 3 ); */
-    /* syncPdfField(&info, f, info.lattice.Q ); */
+    // Synchronize initial fields
+    syncScalarField(&info.parallel, rho );
+    syncPdfField(&info.parallel, U, 3 );
+    syncPdfField(&info.parallel, f, info.lattice.Q );
 
 
     
@@ -64,116 +66,57 @@ int main( int argc, char **argv ) {
     /* while( updateTime(&info) ) { */
 
 
-    /* 	// Collide h (Cahn-Hilliard) */
-    /* 	cahnHilliardCollision(&fields, &info); */
-
-
-	
-    /* 	// Update macroscopic fields */
-
-    /* 	// Order parameter */
-    /* 	orderParameter( &fields, &info, fields.phi ); */
-	
-    /* 	// Chemical potential */
-    /* 	chemicalPotential( &fields, &info, fields.muPhi ); */
-
-    /* 	// Density */
-    /* 	density( &fields, &info, fields.rho ); */
-	
-    /* 	// Velocity */
-    /* 	velocity( &fields, &info, fields.U ); */
-
-    /* 	// Pressure */
-    /* 	pressureWithU( &fields, &info, fields.p ); */
-	
-
-	
-	
-    /* 	// Collide g (Navier - Stokes) */
-    /* 	liangCollision(&fields, &info); */
-
+    	// Collide f (Navier-Stokes)
+    	liCollision( &info, info.fields._T, rho, U, nb, f );
 	
     /* 	// Stream */
     /* 	lbstream( &fields, &info, fields.h ); */
-    /* 	lbstream( &fields, &info, fields.g ); */
+
+
+	
+    	// Update macroscopic fields
+
+    	// Density
+    	liDensity( &info, rho, f );
+	
+    	// Velocity
+    	liVelocity( &info, rho, U, f, nb, info.fields._T  );
+       
 
 
 
-    /* 	// Old values */
-    /* 	{ */
-
-    /* 	    unsigned int id, k; */
-
-    /* 	    for( id = 0 ; id < info.lattice.nlocal ; id++ ) { */
-
-    /* 		fields.phi_old[id] = fields.phi[id]; */
-		
-    /* 		for( k = 0 ; k < 3 ; k++ ) { */
-
-    /* 		    fields.U_old[id][k] = fields.U[id][k]; */
-
-    /* 		} */
-
-    /* 	    } */
+	
+	
+    	/* // Write fields */
+    	/* if( writeFlag(&info) ) { */
 	    
-    /* 	} */
-	
-	
-    /* 	// Update macroscopic fields */
-
-    /* 	// Order parameter */
-    /* 	orderParameter( &fields, &info, fields.phi ); */
-	
-    /* 	// Chemical potential */
-    /* 	chemicalPotential( &fields, &info, fields.muPhi ); */
-
-    /* 	// Velocity */
-    /* 	velocity( &fields, &info, fields.U ); */
-
-    /* 	// Pressure */
-    /* 	pressureWithU( &fields, &info, fields.p ); */
-	
-    /* 	// Density */
-    /* 	density( &fields, &info, fields.rho ); */
-
-
-
-	
-	
-    /* 	// Write fields */
-    /* 	if( writeFlag(&info) ) { */
+    	/*     if(pid == 0) { */
+    	/* 	printf("Time = %.2f (%d)\n", (double)info.time.current * info.time.tstep, info.time.current); */
+    	/* 	printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) ); */
+    	/*     } */
 	    
-    /* 	    if(pid == 0) { */
-    /* 		printf("Time = %.2f (%d)\n", (double)info.time.current * info.time.tstep, info.time.current); */
-    /* 		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) ); */
-    /* 	    } */
-	    
-    /* 	    // ScalarFields */
-    /* 	    writeScalarField("phi", fields.phi, &info); */
-    /* 	    writeScalarField("muPhi", fields.muPhi, &info); */
-    /* 	    writeScalarField("rho", fields.rho, &info); */
-    /* 	    writeScalarField("p", fields.p, &info); */
+    	/*     /\* // ScalarFields *\/ */
+    	/*     /\* writeScalarField("rho", fields.rho, &info); *\/ */
 
-    /* 	    // Vector fields */
-    /* 	    writeVectorField("U", fields.U, &info); */
+    	/*     /\* // Vector fields *\/ */
+    	/*     /\* writeVectorField("U", fields.U, &info); *\/ */
 
-    /* 	    // Pdf fields */
-    /* 	    writePdfField("h", fields.h, &info); */
-    /* 	    writePdfField("g", fields.g, &info); */
+    	/*     /\* // Pdf fields *\/ */
+    	/*     /\* writePdfField("f", fields.f, &info); *\/ */
 	    
-    /* 	} */
+    	/* } */
 
     /* } */
 
 
     
-    /* // Print info */
-    /* if(pid == 0) { */
-    /* 	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info) ); */
-    /* } */
+    // Print info
+    if(pid == 0) {
+    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info) );
+    }
 
 
-    /* MPI_Finalize(); */
+    MPI_Finalize();
     
     return 0;
     
