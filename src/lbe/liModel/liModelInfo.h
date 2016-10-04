@@ -62,6 +62,9 @@ struct li_fieldsInfo {
     // Model matrix (inverse)
     c_scalar** invM;
 
+    // Collision matrix
+    c_scalar** Lambda;
+
     // Carnahan - Starling coefficients
     c_scalar _a;
     c_scalar _b;

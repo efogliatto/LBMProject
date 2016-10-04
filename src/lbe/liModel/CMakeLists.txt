@@ -8,4 +8,6 @@ add_library(limodel SHARED
   liDensity.c
   liVelocity.c
   liMRTForce.c
+  liEquilibrium.c
+  liCollision.c
   )
