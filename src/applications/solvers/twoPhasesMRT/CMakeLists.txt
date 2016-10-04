@@ -1,6 +1,6 @@
 #------------------ Lattice Mesh------------------#
 
-set ( PROJECT_LINK_LIBS libio.so libbasic.so libtime.so liblbmodel.so libliangmodel.so libC_operations.so)
+set ( PROJECT_LINK_LIBS libio.so libbasic.so libtime.so liblbmodel.so libliangmodel.so libC_operations.so libMPI_Sync.so)
 link_directories( ~/LBMProject_v3/lib )
 
 

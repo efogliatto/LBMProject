@@ -54,6 +54,6 @@ void velocity( struct twoPhasesFields* fields, struct solverInfo* info, c_scalar
 
 
     // Sync field
-    syncPdfField( info, fld, 3 );
+    syncPdfField( &info->parallel, fld, 3 );
     
 }

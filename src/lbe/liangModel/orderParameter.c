@@ -22,6 +22,6 @@ void orderParameter( struct twoPhasesFields* fields, struct solverInfo* info, c_
     }
 
     // Sync field
-    syncScalarField( info, fld );
+    syncScalarField( &info->parallel, fld );
     
 }

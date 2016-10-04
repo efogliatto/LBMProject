@@ -66,6 +66,6 @@ void lbstream( struct twoPhasesFields* fields, struct solverInfo* info, c_scalar
 
     
     // Sync fields
-    syncPdfField( info, fld, info->lattice.Q );
+    syncPdfField( &info->parallel, fld, info->lattice.Q );
     
 }

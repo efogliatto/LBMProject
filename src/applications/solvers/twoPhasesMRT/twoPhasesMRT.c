@@ -79,14 +79,14 @@ int main( int argc, char **argv ) {
 
 
     // Synchronize initial fields
-    syncScalarField(&info, fields.phi );
-    syncScalarField(&info, fields.muPhi );
-    syncScalarField(&info, fields.p );
-    syncScalarField(&info, fields.rho );
+    syncScalarField(&info.parallel, fields.phi );
+    syncScalarField(&info.parallel, fields.muPhi );
+    syncScalarField(&info.parallel, fields.p );
+    syncScalarField(&info.parallel, fields.rho );
 
-    syncPdfField(&info, fields.U, 3 );
-    syncPdfField(&info, fields.h, info.lattice.Q );
-    syncPdfField(&info, fields.g, info.lattice.Q );
+    syncPdfField(&info.parallel, fields.U, 3 );
+    syncPdfField(&info.parallel, fields.h, info.lattice.Q );
+    syncPdfField(&info.parallel, fields.g, info.lattice.Q );
 
 
     

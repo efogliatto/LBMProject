@@ -53,7 +53,7 @@ void cahnHilliardCollision(struct twoPhasesFields* fields, struct solverInfo* in
     free(eq);
     
     // Sync fields
-    syncPdfField( info, fields->h, info->lattice.Q );
+    syncPdfField( &info->parallel, fields->h, info->lattice.Q );
     
     
 }

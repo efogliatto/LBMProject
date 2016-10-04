@@ -61,7 +61,7 @@ int main( int argc, char **argv ) {
     for( id = 0 ; id < info.lattice.nlocal ; id++) {
     	fields.phi[id] = id;
     }
-    syncScalarField( &info, fields.phi );
+    syncScalarField( &info.parallel, fields.phi );
 
     
     // Synchronize U
@@ -70,7 +70,7 @@ int main( int argc, char **argv ) {
     	    fields.U[id][k] = id;
     	}
     }
-    syncPdfField( &info, fields.U, 3 );
+    syncPdfField( &info.parallel, fields.U, 3 );
 
     // Synchronize g
     for( id = 0 ; id < info.lattice.nlocal ; id++) {
@@ -78,7 +78,7 @@ int main( int argc, char **argv ) {
     	    fields.g[id][k] = id;
     	}
     }
-    syncPdfField( &info, fields.g, info.lattice.Q );
+    syncPdfField( &info.parallel, fields.g, info.lattice.Q );
     
 
     // Advance in time. Collide, stream, update and write

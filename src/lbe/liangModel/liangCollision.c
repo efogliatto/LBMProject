@@ -71,6 +71,6 @@ void liangCollision(struct twoPhasesFields* fields, struct solverInfo* info) {
 
     
     // Sync fields
-    syncPdfField( info, fields->g, info->lattice.Q );
+    syncPdfField( &info->parallel, fields->g, info->lattice.Q );
     
 }

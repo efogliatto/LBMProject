@@ -155,6 +155,8 @@ extern "C" {
 
     // MPI info
 
+    info.parallel.nlocal = info.lattice.nlocal;
+    
     info.parallel.pid = pid;
     info.parallel.worldSize = sz;
 

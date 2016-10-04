@@ -73,6 +73,6 @@ void pressureWithU( struct twoPhasesFields* fields, struct solverInfo* info, c_s
 
 
     // Sync field
-    syncScalarField( info, fld );    
+    syncScalarField( &info->parallel, fld );    
     
 }

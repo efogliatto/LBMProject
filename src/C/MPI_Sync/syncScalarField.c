@@ -4,10 +4,10 @@
 #include <math.h>
 
 
-void syncScalarField( struct solverInfo* info, c_scalar* fld ) {
+void syncScalarField( struct mpiInfo* info, c_scalar* fld ) {
 
 
-    if( info->parallel.worldSize > 1 ) {
+    if( info->worldSize > 1 ) {
     
 	MPI_Barrier(MPI_COMM_WORLD);
 
@@ -23,12 +23,12 @@ void syncScalarField( struct solverInfo* info, c_scalar* fld ) {
     
 	// Move over send ghosts
 	unsigned int pid;
-	for( pid = 0 ; pid < info->parallel.nSendGhosts ; pid++ ) {
+	for( pid = 0 ; pid < info->nSendGhosts ; pid++ ) {
 
 	
 	    /* Move ovel blocks per send ghost */
 	    unsigned int bid;
-	    for( bid = 0 ; bid < info->parallel.sendScalarBlocks[pid] ; bid++ ) {
+	    for( bid = 0 ; bid < info->sendScalarBlocks[pid] ; bid++ ) {
 
 		// Move inside blocks
 		unsigned int i,
@@ -40,9 +40,9 @@ void syncScalarField( struct solverInfo* info, c_scalar* fld ) {
 		    lid = bid * MPI_BUFF_SIZE + i;
 		
 		    // Copy data
-		    if( lid < info->parallel.sendGhostIds[pid][1]) {
+		    if( lid < info->sendGhostIds[pid][1]) {
 
-			info->parallel.ssbuf[pid][lid] = fld[ info->parallel.sendGhostIds[pid][lid+2] ];
+			info->ssbuf[pid][lid] = fld[ info->sendGhostIds[pid][lid+2] ];
 
 		    }
 		
@@ -58,26 +58,26 @@ void syncScalarField( struct solverInfo* info, c_scalar* fld ) {
 
     
 	// Move over send ghosts
-	for( pid = 0 ; pid < info->parallel.nSendGhosts ; pid++ ) {
+	for( pid = 0 ; pid < info->nSendGhosts ; pid++ ) {
 
 	    // Move ovel blocks per send ghost
 	    unsigned int bid;
-	    for( bid = 0 ; bid < info->parallel.sendScalarBlocks[pid] ; bid++ ) {
+	    for( bid = 0 ; bid < info->sendScalarBlocks[pid] ; bid++ ) {
 
 		// Start position of each block
 		unsigned int lid = bid * MPI_BUFF_SIZE;
 
 		// Send data. tag = bid
-		if(  bid != (info->parallel.sendScalarBlocks[pid] - 1)  ) {
+		if(  bid != (info->sendScalarBlocks[pid] - 1)  ) {
 		    /* MPI_Isend (&info->parallel.ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request); */
-		    MPI_Send (&info->parallel.ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD);
+		    MPI_Send (&info->ssbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->sendGhostIds[pid][0], bid, MPI_COMM_WORLD);
 		}
 		else {
 
-		    int msg = info->parallel.sendScalarBlocks[pid] * MPI_BUFF_SIZE - info->parallel.sendGhostIds[pid][1];
+		    int msg = info->sendScalarBlocks[pid] * MPI_BUFF_SIZE - info->sendGhostIds[pid][1];
 		    msg = MPI_BUFF_SIZE - msg;
 		    /* MPI_Isend (&info->parallel.ssbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD, &request); */
-		    MPI_Send (&info->parallel.ssbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.sendGhostIds[pid][0], bid, MPI_COMM_WORLD);
+		    MPI_Send (&info->ssbuf[pid][lid], msg, MPI_DOUBLE, info->sendGhostIds[pid][0], bid, MPI_COMM_WORLD);
 
 		}
 	    
@@ -92,25 +92,25 @@ void syncScalarField( struct solverInfo* info, c_scalar* fld ) {
 	// Receive data in recv buffer
     
 	// Move over send ghosts
-	for( pid = 0 ; pid < info->parallel.nRecvGhosts ; pid++ ) {
+	for( pid = 0 ; pid < info->nRecvGhosts ; pid++ ) {
 
 	    // Move ovel blocks per send ghost
 	    unsigned int bid;
-	    for( bid = 0 ; bid < info->parallel.recvScalarBlocks[pid] ; bid++ ) {
+	    for( bid = 0 ; bid < info->recvScalarBlocks[pid] ; bid++ ) {
 
 		// Start position of each block
 		unsigned int lid =  bid * MPI_BUFF_SIZE;
 
 		// Send data. tag = bid
-		if(  bid != (info->parallel.recvScalarBlocks[pid] - 1)  ) {
+		if(  bid != (info->recvScalarBlocks[pid] - 1)  ) {
 		    /* MPI_Irecv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request); */
-		    MPI_Recv (&info->parallel.srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status);
+		    MPI_Recv (&info->srbuf[pid][lid], MPI_BUFF_SIZE, MPI_DOUBLE, info->recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status);
 		}
 		else {
-		    int msg = info->parallel.recvScalarBlocks[pid] * MPI_BUFF_SIZE - info->parallel.recvGhostIds[pid][1];
+		    int msg = info->recvScalarBlocks[pid] * MPI_BUFF_SIZE - info->recvGhostIds[pid][1];
 		    msg = MPI_BUFF_SIZE - msg;
 		    /* MPI_Irecv (&info->parallel.srbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &request); */
-		    MPI_Recv (&info->parallel.srbuf[pid][lid], msg, MPI_DOUBLE, info->parallel.recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status);
+		    MPI_Recv (&info->srbuf[pid][lid], msg, MPI_DOUBLE, info->recvGhostIds[pid][0], bid, MPI_COMM_WORLD, &status);
 		}
 
 	    }
@@ -130,13 +130,13 @@ void syncScalarField( struct solverInfo* info, c_scalar* fld ) {
 	// Copy data from buffer
     
 	// Move over send ghosts
-	for( pid = 0 ; pid < info->parallel.nRecvGhosts ; pid++ ) {
+	for( pid = 0 ; pid < info->nRecvGhosts ; pid++ ) {
 	    
 	    unsigned int i;
-	    for( i = 0 ; i < info->parallel.recvGhostIds[pid][1] ; i++ ) {
+	    for( i = 0 ; i < info->recvGhostIds[pid][1] ; i++ ) {
 		
 		// Copy data
-		fld[ info->lattice.nlocal + info->parallel.recvGhostIds[pid][i+2] ] = info->parallel.srbuf[pid][i];
+		fld[ info->nlocal + info->recvGhostIds[pid][i+2] ] = info->srbuf[pid][i];
 		
 	    }
 	    

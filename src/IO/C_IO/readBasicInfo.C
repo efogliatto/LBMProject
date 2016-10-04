@@ -268,6 +268,8 @@ extern "C" {
     inFile.close();
 
 
+    info.parallel.nlocal = info.lattice.nlocal;
+
 
     // Read total send ghosts
     fileName = latticeFolder.str() + "sendMapIds" ;     

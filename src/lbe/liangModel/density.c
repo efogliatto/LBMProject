@@ -14,6 +14,6 @@ void density( struct twoPhasesFields* fields, struct solverInfo* info, c_scalar*
 
 
     // Sync field
-    syncScalarField( info, fld );    
+    syncScalarField( &info->parallel, fld );    
     
 }

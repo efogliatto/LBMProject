@@ -12,6 +12,6 @@ void chemicalPotential( struct twoPhasesFields* fields, struct solverInfo* info,
 
     
     // Sync field
-    syncScalarField( info, chfield );
+    syncScalarField( &info->parallel, chfield );
     
 }

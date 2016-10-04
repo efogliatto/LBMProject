@@ -5,9 +5,6 @@
 #include <latticeInfo.h>
 #include <mpiInfo.h>
 
-#define MPI_BUFF_SIZE 100
-
-
 
 struct fieldsInfo {
 

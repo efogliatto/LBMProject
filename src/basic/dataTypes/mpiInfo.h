@@ -3,6 +3,8 @@
 
 #include <scalars_C.h>
 
+#define MPI_BUFF_SIZE 100
+
 struct mpiInfo {
 
     // Process id
@@ -25,6 +27,9 @@ struct mpiInfo {
 
     // Recv ghost ids. Id = nlocal + id
     unsigned int** recvGhostIds;
+
+    // Local elements
+    unsigned int nlocal;
 
 
     // Buffers
