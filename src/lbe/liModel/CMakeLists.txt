@@ -7,4 +7,5 @@ add_library(limodel SHARED
   interactionForce.c
   liDensity.c
   liVelocity.c
+  liMRTForce.c
   )
