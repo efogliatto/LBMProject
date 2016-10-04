@@ -53,7 +53,7 @@ struct li_latticeInfo {
     int* reverse;
     c_scalar* omega;
     c_scalar* weights;    
-    int principal[3][2];
+
     
 };
 
@@ -62,7 +62,7 @@ struct li_fieldsInfo {
     // Model matrix (inverse)
     c_scalar** invM;
 
-    // Collision matrix
+    // Collision matrix (\bar{\Lambda})
     c_scalar** Lambda;
 
     // Carnahan - Starling coefficients
@@ -71,8 +71,6 @@ struct li_fieldsInfo {
     c_scalar _R;
     c_scalar _T;
     c_scalar _G;
-    c_scalar _c;
-
     
     
 };

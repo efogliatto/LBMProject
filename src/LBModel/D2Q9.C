@@ -127,6 +127,20 @@ D2Q9::D2Q9() {
     _principal[1][1] = 2;
     _principal[2][0] = 0;
     _principal[2][1] = 0;
+
+
+
+    // Pseudopotential weights
+
+    _weights.push_back( 0 );
+    _weights.push_back(1/3);
+    _weights.push_back(1/3);
+    _weights.push_back(1/3);
+    _weights.push_back(1/3);
+    _weights.push_back(1/12);
+    _weights.push_back(1/12);
+    _weights.push_back(1/12);
+    _weights.push_back(1/12);
     
 }
 

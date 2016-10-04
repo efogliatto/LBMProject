@@ -166,3 +166,8 @@ const Matrix& basicLBModel::invM() const {  return _invM;  }
 const vector< vector<int> >& basicLBModel::principal() const {
     return _principal;
 }
+
+// Pseudopotential indices
+const vector<double>& basicLBModel::weights() const {
+    return _weights;
+}

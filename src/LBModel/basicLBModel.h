@@ -56,6 +56,9 @@ protected:
     // Principal indices
     std::vector< std::vector<int> > _principal;
 
+    // Pseudopotential weights
+    std::vector<double> _weights;
+
 
 
     /* ----------------------  Public member functions ----------------------  */
@@ -142,6 +145,9 @@ public:
 
     // Principal indices
     virtual const std::vector< std::vector<int> >& principal() const;
+
+    // Pseudopotential indices
+    virtual const std::vector< double >& weights() const;    
 
 };
 
