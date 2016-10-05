@@ -19,7 +19,7 @@ rho
 U
 {
     type latticeVectorField;
-    value (0 0 0);
+    value (1 2 3);
 }
 
 f

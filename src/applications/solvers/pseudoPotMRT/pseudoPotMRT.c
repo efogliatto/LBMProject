@@ -38,32 +38,32 @@ int main( int argc, char **argv ) {
     struct liModelInfo info = readLiModelInfo( pid, world );
     
 
-    /* // Neighbours indices */
-    /* int** nb = readNeighbours(&info.lattice, &info.parallel); */
-    /* if(pid == 0) { printf("\nReading neighbour indices\n"); } */
+    // Neighbours indices
+    int** nb = readNeighbours(&info.lattice, &info.parallel);
+    if(pid == 0) { printf("\nReading neighbour indices\n"); }
 
-    /* // Density */
-    /* double* rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time); */
-    /* if(pid == 0) { printf("\nReading field rho\n");  } */
+    // Density
+    double* rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time);
+    if(pid == 0) { printf("\nReading field rho\n");  }
 
-    /* // Velocity */
-    /* double** U = readVectorField("U", &info.lattice, &info.parallel, &info.time); */
-    /* if(pid == 0) { printf("\nReading field U\n");  } */
+    // Velocity
+    double** U = readVectorField("U", &info.lattice, &info.parallel, &info.time);
+    if(pid == 0) { printf("\nReading field U\n");  }
 
-    /* // Navier-Stokes field */
-    /* double** f   = readPdfField("f", &info.lattice, &info.parallel, &info.time); */
-    /* double** swp = readPdfField("f", &info.lattice, &info.parallel, &info.time); */
-    /* if(pid == 0) { printf("\nReading field f\n\n\n");  } */
+    // Navier-Stokes field
+    double** f   = readPdfField("f", &info.lattice, &info.parallel, &info.time);
+    double** swp = readPdfField("f", &info.lattice, &info.parallel, &info.time);
+    if(pid == 0) { printf("\nReading field f\n\n\n");  }
     
 
-    /* // Equilibrium distribution using rho and U */
-    /* { */
-    /* 	unsigned int id; */
-    /* 	for( id = 0 ; id < info.lattice.nlocal ; id++ ) { */
-    /* 	    liEquilibrium(&info, rho[id], U[id], f[id]); */
-    /* 	} */
+    // Equilibrium distribution using rho and U
+    {
+    	unsigned int id;
+    	for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
+    	    liEquilibrium(&info, rho[id], U[id], f[id]);
+    	}
 	
-    /* } */
+    }
     
     
 
@@ -74,8 +74,8 @@ int main( int argc, char **argv ) {
 
 
     
-    /* // Advance in time. Collide, stream, update and write */
-    /* while( updateTime(&info.time) ) { */
+    // Advance in time. Collide, stream, update and write
+    while( updateTime(&info.time) ) {
 
 
     	/* // Collide f (Navier-Stokes) */
@@ -86,10 +86,10 @@ int main( int argc, char **argv ) {
 
 
 	
-    	/* // Update macroscopic fields */
+    	// Update macroscopic fields
 
-    	/* // Density */
-    	/* liDensity( &info, rho, f ); */
+    	// Density
+    	liDensity( &info, rho, f );
 	
     	/* // Velocity */
     	/* liVelocity( &info, rho, U, f, nb, info.fields._T  ); */
@@ -97,34 +97,34 @@ int main( int argc, char **argv ) {
 
 
 	
-    	/* // Write fields */
-    	/* if( writeFlag(&info.time) ) { */
+    	// Write fields
+    	if( writeFlag(&info.time) ) {
 	    
-    	/*     if(pid == 0) { */
-    	/* 	printf("Time = %.2f (%d)\n", (double)info.time.current * info.time.tstep, info.time.current); */
-    	/* 	printf("Elapsed time = %.2f seconds\n\n", elapsed(&info.time) ); */
-    	/*     } */
+    	    if(pid == 0) {
+    		printf("Time = %.2f (%d)\n", (double)info.time.current * info.time.tstep, info.time.current);
+    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info.time) );
+    	    }
 	    
-    	/*     // ScalarFields */
-    	/*     writeScalarField("rho", rho, &info.lattice, &info.parallel, &info.time); */
+    	    // ScalarFields
+    	    writeScalarField("rho", rho, &info.lattice, &info.parallel, &info.time);
 
-    	/*     // Vector fields */
-    	/*     writeVectorField("U", U, &info.lattice, &info.parallel, &info.time); */
+    	    // Vector fields
+    	    writeVectorField("U", U, &info.lattice, &info.parallel, &info.time);
 
-    	/*     // Pdf fields */
-    	/*     writePdfField("f", f, &info.lattice, &info.parallel, &info.time); */
+    	    // Pdf fields
+    	    writePdfField("f", f, &info.lattice, &info.parallel, &info.time);
 	    
-    	/* } */
+    	}
 	
 
-    /* } */
+    }
 
 
     
-    /* // Print info */
-    /* if(pid == 0) { */
-    /* 	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info.time) ); */
-    /* } */
+    // Print info
+    if(pid == 0) {
+    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info.time) );
+    }
 
 
     MPI_Finalize();
