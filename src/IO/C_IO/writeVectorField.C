@@ -11,11 +11,11 @@ extern "C" {
 #endif
 
 
-void writeVectorField( char* fname, c_scalar** field, struct solverInfo* info) {
+void writeVectorField( char* fname, c_scalar** field, const struct latticeInfo* lattice, const struct mpiInfo* parallel, const struct timeInfo* time) {
 
     // Create folder if it does not exist
     std::ostringstream fileName;
-    fileName << "processor" << info->parallel.pid << "/" << info->time.current << "/";
+    fileName << "processor" << parallel->pid << "/" << time->current << "/";
     system( ("mkdir -p " + fileName.str()).c_str() );
     
     // Open file
@@ -29,10 +29,10 @@ void writeVectorField( char* fname, c_scalar** field, struct solverInfo* info) {
 
     
     // Total number of points
-    outFile << info->lattice.nlocal + info->parallel.nghosts << std::endl;
+    outFile << lattice->nlocal + parallel->nghosts << std::endl;
     
     // Write elements
-    for(uint i = 0 ; i < info->lattice.nlocal + info->parallel.nghosts ; i++) {
+    for(uint i = 0 ; i < lattice->nlocal + parallel->nghosts ; i++) {
 	outFile << field[i][0] << " ";
 	outFile << field[i][1] << " ";
 	outFile << field[i][2] << std::endl;

@@ -93,10 +93,10 @@ int main( int argc, char **argv ) {
     	    }
 	    
     	    // ScalarFields
-    	    writeScalarField("phi", fields.phi, &info);
+    	    writeScalarField("phi", fields.phi, &info.lattice, &info.parallel, &info.time);
     	
     	    // Vector fields
-    	    writeVectorField("U", fields.U, &info);
+    	    writeVectorField("U", fields.U, &info.lattice, &info.parallel, &info.time);
 
     	    // Pdf fields
     	    writePdfField("g", fields.g, &info.lattice, &info.parallel, &info.time);

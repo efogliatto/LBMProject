@@ -1,13 +1,15 @@
 #ifndef WRITEVECTORFIELD_H
 #define WRITEVECTORFIELD_H
 
-#include <basicSolverInfo.h>
+#include <latticeInfo.h>
+#include <mpiInfo.h>
+#include <timeInfo.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-    void writeVectorField( char* fname, c_scalar** field, struct solverInfo* info);
+    void writeVectorField( char* fname, c_scalar** field, const struct latticeInfo* lattice, const struct mpiInfo* parallel, const struct timeInfo* time);
     
 #ifdef __cplusplus
 }

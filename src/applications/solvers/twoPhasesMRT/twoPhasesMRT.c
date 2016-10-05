@@ -175,17 +175,17 @@ int main( int argc, char **argv ) {
 	    
 	    if(pid == 0) {
 		printf("Time = %.2f (%d)\n", (double)info.time.current * info.time.tstep, info.time.current);
-		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) );
+		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info.time) );
 	    }
 	    
     	    // ScalarFields
-    	    writeScalarField("phi", fields.phi, &info);
-    	    writeScalarField("muPhi", fields.muPhi, &info);
-    	    writeScalarField("rho", fields.rho, &info);
-    	    writeScalarField("p", fields.p, &info);
+    	    writeScalarField("phi", fields.phi, &info.lattice, &info.parallel, &info.time);
+    	    writeScalarField("muPhi", fields.muPhi, &info.lattice, &info.parallel, &info.time);
+    	    writeScalarField("rho", fields.rho, &info.lattice, &info.parallel, &info.time);
+    	    writeScalarField("p", fields.p, &info.lattice, &info.parallel, &info.time);
 
     	    // Vector fields
-    	    writeVectorField("U", fields.U, &info);
+    	    writeVectorField("U", fields.U, &info.lattice, &info.parallel, &info.time);
 
     	    // Pdf fields
     	    writePdfField("h", fields.h, &info.lattice, &info.parallel, &info.time);
