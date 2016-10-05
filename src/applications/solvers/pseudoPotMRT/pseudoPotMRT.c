@@ -62,8 +62,8 @@ int main( int argc, char **argv ) {
 
 
     
-    /* // Advance in time. Collide, stream, update and write */
-    /* while( updateTime(&info) ) { */
+    // Advance in time. Collide, stream, update and write
+    while( updateTime(&info.time) ) {
 
 
     	// Collide f (Navier-Stokes)
@@ -87,32 +87,32 @@ int main( int argc, char **argv ) {
 
 	
 	
-    	/* // Write fields */
-    	/* if( writeFlag(&info) ) { */
+    	// Write fields
+    	if( writeFlag(&info.time) ) {
 	    
-    	/*     if(pid == 0) { */
-    	/* 	printf("Time = %.2f (%d)\n", (double)info.time.current * info.time.tstep, info.time.current); */
-    	/* 	printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) ); */
-    	/*     } */
+    	    if(pid == 0) {
+    		printf("Time = %.2f (%d)\n", (double)info.time.current * info.time.tstep, info.time.current);
+    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info.time) );
+    	    }
 	    
     	/*     /\* // ScalarFields *\/ */
-    	/*     /\* writeScalarField("rho", fields.rho, &info); *\/ */
+    	/*     /\* writeScalarField("rho", fields.rho, &info.lattice, &info.parallel, &info.time); *\/ */
 
     	/*     /\* // Vector fields *\/ */
-    	/*     /\* writeVectorField("U", fields.U, &info); *\/ */
+    	/*     /\* writeVectorField("U", fields.U, &info.lattice, &info.parallel, &info.time); *\/ */
 
-    	/*     /\* // Pdf fields *\/ */
-    	/*     /\* writePdfField("f", fields.f, &info); *\/ */
+    	    // Pdf fields
+    	    writePdfField("f", f, &info.lattice, &info.parallel, &info.time);
 	    
-    	/* } */
+    	}
 
-    /* } */
+    }
 
 
     
     // Print info
     if(pid == 0) {
-    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info) );
+    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info.time) );
     }
 
 

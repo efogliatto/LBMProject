@@ -11,11 +11,11 @@ extern "C" {
 #endif
 
 
-void writePdfField( char* fname, c_scalar** field, struct solverInfo* info ) {
+void writePdfField( char* fname, c_scalar** field, const struct latticeInfo* lattice, const struct mpiInfo* parallel, const struct timeInfo* time ) {
 
     // Create folder if it does not exist
     std::ostringstream fileName;
-    fileName << "processor" << info->parallel.pid << "/" << info->time.current << "/";
+    fileName << "processor" << parallel->pid << "/" << time->current << "/";
     system( ("mkdir -p " + fileName.str()).c_str() );
     
     
@@ -30,11 +30,11 @@ void writePdfField( char* fname, c_scalar** field, struct solverInfo* info ) {
 
     
     // Total number of points
-    outFile << info->lattice.nlocal + info->parallel.nghosts << std::endl;
+    outFile << lattice->nlocal + parallel->nghosts << std::endl;
     
     // Write elements
-    for(uint i = 0 ; i < info->lattice.nlocal + info->parallel.nghosts; i++) {
-	for(uint j = 0 ; j < (uint)info->lattice.Q ; j++) {
+    for(uint i = 0 ; i < lattice->nlocal + parallel->nghosts; i++) {
+	for(uint j = 0 ; j < (uint)lattice->Q ; j++) {
 	    outFile << field[i][j] << " ";
 	}
 	outFile << std::endl;

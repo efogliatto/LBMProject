@@ -188,8 +188,8 @@ int main( int argc, char **argv ) {
     	    writeVectorField("U", fields.U, &info);
 
     	    // Pdf fields
-    	    writePdfField("h", fields.h, &info);
-    	    writePdfField("g", fields.g, &info);
+    	    writePdfField("h", fields.h, &info.lattice, &info.parallel, &info.time);
+    	    writePdfField("g", fields.g, &info.lattice, &info.parallel, &info.time);
 	    
     	}
 

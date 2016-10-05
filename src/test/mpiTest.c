@@ -99,7 +99,7 @@ int main( int argc, char **argv ) {
     	    writeVectorField("U", fields.U, &info);
 
     	    // Pdf fields
-    	    writePdfField("g", fields.g, &info);
+    	    writePdfField("g", fields.g, &info.lattice, &info.parallel, &info.time);
 	    
     	}
 
