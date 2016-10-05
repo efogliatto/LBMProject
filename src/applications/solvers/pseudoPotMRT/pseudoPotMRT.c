@@ -69,8 +69,8 @@ int main( int argc, char **argv ) {
     	// Collide f (Navier-Stokes)
     	liCollision( &info, info.fields._T, rho, U, nb, f );
 	
-    /* 	// Stream */
-    /* 	lbstream( &fields, &info, fields.h ); */
+    	// Stream
+	lbstream( f, swp, nb, &info.lattice, &info.parallel );
 
 
 	
@@ -84,8 +84,6 @@ int main( int argc, char **argv ) {
        
 
 
-
-	
 	
     	// Write fields
     	if( writeFlag(&info.time) ) {

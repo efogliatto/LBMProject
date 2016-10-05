@@ -124,8 +124,8 @@ int main( int argc, char **argv ) {
 
 	
 	// Stream
-	lbstream( &fields, &info, fields.h );
-	lbstream( &fields, &info, fields.g );
+	lbstream( fields.h, fields.swp, fields.nb, &info.lattice, &info.parallel );
+	lbstream( fields.g, fields.swp, fields.nb, &info.lattice, &info.parallel );
 
 
 
