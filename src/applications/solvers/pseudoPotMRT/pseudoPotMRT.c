@@ -13,6 +13,7 @@
 #include <liDensity.h>
 #include <liEquilibrium.h>
 
+#include <potential.h>
 
 int main( int argc, char **argv ) {
 
@@ -64,6 +65,7 @@ int main( int argc, char **argv ) {
     	}
 	
     }
+
     
     
 
@@ -90,6 +92,14 @@ int main( int argc, char **argv ) {
 
     	// Density
     	liDensity( &info, rho, f );
+
+	{
+	    unsigned int id;
+	    for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
+		printf("%f\n",potential(&info, rho[id], info.fields._T));
+	    }
+	
+	}    	
 	
     	/* // Velocity */
     	/* liVelocity( &info, rho, U, f, nb, info.fields._T  ); */
