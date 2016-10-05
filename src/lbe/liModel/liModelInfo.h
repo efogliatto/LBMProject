@@ -23,6 +23,11 @@ struct li_fieldsInfo {
     c_scalar _R;
     c_scalar _T;
     c_scalar _G;
+
+    // Forcing scheme coefficients
+    c_scalar sigma;
+    c_scalar tau_e;
+    c_scalar tau_c;
     
     
 };

@@ -156,6 +156,15 @@ extern "C" {
 
 
 
+    // Forcing scheme coefficients
+    
+    info.fields.sigma = (c_scalar)mp.lookUpEntry<double>("f/sigma");
+    
+    info.fields.tau_e = 1 / le[1];
+
+    info.fields.tau_c = 1 / le[2];
+
+
 
 
 

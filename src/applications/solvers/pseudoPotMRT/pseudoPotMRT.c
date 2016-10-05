@@ -80,29 +80,21 @@ int main( int argc, char **argv ) {
     while( updateTime(&info.time) ) {
 
 
-    	/* // Collide f (Navier-Stokes) */
-    	/* liCollision( &info, info.fields._T, rho, U, nb, f ); */
+    	// Collide f (Navier-Stokes)
+    	liCollision( &info, info.fields._T, rho, U, nb, f );
 	
-    	/* // Stream */
-	/* lbstream( f, swp, nb, &info.lattice, &info.parallel ); */
+    	// Stream
+	lbstream( f, swp, nb, &info.lattice, &info.parallel );
 
 
 	
     	// Update macroscopic fields
 
     	// Density
-    	liDensity( &info, rho, f );
-
-	{
-	    unsigned int id;
-	    for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
-		printf("%f\n",potential(&info, rho[id], info.fields._T));
-	    }
+    	liDensity( &info, rho, f );  	
 	
-	}    	
-	
-    	/* // Velocity */
-    	/* liVelocity( &info, rho, U, f, nb, info.fields._T  ); */
+    	// Velocity
+    	liVelocity( &info, rho, U, f, nb, info.fields._T  );
        
 
 
