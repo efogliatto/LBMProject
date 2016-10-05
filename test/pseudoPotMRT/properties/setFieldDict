@@ -1,0 +1,35 @@
+Shapes
+{
+    Box
+}
+
+Fields
+{
+    valuesList
+    {
+        1
+	rho
+    }
+}
+
+
+Box
+{
+    type box;
+    min ( 0 0 0 );
+    max ( 2.5 5 0 );
+    inside true;
+}
+
+
+rho
+{
+    type latticeScalarField;
+    function none;    
+    inside 1000;
+    shapesList
+    {
+	1
+	Box
+    }
+}

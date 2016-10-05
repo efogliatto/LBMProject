@@ -46,6 +46,8 @@ extern "C" {
     info.lattice.Q = lbm->Q();
 
 
+
+    
     // Read total number of points from global Ids
     std::ostringstream latticeFolder;
     latticeFolder << "processor" << pid << "/" << lbm->name() << "_lattice/";
@@ -116,6 +118,10 @@ extern "C" {
     
     Matrix M = lbm->invM() * Lambda * lbm->M();
 
+    info.fields.Lambda = (c_scalar**)malloc( lbm->Q() * sizeof(c_scalar*));
+    for(uint i = 0 ; i < lbm->Q() ; i++)
+	info.fields.Lambda[i] = (c_scalar*)malloc( lbm->Q() * sizeof(c_scalar)); 
+    
     for(uint i = 0 ; i < lbm->Q() ; i++) {
     	for(uint j = 0 ; j < lbm->Q() ; j++) {
     	    info.fields.Lambda[i][j] = Lambda[i][j];
@@ -123,6 +129,10 @@ extern "C" {
     }
 
 
+    info.fields.invM = (c_scalar**)malloc( lbm->Q() * sizeof(c_scalar*));
+    for(uint i = 0 ; i < lbm->Q() ; i++)
+	info.fields.invM[i] = (c_scalar*)malloc( lbm->Q() * sizeof(c_scalar)); 
+    
     // Model inverse matrix
     for(uint i = 0 ; i < lbm->Q() ; i++) {
     	for(uint j = 0 ; j < lbm->Q() ; j++) {

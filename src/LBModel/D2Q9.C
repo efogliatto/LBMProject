@@ -133,14 +133,14 @@ D2Q9::D2Q9() {
     // Pseudopotential weights
 
     _weights.push_back( 0 );
-    _weights.push_back(1/3);
-    _weights.push_back(1/3);
-    _weights.push_back(1/3);
-    _weights.push_back(1/3);
-    _weights.push_back(1/12);
-    _weights.push_back(1/12);
-    _weights.push_back(1/12);
-    _weights.push_back(1/12);
+    _weights.push_back(1.0/3);
+    _weights.push_back(1.0/3);
+    _weights.push_back(1.0/3);
+    _weights.push_back(1.0/3);
+    _weights.push_back(1.0/12);
+    _weights.push_back(1.0/12);
+    _weights.push_back(1.0/12);
+    _weights.push_back(1.0/12);
     
 }
 
