@@ -1,7 +1,7 @@
 #ifndef TIMEOPTIONS_H
 #define TIMEOPTIONS_H
 
-#include <basicSolverInfo.h>
+#include <timeInfo.h>
 #include <readNeighbours.h>
 #include <basicSolverInfo.h>
 #include <readBasicInfo.h>
@@ -15,13 +15,13 @@ extern "C" {
 #endif
 
     // Elapsed time
-    const double elapsed (const struct solverInfo* info);
+    const double elapsed (const struct timeInfo* info);
 
     // Flag to enable writing
-    const int writeFlag(const struct solverInfo* info);
+    const int writeFlag(const struct timeInfo* info);
 
     // Update time structure
-    const int updateTime(struct solverInfo* info);
+    const int updateTime(struct timeInfo* info);
     
     
 #ifdef __cplusplus

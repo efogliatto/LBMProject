@@ -82,14 +82,14 @@ int main( int argc, char **argv ) {
     
 
     // Advance in time. Collide, stream, update and write
-    while( updateTime(&info) ) {
+    while( updateTime(&info.time) ) {
 		
     	// Write fields
-    	if( writeFlag(&info) ) {
+    	if( writeFlag(&info.time) ) {
 	    
     	    if(pid == 0) {
     		printf("Time = %.2f\n", (double)info.time.current);
-    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info) );
+    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info.time) );
     	    }
 	    
     	    // ScalarFields
@@ -109,7 +109,7 @@ int main( int argc, char **argv ) {
     
     // Print info
     if(pid == 0) {
-	printf("\n  Finished in %.3f seconds \n\n", elapsed(&info) );
+	printf("\n  Finished in %.3f seconds \n\n", elapsed(&info.time) );
     }
 
 
