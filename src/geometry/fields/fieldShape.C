@@ -65,6 +65,28 @@ const double fieldShape::fieldValue( const string& fieldName, const Vector3& poi
 
 	}
 
+
+	else {
+
+	    // Rayleigh - Taylor function
+	    if( ffunc.compare("droplet") == 0 ) {
+
+		// Read properties
+		const double inside   = _dict.lookUpEntry<double>( fieldName + "/inside");
+		const double outside  = _dict.lookUpEntry<double>( fieldName + "/outside");
+		const double width    = _dict.lookUpEntry<double>( fieldName + "/width");
+		const Vector3 origin  = _dict.lookUpEntry<Vector3>( fieldName + "/origin");
+		const double ro       = _dict.lookUpEntry<double>( fieldName + "/radius");
+		
+		const double r = sqrt( (point - origin).sqMag() );
+		 
+		
+		val = 0.5 * (inside + outside)   -   0.5 * (inside - outside) * tanh( 2*(r-ro)/width );
+
+	    }
+
+	}
+
     }
 
 
