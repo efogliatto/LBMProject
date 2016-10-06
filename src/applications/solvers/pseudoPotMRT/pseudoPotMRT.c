@@ -11,9 +11,8 @@
 #include <readNeighbours.h>
 #include <liVelocity.h>
 #include <liDensity.h>
-#include <liEquilibrium.h>
+#include <readVTKInfo.h>
 
-#include <potential.h>
 
 int main( int argc, char **argv ) {
 
@@ -37,6 +36,9 @@ int main( int argc, char **argv ) {
 	
     // Simulation properties
     struct liModelInfo info = readLiModelInfo( pid, world );
+
+    // VTK properties
+    struct vtkInfo vtk = readVTKInfo(&info.lattice, &info.parallel);
     
 
     // Neighbours indices
@@ -57,22 +59,12 @@ int main( int argc, char **argv ) {
     if(pid == 0) { printf("\nReading field f\n\n\n");  }
     
 
-    // Equilibrium distribution using rho and U
-    {
-    	unsigned int id;
-    	for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
-    	    liEquilibrium(&info, rho[id], U[id], f[id]);
-    	}
-	
-    }
-
-    
-    
-
-    /* // Synchronize initial fields */
-    /* syncScalarField(&info.parallel, rho ); */
-    /* syncPdfField(&info.parallel, U, 3 ); */
-    /* syncPdfField(&info.parallel, f, info.lattice.Q ); */
+  
+   
+    // Synchronize initial fields
+    syncScalarField(&info.parallel, rho );
+    syncPdfField(&info.parallel, U, 3 );
+    syncPdfField(&info.parallel, f, info.lattice.Q );
 
 
     
