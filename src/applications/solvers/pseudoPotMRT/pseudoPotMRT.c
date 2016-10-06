@@ -13,6 +13,7 @@
 #include <liDensity.h>
 #include <readVTKInfo.h>
 
+#include <writeVTKFile.h>
 
 int main( int argc, char **argv ) {
 
@@ -107,6 +108,10 @@ int main( int argc, char **argv ) {
 
     	    // Pdf fields
     	    writePdfField("f", f, &info.lattice, &info.parallel, &info.time);
+
+
+	    // VTK file
+	    writeVTKFile(&vtk, &info.parallel, &info.time);
 	    
     	}
 	

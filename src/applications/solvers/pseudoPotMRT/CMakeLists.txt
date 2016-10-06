@@ -1,6 +1,6 @@
 #------------------ Pseudopotential MRT Solver ------------------#
 
-set ( PROJECT_LINK_LIBS libio.so libbasic.so libtime.so liblbmodel.so liblimodel.so libC_operations.so libMPI_Sync.so)
+set ( PROJECT_LINK_LIBS libio.so libbasic.so libtime.so liblbmodel.so liblimodel.so libC_operations.so libMPI_Sync.so libcio.so)
 link_directories( ~/LBMProject_v3/lib )
 
 

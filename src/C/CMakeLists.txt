@@ -5,3 +5,6 @@ add_subdirectory (C_operations)
 
 # MPI Synchronization
 add_subdirectory (MPI_Sync)
+
+# IO
+add_subdirectory (IO)
