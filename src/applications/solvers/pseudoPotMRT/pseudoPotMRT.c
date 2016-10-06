@@ -14,6 +14,10 @@
 #include <readVTKInfo.h>
 
 #include <writeVTKFile.h>
+#include <writeVTKExtra.h>
+#include <writeScalarToVTK.h>
+#include <writeVectorToVTK.h>
+#include <writePdfToVTK.h>
 
 int main( int argc, char **argv ) {
 
@@ -100,18 +104,26 @@ int main( int argc, char **argv ) {
     		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info.time) );
     	    }
 	    
-    	    // ScalarFields
-    	    writeScalarField("rho", rho, &info.lattice, &info.parallel, &info.time);
+    	    /* // ScalarFields */
+    	    /* writeScalarField("rho", rho, &info.lattice, &info.parallel, &info.time); */
 
-    	    // Vector fields
-    	    writeVectorField("U", U, &info.lattice, &info.parallel, &info.time);
+    	    /* // Vector fields */
+    	    /* writeVectorField("U", U, &info.lattice, &info.parallel, &info.time); */
 
-    	    // Pdf fields
-    	    writePdfField("f", f, &info.lattice, &info.parallel, &info.time);
+    	    /* // Pdf fields */
+    	    /* writePdfField("f", f, &info.lattice, &info.parallel, &info.time); */
 
 
 	    // VTK file
 	    writeVTKFile(&vtk, &info.parallel, &info.time);
+	    
+	    writeScalarToVTK("rho", rho, &info.lattice, &info.parallel, &info.time);
+
+	    writeVectorToVTK("U", U, &info.lattice, &info.parallel, &info.time);
+
+	    writePdfToVTK("f", f, &info.lattice, &info.parallel, &info.time);
+
+	    writeVTKExtra(&vtk, &info.parallel, &info.time);
 	    
     	}
 	

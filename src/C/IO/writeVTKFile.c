@@ -6,11 +6,11 @@ void writeVTKFile( struct vtkInfo* vtk, struct mpiInfo* parallel, struct timeInf
 
     FILE *outFile;
 
-    char* fileName;
+    char fileName[100];
 
-    /* // Create folder */
-    /* sprintf(fileName, "mkdir -p processor%d/%d", parallel->pid, time->current); */
-    /* system(fileName); */
+    // Create folder
+    sprintf(fileName, "mkdir -p processor%d/%d", parallel->pid, time->current);
+    system(fileName);
 
 
     // Open file
@@ -32,7 +32,7 @@ void writeVTKFile( struct vtkInfo* vtk, struct mpiInfo* parallel, struct timeInf
     // Write points
     unsigned int i;
     for( i = 0 ; i < vtk->np ; i++ ) {
-	fprintf(outFile, "%f %f %f\n", vtk->points[i][0], vtk->points[i][1], vtk->points[i][2]);
+    	fprintf(outFile, "          %f %f %f\n", vtk->points[i][0], vtk->points[i][1], vtk->points[i][2]);
     }
     
 
@@ -44,10 +44,11 @@ void writeVTKFile( struct vtkInfo* vtk, struct mpiInfo* parallel, struct timeInf
     // Write cells
     unsigned int j;
     for( i = 0 ; i < vtk->ncells ; i++ ) {
-	for( j = 0 ; j < vtk->cells[i][0] ; j++ ) {
-	    fprintf(outFile, "%d ", vtk->cells[i][j+1]);
-	}
-	fprintf(outFile, "\n");
+	fprintf(outFile, "          ");
+    	for( j = 0 ; j < vtk->cells[i][0] ; j++ ) {
+    	    fprintf(outFile, "%d ", vtk->cells[i][j+1]);
+    	}
+    	fprintf(outFile, "\n");
     }
 
 
@@ -58,18 +59,18 @@ void writeVTKFile( struct vtkInfo* vtk, struct mpiInfo* parallel, struct timeInf
     // Write offsets
     unsigned int acum = 0;
     for( i = 0 ; i < vtk->ncells ; i++ ) {
-	acum += vtk->cells[i][0];
-	fprintf(outFile, "%d\n", acum);
+    	acum += vtk->cells[i][0];
+    	fprintf(outFile, "          %d\n", acum);
     }
 
 
     fprintf(outFile, "        </DataArray>\n");
-    fprintf(outFile, "        <DataArray type=\"UInt8\" Name=\"types\" format=\"ascii\">\n");    
+    fprintf(outFile, "        <DataArray type=\"UInt8\" Name=\"types\" format=\"ascii\">\n");
 
 
     // Write cell type
     for( i = 0 ; i < vtk->ncells ; i++ ) {
-	fprintf(outFile, "8\n");
+    	fprintf(outFile, "          8\n");
     }
 
 
@@ -77,18 +78,28 @@ void writeVTKFile( struct vtkInfo* vtk, struct mpiInfo* parallel, struct timeInf
     fprintf(outFile, "      </Cells>\n");
 
     // Write field names
-    fprintf(outFile, "<PointData Scalars=\"");
+    fprintf(outFile, "      <PointData Scalars=\"");
     for( i = 0 ; i < vtk->nscalar ; i++ ) {
-	fprintf(outFile, "%s ", vtk->scalarFields[i]);
+	if(i == (vtk->nscalar - 1)) {
+	    fprintf(outFile, "%s", vtk->scalarFields[i]);
+	}
+	else {	    
+	    fprintf(outFile, "%s ", vtk->scalarFields[i]);
+	}
     }
 
     fprintf(outFile, "\" Vectors=\"");
     for( i = 0 ; i < vtk->nvector ; i++ ) {
-	fprintf(outFile, "%s ", vtk->vectorFields[i]);
+    	fprintf(outFile, "%s ", vtk->vectorFields[i]);
     }
     for( i = 0 ; i < vtk->npdf ; i++ ) {
-	fprintf(outFile, "%s ", vtk->pdfFields[i]);
-    }        
+	if(i == (vtk->npdf - 1)) {
+	    fprintf(outFile, "%s", vtk->pdfFields[i]);
+	}
+	else {
+	    fprintf(outFile, "%s ", vtk->pdfFields[i]);
+	}
+    }
 
     
     fprintf(outFile, "\">\n");
