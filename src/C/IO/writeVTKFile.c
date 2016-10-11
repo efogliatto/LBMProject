@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void writeVTKFile( struct vtkInfo* vtk, struct mpiInfo* parallel, struct timeInfo* time ) {
+void writeVTKFile( struct vtkInfo* vtk, struct mpiInfo* parallel, struct latticeInfo* lattice, struct timeInfo* time ) {
 
     FILE *outFile;
 
@@ -105,5 +105,91 @@ void writeVTKFile( struct vtkInfo* vtk, struct mpiInfo* parallel, struct timeInf
     fprintf(outFile, "\">\n");
     
     fclose(outFile);
+
+
+
+
+
+    // Write in time folder
+    if( parallel->pid == 0 ) {
+
+	// Create folder
+	sprintf(fileName, "mkdir -p %d", time->current);
+	system(fileName);
+
+
+	// Open file
+	sprintf(fileName, "%d/fields.pvtu", time->current);
+	outFile = fopen(fileName, "w");
+
+
+	// Write header
+	fprintf(outFile, "<?xml version=\"1.0\"?>\n");
+	fprintf(outFile, "<VTKFile type=\"PUnstructuredGrid\" version=\"0.1\" byte_order=\"LittleEndian\">\n");
+	fprintf(outFile, "  <PUnstructuredGrid GhostLevel=\"0\">\n");
+
+
+	// Write fields info
+	fprintf(outFile, "    <PPointData Scalars=\"");
+	for( i = 0 ; i < vtk->nscalar ; i++ ) {
+	    if(i == (vtk->nscalar - 1)) {
+		fprintf(outFile, "%s", vtk->scalarFields[i]);
+	    }
+	    else {	    
+		fprintf(outFile, "%s ", vtk->scalarFields[i]);
+	    }
+	}
+
+	fprintf(outFile, "\" Vectors=\"");
+	for( i = 0 ; i < vtk->nvector ; i++ ) {
+	    fprintf(outFile, "%s ", vtk->vectorFields[i]);
+	}
+	for( i = 0 ; i < vtk->npdf ; i++ ) {
+	    if(i == (vtk->npdf - 1)) {
+		fprintf(outFile, "%s", vtk->pdfFields[i]);
+	    }
+	    else {
+		fprintf(outFile, "%s ", vtk->pdfFields[i]);
+	    }
+	}
+
+	fprintf(outFile, "\">\n");
+
+	
+
+	// Write scalar fields info
+	for (i = 0 ; i < vtk->nscalar ; i++) {
+	    fprintf(outFile, "      <PDataArray type=\"Float32\" Name=\"%s\"/>\n", vtk->scalarFields[i]);
+	}
+
+	// Write vector fields info
+	for (i = 0 ; i < vtk->nvector ; i++) {
+	    fprintf(outFile, "      <PDataArray type=\"Float32\" Name=\"%s\" NumberOfComponents=\"3\"/>\n", vtk->vectorFields[i]);
+	}
+
+	// Write pdf fields info
+	for (i = 0 ; i < vtk->npdf ; i++) {
+	    fprintf(outFile, "      <PDataArray type=\"Float32\" Name=\"%s\" NumberOfComponents=\"%d\"/>\n", vtk->pdfFields[i], lattice->Q);
+	}		
+
+
+
+	fprintf(outFile, "    </PPointData>\n");
+	fprintf(outFile, "    <PPoints>\n");
+	fprintf(outFile, "      <PDataArray type=\"Float32\" NumberOfComponents=\"3\"/>\n");
+	fprintf(outFile, "    </PPoints>\n");
+	for (i = 0 ; i < vtk->npdf ; i++) {
+	    fprintf(outFile, "    <Piece Source=\"../processor0/%d/fields.vtu\"/>\n", time->current);
+	}
+	fprintf(outFile, "  </PUnstructuredGrid>\n");
+	fprintf(outFile, "</VTKFile>\n");
+
+
+	
+	fclose(outFile);
+
+    }
+
+    
 
 }

@@ -115,7 +115,7 @@ int main( int argc, char **argv ) {
 
 
 	    // VTK file
-	    writeVTKFile(&vtk, &info.parallel, &info.time);
+	    writeVTKFile(&vtk, &info.parallel, &info.lattice, &info.time);
 	    
 	    writeScalarToVTK("rho", rho, &info.lattice, &info.parallel, &info.time);
 
