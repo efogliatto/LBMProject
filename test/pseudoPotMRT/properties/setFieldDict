@@ -12,7 +12,6 @@ Fields
     }
 }
 
-
 Box
 {
     type box;
@@ -21,15 +20,15 @@ Box
     inside true;
 }
 
-
 rho
 {
     type latticeScalarField;
-    function none;    
-    inside 1000;
+    function none;
+    inside 125;
     shapesList
     {
-	1
-	Box
+        1
+        Box
     }
+    
 }

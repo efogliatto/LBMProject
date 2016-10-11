@@ -6,8 +6,8 @@ void liMRTForce( struct liModelInfo* info, double v[3], double F[3], double psi,
     if( info->lattice.Q == 9 ) {
 
 	S[0] = 0;
-	S[1] = 6 * (v[0]*F[0] + v[1]*F[1]) + 12 * info->fields.sigma * (F[0]*F[0] + F[1]*F[1]) / (psi * info->time.tstep*(info->fields.tau_e-0.5));
-	S[2] = -6 * (v[0]*F[0] + v[1]*F[1]) - 12 * info->fields.sigma * (F[0]*F[0] + F[1]*F[1]) / (psi * info->time.tstep*(info->fields.tau_c-0.5));
+	S[1] = 6 * (v[0]*F[0] + v[1]*F[1]) + 12 * info->fields.sigma * (F[0]*F[0] + F[1]*F[1]) / (psi * psi * info->time.tstep*(info->fields.tau_e-0.5));
+	S[2] = -6 * (v[0]*F[0] + v[1]*F[1]) - 12 * info->fields.sigma * (F[0]*F[0] + F[1]*F[1]) / (psi * psi * info->time.tstep*(info->fields.tau_c-0.5));
 	S[3] = F[0];
 	S[4] = -F[0];
 	S[5] = F[1];

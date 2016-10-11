@@ -75,24 +75,26 @@ int main( int argc, char **argv ) {
     
     // Advance in time. Collide, stream, update and write
     while( updateTime(&info.time) ) {
-
-
+	
+	
     	// Collide f (Navier-Stokes)
     	liCollision( &info, info.fields._T, rho, U, nb, f );
+	syncPdfField( &info.parallel, f, info.lattice.Q );
 	
-    	// Stream
-	lbstream( f, swp, nb, &info.lattice, &info.parallel );
-
+    	/* // Stream */
+	/* lbstream( f, swp, nb, &info.lattice, &info.parallel ); */
+	/* syncPdfField( &info.parallel, f, info.lattice.Q ); */
 
 	
-    	// Update macroscopic fields
+    	/* // Update macroscopic fields */
 
-    	// Density
-    	liDensity( &info, rho, f );  	
+    	/* // Density */
+    	/* liDensity( &info, rho, f ); */
+	/* syncScalarField( &info.parallel, rho );	 */
 	
-    	// Velocity
-    	liVelocity( &info, rho, U, f, nb, info.fields._T  );
-       
+    	/* // Velocity */
+    	/* liVelocity( &info, rho, U, f, nb, info.fields._T  ); */
+	/* syncPdfField( &info.parallel, U, 3 );        */
 
 
 	
@@ -104,17 +106,7 @@ int main( int argc, char **argv ) {
     		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info.time) );
     	    }
 	    
-    	    /* // ScalarFields */
-    	    /* writeScalarField("rho", rho, &info.lattice, &info.parallel, &info.time); */
-
-    	    /* // Vector fields */
-    	    /* writeVectorField("U", U, &info.lattice, &info.parallel, &info.time); */
-
-    	    /* // Pdf fields */
-    	    /* writePdfField("f", f, &info.lattice, &info.parallel, &info.time); */
-
-
-	    // VTK file
+	    // VTK files 
 	    writeVTKFile(&vtk, &info.parallel, &info.lattice, &info.time);
 	    
 	    writeScalarToVTK("rho", rho, &info.lattice, &info.parallel, &info.time);

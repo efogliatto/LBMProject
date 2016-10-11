@@ -33,7 +33,7 @@ void interactionForce( struct liModelInfo* info, double F[3], double* rho, int**
 
     // Extra constant
 
-    double beta = info->fields._G * potential(info, rho[id], T);
+    double beta = -info->fields._G * potential(info, rho[id], T);
     
     for( i = 0 ; i < 3 ; i++) {
 	

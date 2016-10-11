@@ -5,6 +5,7 @@
 #include <liMRTForce.h>
 #include <interactionForce.h>
 #include <potential.h>
+#include <stdio.h>
 
 void liCollision( struct liModelInfo* info, double T, double* rho, double** v, int** nb, double** f ) {
 
@@ -25,38 +26,39 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
     // Move over points
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
 
-	// Compute equilibrium
-	liEquilibrium(info, rho[id], v[id], alpha);
+	/* // Compute equilibrium */
+	/* liEquilibrium(info, rho[id], v[id], alpha); */
 
-	// Update alpha. alpha = f - f_eq
-	for( k = 0 ; k < info->lattice.Q ; k++ ) {
-	    alpha[k] = f[id][k] - alpha[k];
-	}
+	/* // Update alpha. alpha = f - f_eq */
+	/* for( k = 0 ; k < info->lattice.Q ; k++ ) { */
+	/*     alpha[k] = f[id][k] - alpha[k]; */
+	/* } */
 
-	// Update Beta. beta = Lambda * (f - f_eq)
-	matVecMult(info->fields.Lambda, alpha, beta, info->lattice.Q);
+	/* // Update Beta. beta = Lambda * (f - f_eq) */
+	/* matVecMult(info->fields.Lambda, alpha, beta, info->lattice.Q); */
 
 	// Interaction force
 	interactionForce( info, F, rho, nb, T, id);
+	printf("%f  %f  %f\n", F[0], F[1], F[2]);	
 
 	// MRT force
 	double psi = potential(info, rho[id], info->fields._T);
-	liMRTForce(info, v[id], F, psi, Sbar);
+	/* liMRTForce(info, v[id], F, psi, Sbar); */
 
-	// Force in velocity space. S = inv(M) * S_bar
-	matVecMult(info->fields.invM, Sbar, S, info->lattice.Q);
+	/* // Force in velocity space. S = inv(M) * S_bar */
+	/* matVecMult(info->fields.invM, Sbar, S, info->lattice.Q); */
 	
-	// Update gamma. gamma = Lambda * S
-	matVecMult(info->fields.Lambda, S, gamma, info->lattice.Q);
+	/* // Update gamma. gamma = Lambda * S */
+	/* matVecMult(info->fields.Lambda, S, gamma, info->lattice.Q); */
 
 
 	
-	// Collide f
-	for( k = 0 ; k < info->lattice.Q ; k++ ) {
+	/* // Collide f */
+	/* for( k = 0 ; k < info->lattice.Q ; k++ ) { */
 
-	    f[id][k] = f[id][k] - beta[k] + info->time.tstep * (S[k] - 0.5 * gamma[k]);
+	/*     f[id][k] = f[id][k] - beta[k] + info->time.tstep * (S[k] - 0.5 * gamma[k]); */
 
-	}
+	/* } */
 	
 
     }
@@ -68,5 +70,5 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
     free(gamma);
     free(Sbar);
     free(S);
-
+    
 }

@@ -19,11 +19,13 @@ void liVelocity( struct liModelInfo* info, double* rho, double** v, double** f, 
 	    v[id][k] = 0;
 	}	
 	
-	// Move over model velocities
-	for(k = 0 ; k < info->lattice.Q ; k++) {
 
-	    // Move over velocity components
-	    for( j = 0 ; j < 3 ; j++ ) {
+
+	// Move over velocity components
+	for( j = 0 ; j < 3 ; j++ ) {
+
+	    // Move over model velocities
+	    for(k = 0 ; k < info->lattice.Q ; k++) {
 
 		v[id][j] += info->lattice.vel[k][j] * f[id][k] * info->lattice.c;
 		    

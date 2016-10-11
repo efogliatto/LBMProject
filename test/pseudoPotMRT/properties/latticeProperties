@@ -1,9 +1,9 @@
 Shapes
 {
-    semiPeriodicBox
+    periodicBox
 }
 
-semiPeriodicBox
+periodicBox
 {
     type box;
     min ( 0 0 0 );

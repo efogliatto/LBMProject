@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Compute lattice
-latticeMesh -d D2Q9 --semiPeriodicBox
+latticeMesh -d D2Q9 --periodicBox
 
 # lattice partitioning
 latticeMeshPartition -n $1 -d D2Q9
