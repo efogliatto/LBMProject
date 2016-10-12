@@ -124,7 +124,7 @@ extern "C" {
     
     for(uint i = 0 ; i < lbm->Q() ; i++) {
     	for(uint j = 0 ; j < lbm->Q() ; j++) {
-    	    info.fields.Lambda[i][j] = Lambda[i][j];
+    	    info.fields.Lambda[i][j] = M[i][j];
     	}
     }
 

@@ -23,19 +23,36 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
     double F[3];
 
 
+    /* { */
+    /* 	unsigned int j,l; */
+    /* 	for(j=0;j<info->lattice.Q;j++){ */
+    /* 	    for(l=0;l<info->lattice.Q;l++){ */
+    /* 		printf("%f ", info->fields.Lambda[j][l]); */
+    /* 	    } */
+    /* 	    printf("\n"); */
+    /* 	} */
+    /* } */
+    
     // Move over points
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
 
-	/* // Compute equilibrium */
-	/* liEquilibrium(info, rho[id], v[id], alpha); */
+	// Compute equilibrium
+	liEquilibrium(info, rho[id], v[id], alpha);
 
-	/* // Update alpha. alpha = f - f_eq */
-	/* for( k = 0 ; k < info->lattice.Q ; k++ ) { */
-	/*     alpha[k] = f[id][k] - alpha[k]; */
-	/* } */
+	// Update alpha. alpha = f - f_eq
+	for( k = 0 ; k < info->lattice.Q ; k++ ) {
+	    alpha[k] = f[id][k] - alpha[k];
+	}
 
-	/* // Update Beta. beta = Lambda * (f - f_eq) */
-	/* matVecMult(info->fields.Lambda, alpha, beta, info->lattice.Q); */
+	// Update Beta. beta = Lambda * (f - f_eq)
+	matVecMult(info->fields.Lambda, alpha, beta, info->lattice.Q);
+	{
+	    unsigned int j;
+	    for(j=0;j<info->lattice.Q;j++){
+		printf("%f ", beta[j]);
+	    }
+	    printf("\n");
+	}
 
 	// Interaction force
 	interactionForce( info, F, rho, nb, T, id);
@@ -43,7 +60,6 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
 	// MRT force
 	double psi = potential(info, rho[id], info->fields._T);
 	liMRTForce(info, v[id], F, psi, Sbar);
-	printf("%f\n", Sbar[8]);
 
 	/* // Force in velocity space. S = inv(M) * S_bar */
 	/* matVecMult(info->fields.invM, Sbar, S, info->lattice.Q); */
