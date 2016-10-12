@@ -146,3 +146,33 @@ const Vector3 fieldShape::fieldValue( const string& fieldName, const Vector3& po
     return val;
 
 }
+
+
+
+
+// Field value, related to mesh point
+const pdf fieldShape::fieldValue( const string& fieldName, const Vector3& point, const pdf& nval) const {
+
+    pdf val;
+    
+    // Search field function type
+    const string ffunc = _dict.lookUpEntry<string>( fieldName + "/function");
+
+    // No function, only inside out
+    if( ffunc.compare("none") == 0 ) {
+
+	pdf in  = _dict.lookUpEntry<pdf>( fieldName + "/inside" );
+
+	if ( locatePoint( point ) ) {
+	    val = in;
+	}
+	else {
+	    val = nval;
+	}
+	    
+    }
+
+
+    return val;
+
+}

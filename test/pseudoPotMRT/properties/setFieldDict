@@ -7,8 +7,9 @@ Fields
 {
     valuesList
     {
-        1
+        2
 	rho
+	f
     }
 }
 
@@ -24,7 +25,20 @@ rho
 {
     type latticeScalarField;
     function none;
-    inside 125;
+    inside 360;
+    shapesList
+    {
+        1
+        Box
+    }
+    
+}
+
+f
+{
+    type latticePdfField;
+    function none;
+    inside (0 10 20 30 40 50 60 70 80);
     shapesList
     {
         1

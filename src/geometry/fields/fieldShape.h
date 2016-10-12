@@ -39,7 +39,10 @@ public:
     const double fieldValue( const string& fieldName, const Vector3& point, const double& nval) const;
 
     // Field value, related to mesh point
-    const Vector3 fieldValue( const string& fieldName, const Vector3& point, const Vector3& nval) const;    
+    const Vector3 fieldValue( const string& fieldName, const Vector3& point, const Vector3& nval) const;
+
+    // Field value, related to mesh point
+    const pdf fieldValue( const string& fieldName, const Vector3& point, const pdf& nval) const;        
     
     
 };

@@ -436,6 +436,89 @@ int main(int argc, char** argv) {
 			for(vector<pdf>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
 			    *pt = value;
 
+
+
+
+
+
+
+		    // Set values using shapes
+		    if(  find( changeFields.begin(), changeFields.end(), fieldsList[fid] ) != changeFields.end()  ) {
+		    
+		    
+			// Read list of shapes for this field
+			vector<string> snames = setFieldsDict.lookUpEntryList<string>( fieldsList[fid] + "/shapesList");
+
+			// Create map for this shapes
+			vector<fieldShape> shMap;
+
+			// Set values for each shape
+			for(auto sn : snames) {    shMap.push_back( fieldShape("properties/setFieldDict", sn) );     }
+
+		    
+
+			uint pointId(0);
+		    
+			// Set local values
+			for(lbPatch_iterator<pdf> pt = fld.begin() ; pt != fld.end() ; ++pt) {
+
+			    pdf val;
+			    
+
+			    // Set values for each shape
+			    for(uint shid = 0 ; shid < shMap.size() ; shid++) {
+
+				if( shMap[shid].locatePoint( meshPoints[pointId] ) ) {
+
+				    val = shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+
+				}
+
+
+			    }
+						    
+			
+			    pointId++;
+			
+			}
+
+
+			// Set ghost values
+			for(vector<pdf>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
+
+
+			    pdf val;
+			    int count(0);
+
+			    // Set values for each shape
+			    for(uint shid = 0 ; shid < shMap.size() ; shid++) {
+
+				if( shMap[shid].locatePoint( meshPoints[pointId] ) ) {
+
+				    val = shMap[shid].fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+				    count++;
+
+				}
+
+
+			    }
+
+						    
+			
+			    pointId++;
+
+			
+			}
+			
+
+		    }
+
+
+
+
+			
+
+			
 			// Add field to container
 			pdfFields.push_back( std::make_pair(fieldsList[fid],fld) );			
 

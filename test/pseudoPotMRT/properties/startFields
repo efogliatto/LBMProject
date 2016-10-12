@@ -13,17 +13,17 @@ fields
 rho
 {
     type latticeScalarField;
-    value 12.5;
+    value 36;
 }
 
 U
 {
     type latticeVectorField;
-    value (1 2 0);
+    value (0 0 0);
 }
 
 f
 {
     type latticePdfField;
-    value (0 0 0 0 0 0 0 0 0);
+    value (0 1 2 3 4 5 6 7 8);
 }
