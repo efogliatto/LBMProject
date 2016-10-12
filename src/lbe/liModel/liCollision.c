@@ -59,22 +59,22 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
 
 	// Update gamma. gamma = LambdaBar * S
 	matVecMult(info->fields.Lambda, S, gamma, info->lattice.Q);
+	
+	// Collide f
+	for( k = 0 ; k < info->lattice.Q ; k++ ) {
+
+	    f[id][k] = f[id][k] - beta[k] + info->time.tstep * (S[k] - 0.5 * gamma[k]);
+
+	}
+
 
 	{
 	    unsigned int j;
 	    for(j=0;j<info->lattice.Q;j++){
-		printf("%f ", gamma[j]);
+		printf("%f ", f[id][j]);
 	    }
 	    printf("\n");
-	}
-	
-	/* // Collide f */
-	/* for( k = 0 ; k < info->lattice.Q ; k++ ) { */
-
-	/*     f[id][k] = f[id][k] - beta[k] + info->time.tstep * (S[k] - 0.5 * gamma[k]); */
-
-	/* } */
-	
+	}	
 
     }
 

@@ -27,3 +27,8 @@ Sbar_36 = [0 10210.86055284303 -10210.86055284303 719.5663036920095 -719.5663036
 S_0 = inv(M) * Sbar_0';
 S_36 = inv(M) * Sbar_36';
 
+gamma_0 = LambdaBar * S_0;
+gamma_36 = LambdaBar * S_36;
+
+col = LambdaBar * f_eq_2' + (S_36 - 0.5*gamma_36);
+
