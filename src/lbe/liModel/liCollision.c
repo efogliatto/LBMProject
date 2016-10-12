@@ -57,18 +57,16 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
 	// Force in velocity space. S = inv(M) * S_bar
 	matVecMult(info->fields.invM, Sbar, S, info->lattice.Q);
 
+	// Update gamma. gamma = LambdaBar * S
+	matVecMult(info->fields.Lambda, S, gamma, info->lattice.Q);
+
 	{
-	    unsigned int j,l;
+	    unsigned int j;
 	    for(j=0;j<info->lattice.Q;j++){
-		printf("%f ", S[j]);
+		printf("%f ", gamma[j]);
 	    }
 	    printf("\n");
 	}
-	
-	/* // Update gamma. gamma = LambdaBar * S */
-	/* matVecMult(info->fields.Lambda, S, gamma, info->lattice.Q); */
-
-
 	
 	/* // Collide f */
 	/* for( k = 0 ; k < info->lattice.Q ; k++ ) { */
