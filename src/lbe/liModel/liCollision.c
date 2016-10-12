@@ -27,7 +27,7 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
     /* 	unsigned int j,l; */
     /* 	for(j=0;j<info->lattice.Q;j++){ */
     /* 	    for(l=0;l<info->lattice.Q;l++){ */
-    /* 		printf("%f ", info->fields.Lambda[j][l]); */
+    /* 		printf("%f ", info->fields.invM[j][l]); */
     /* 	    } */
     /* 	    printf("\n"); */
     /* 	} */
@@ -46,13 +46,6 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
 
 	// Update Beta. beta = Lambda * (f - f_eq)
 	matVecMult(info->fields.Lambda, alpha, beta, info->lattice.Q);
-	{
-	    unsigned int j;
-	    for(j=0;j<info->lattice.Q;j++){
-		printf("%f ", beta[j]);
-	    }
-	    printf("\n");
-	}
 
 	// Interaction force
 	interactionForce( info, F, rho, nb, T, id);
@@ -60,11 +53,19 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
 	// MRT force
 	double psi = potential(info, rho[id], info->fields._T);
 	liMRTForce(info, v[id], F, psi, Sbar);
-
-	/* // Force in velocity space. S = inv(M) * S_bar */
-	/* matVecMult(info->fields.invM, Sbar, S, info->lattice.Q); */
 	
-	/* // Update gamma. gamma = Lambda * S */
+	// Force in velocity space. S = inv(M) * S_bar
+	matVecMult(info->fields.invM, Sbar, S, info->lattice.Q);
+
+	{
+	    unsigned int j,l;
+	    for(j=0;j<info->lattice.Q;j++){
+		printf("%f ", S[j]);
+	    }
+	    printf("\n");
+	}
+	
+	/* // Update gamma. gamma = LambdaBar * S */
 	/* matVecMult(info->fields.Lambda, S, gamma, info->lattice.Q); */
 
 
