@@ -5,12 +5,13 @@
 #include <liMRTForce.h>
 #include <interactionForce.h>
 #include <potential.h>
-#include <stdio.h>
+#include <syncPdfField.h>
 
 void liCollision( struct liModelInfo* info, double T, double* rho, double** v, int** nb, double** f ) {
 
     // Indices
     unsigned int id, k;
+
     
     // Partial distributions
     double* alpha = (double*)malloc( info->lattice.Q * sizeof(double) );   // f - f_eq
@@ -19,19 +20,11 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
     double* Sbar  = (double*)malloc( info->lattice.Q * sizeof(double) );   // MRT force
     double* S     = (double*)malloc( info->lattice.Q * sizeof(double) );   // MRT force
 
+    
     // Interaction force
     double F[3];
 
 
-    /* { */
-    /* 	unsigned int j,l; */
-    /* 	for(j=0;j<info->lattice.Q;j++){ */
-    /* 	    for(l=0;l<info->lattice.Q;l++){ */
-    /* 		printf("%f ", info->fields.invM[j][l]); */
-    /* 	    } */
-    /* 	    printf("\n"); */
-    /* 	} */
-    /* } */
     
     // Move over points
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
@@ -68,14 +61,6 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
 	}
 
 
-	{
-	    unsigned int j;
-	    for(j=0;j<info->lattice.Q;j++){
-		printf("%f ", f[id][j]);
-	    }
-	    printf("\n");
-	}	
-
     }
 
 
@@ -85,5 +70,9 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
     free(gamma);
     free(Sbar);
     free(S);
-    
+
+
+    // Synchronize field
+    syncPdfField( &info->parallel, f, info->lattice.Q );
+
 }

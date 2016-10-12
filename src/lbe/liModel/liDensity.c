@@ -1,4 +1,5 @@
 #include <liDensity.h>
+#include <syncScalarField.h>
 
 void liDensity( struct liModelInfo* info, double* rho, double** f ) {
 
@@ -17,5 +18,9 @@ void liDensity( struct liModelInfo* info, double* rho, double** f ) {
 	}
 
     }
+
+
+    // Synchronize field
+    syncScalarField( &info->parallel, rho );
 	
 }

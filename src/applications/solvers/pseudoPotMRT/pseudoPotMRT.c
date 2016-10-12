@@ -79,22 +79,18 @@ int main( int argc, char **argv ) {
 	
     	// Collide f (Navier-Stokes)
     	liCollision( &info, info.fields._T, rho, U, nb, f );
-	syncPdfField( &info.parallel, f, info.lattice.Q );
 	
-    	/* // Stream */
-	/* lbstream( f, swp, nb, &info.lattice, &info.parallel ); */
-	/* syncPdfField( &info.parallel, f, info.lattice.Q ); */
+    	// Stream
+	lbstream( f, swp, nb, &info.lattice, &info.parallel );
 
 	
-    	/* // Update macroscopic fields */
+    	// Update macroscopic fields
 
-    	/* // Density */
-    	/* liDensity( &info, rho, f ); */
-	/* syncScalarField( &info.parallel, rho );	 */
+    	// Density
+    	liDensity( &info, rho, f );
 	
-    	/* // Velocity */
-    	/* liVelocity( &info, rho, U, f, nb, info.fields._T  ); */
-	/* syncPdfField( &info.parallel, U, 3 );        */
+    	// Velocity
+    	liVelocity( &info, rho, U, f, nb, info.fields._T  );
 
 
 	
