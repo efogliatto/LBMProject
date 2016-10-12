@@ -43,7 +43,7 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
 	// MRT force
 	double psi = potential(info, rho[id], info->fields._T);
 	liMRTForce(info, v[id], F, psi, Sbar);
-	printf("%f\n", Sbar[2]);
+	printf("%f\n", Sbar[8]);
 
 	/* // Force in velocity space. S = inv(M) * S_bar */
 	/* matVecMult(info->fields.invM, Sbar, S, info->lattice.Q); */
