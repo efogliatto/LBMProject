@@ -178,8 +178,8 @@ void writeVTKFile( struct vtkInfo* vtk, struct mpiInfo* parallel, struct lattice
 	fprintf(outFile, "    <PPoints>\n");
 	fprintf(outFile, "      <PDataArray type=\"Float32\" NumberOfComponents=\"3\"/>\n");
 	fprintf(outFile, "    </PPoints>\n");
-	for (i = 0 ; i < vtk->npdf ; i++) {
-	    fprintf(outFile, "    <Piece Source=\"../processor0/%d/fields.vtu\"/>\n", time->current);
+	for (i = 0 ; i < parallel->worldSize ; i++) {
+	    fprintf(outFile, "    <Piece Source=\"../processor%d/%d/fields.vtu\"/>\n", i, time->current);
 	}
 	fprintf(outFile, "  </PUnstructuredGrid>\n");
 	fprintf(outFile, "</VTKFile>\n");
