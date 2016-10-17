@@ -114,14 +114,27 @@ const Vector3 fieldShape::fieldValue( const string& fieldName, const Vector3& po
     // No function, only inside out
     if( ffunc.compare("none") == 0 ) {
 
-	Vector3 in  = _dict.lookUpEntry<Vector3>( fieldName + "/inside" );
+	Vector3 in   = _dict.lookUpEntry<Vector3>( fieldName + "/inside" );
+	Vector3 out  = _dict.lookUpEntry<Vector3>( fieldName + "/outside" );
+
+	// if ( locatePoint( point ) ) {
+	//     val = in;
+	// }
+	// else {
+	//     val = nval;
+	// }
 
 	if ( locatePoint( point ) ) {
-	    val = in;
+	    
+	    val = _shapes[0]->value( point, in, out );
+	    
 	}
+	
 	else {
+	    
 	    val = nval;
-	}
+	    
+	}	
 	    
     }
 

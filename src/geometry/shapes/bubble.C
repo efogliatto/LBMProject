@@ -50,6 +50,13 @@ const double bubble::value(const Vector3& v) const {
     return tanh(2 * ( sqrt((v-_origin).sqMag()) - _radius) / _width);
 }
 
+// Value
+const Vector3 bubble::value( const Vector3& v, const Vector3& in, const Vector3& out ) const {
+    
+    return (in + out) * 0.5 - (in - out) * 0.5 * tanh(   2 * ( sqrt((v-_origin).sqMag()) - _radius) / _width ) ;
+    
+}
+
 
 // Value
 const double bubble::value(const Vector3& v, const double& val) const {

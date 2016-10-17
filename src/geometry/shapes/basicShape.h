@@ -82,7 +82,10 @@ public:
     virtual const double value(const Vector3& v) const;
 
     // Value
-    virtual const double value(const Vector3& v, const double& val) const;    
+    virtual const double value(const Vector3& v, const double& val) const;
+
+    // Value
+    virtual const Vector3 value( const Vector3& v, const Vector3& in, const Vector3& out ) const;    
     
 };
 
