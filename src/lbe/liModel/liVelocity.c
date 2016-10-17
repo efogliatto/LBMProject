@@ -8,39 +8,42 @@ void liVelocity( struct liModelInfo* info, double* rho, double** v, double** f, 
 
     // Interaction force
     double F[3];
+
+    // Auxiliar velocity
+    double V[3];
     
     // Move over points
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
 
-	// Compute interaction force
-	interactionForce( info, F, rho, nb, T, id );
+    	// Compute interaction force
+    	interactionForce( info, F, rho, nb, T, id );
 
-	// Initialize velocities
-	for(k = 0 ; k < 3 ; k++) {
-	    v[id][k] = 0;
-	}	
+    	// Initialize velocities
+    	for(k = 0 ; k < 3 ; k++) {
+    	    V[k] = 0;
+    	}
 	
 
 
-	// Move over velocity components
-	for( j = 0 ; j < 3 ; j++ ) {
+    	// Move over velocity components
+    	for( j = 0 ; j < 3 ; j++ ) {
 
-	    // Move over model velocities
-	    for(k = 0 ; k < info->lattice.Q ; k++) {
+    	    // Move over model velocities
+    	    for(k = 0 ; k < info->lattice.Q ; k++) {
 
-		v[id][j] += info->lattice.vel[k][j] * f[id][k] * info->lattice.c;
+    		V[j] += info->lattice.vel[ info->lattice.reverse[k] ][j] * f[id][k] * info->lattice.c;
 		    
-	    }
+    	    }
 	    
-	}
+    	}
 
 
-	// Add interaction force and divide by density
-	for( j = 0 ; j < 3 ; j++ ) {
+    	// Add interaction force and divide by density
+    	for( j = 0 ; j < 3 ; j++ ) {
 
-	    v[id][j] = ( v[id][j]   +   F[j] * info->time.tstep * 0.5  ) / rho[id];
+    	    v[id][j] = ( V[j]   +   F[j] * info->time.tstep * 0.5  ) / rho[id];
 
-	}
+    	}
 	
 
     }

@@ -12,6 +12,7 @@
 #include <liVelocity.h>
 #include <liDensity.h>
 #include <readVTKInfo.h>
+#include <liEquilibrium.h>
 
 #include <writeVTKFile.h>
 #include <writeVTKExtra.h>
@@ -62,7 +63,20 @@ int main( int argc, char **argv ) {
     double** f   = readPdfField("f", &info.lattice, &info.parallel, &info.time);
     double** swp = readPdfField("f", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field f\n\n\n");  }
+
+
+    // Compute initial distribution (equilibrium) for f
+    {
+
+    	unsigned int id;
+
+    	for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
+
+    	    liEquilibrium(&info, rho[id], U[id], f[id]);
+
+    	}
     
+    }
 
   
    

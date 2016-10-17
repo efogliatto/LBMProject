@@ -22,7 +22,7 @@ void writeVectorToVTK( char* fname, double** field, struct latticeInfo* lattice,
     // Print field
     unsigned int i;
     for( i = 0 ; i < lattice->nlocal + parallel->nghosts ; i++ ) {
-	fprintf(outFile, "          %f %f %f\n", field[i][0], field[i][2], field[i][2]);
+	fprintf(outFile, "          %f %f %f\n", field[i][0], field[i][1], field[i][2]);
     }
 
     fprintf(outFile, "        </DataArray>\n");
