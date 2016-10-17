@@ -12,6 +12,13 @@ protected:
     double _width;
     
 
+    // Inside value
+    double _in;
+    
+    // Outside value
+    double _out;
+
+    
     /* ----------------------  Public member functions ----------------------  */
 
 public:

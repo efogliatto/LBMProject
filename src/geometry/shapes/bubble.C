@@ -35,7 +35,11 @@ void bubble::readProperties(const std::string& dictName) {
         
     dictionary dict(dictName);
 
-    _width = dict.lookUpEntry<double>( _name + "/width" );    
+    _width = dict.lookUpEntry<double>( _name + "/width" );
+
+    _in  = dict.lookUpEntry<double>( _name + "/in" );
+
+    _out = dict.lookUpEntry<double>( _name + "/out" );    
     
 }
 
@@ -49,7 +53,8 @@ const double bubble::value(const Vector3& v) const {
 
 // Value
 const double bubble::value(const Vector3& v, const double& val) const {
-    return -val*tanh(2 * ( sqrt((v-_origin).sqMag()) - _radius) / _width);
+    // return -val*tanh(2 * ( sqrt((v-_origin).sqMag()) - _radius) / _width);
+    return 0.5 * (_in + _out) - 0.5 * (_in - _out) * tanh(   2 * ( sqrt((v-_origin).sqMag()) - _radius) / _width ) ;    
 }
 
 
