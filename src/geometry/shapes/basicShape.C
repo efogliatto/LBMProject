@@ -78,21 +78,3 @@ const double basicShape::value(const Vector3& v) const {
 const double basicShape::value(const Vector3& v, const double& val) const {
     return val;
 }
-
-
-// Value
-const Vector3 basicShape::value( const Vector3& v, const Vector3& in, const Vector3& out ) const {
-    
-    Vector3 a;
-
-    if( locatePoint(v) ) {
-	a = in;
-    }
-
-    else {
-	a = out;
-    }
-
-    return a;
-    
-}

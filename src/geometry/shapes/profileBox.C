@@ -36,10 +36,6 @@ void profileBox::readProperties(const std::string& dictName) {
     dictionary dict(dictName);
 
     _width = dict.lookUpEntry<double>( _name + "/width" );
-
-    _in  = dict.lookUpEntry<double>( _name + "/in" );
-
-    _out = dict.lookUpEntry<double>( _name + "/out" );
     
 }
 
@@ -53,8 +49,7 @@ const double profileBox::value(const Vector3& v) const {
 
 // Value
 const double profileBox::value(const Vector3& v, const double& val) const {
-    // return -val * tanh(   ( 2 * (v.y() - _bbox_max.y()) ) / _width   ) ;
-    return 0.5 * (_in + _out) - 0.5 * (_in - _out) * tanh(   ( 2 * (v.y() - _bbox_max.y()) ) / _width   ) ;
+    return -val * tanh(   ( 2 * (v.y() - _bbox_max.y()) ) / _width   ) ;
 }
 
 

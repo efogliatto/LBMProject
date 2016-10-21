@@ -28,25 +28,6 @@ void interactionForce( struct liModelInfo* info, double F[3], double* rho, int**
 
 	}
 
-	// Use reverse velocity (only temporary)
-	else {
-
-	    // Reverse velocity
-	    int rvel = info->lattice.reverse[k];
-
-	    // Reverse neighbour
-	    int nnid = nb[id][rvel];
-
-	    double alpha = info->lattice.weights[rvel] * potential(info, rho[nnid], T) * info->lattice.c;
-
-	    for( i = 0 ; i < 3 ; i++ ) {
-
-		F[i] +=  alpha * info->lattice.vel[rvel][i] ;
-
-	    }	    
-	    
-	}
-
     }
 
 

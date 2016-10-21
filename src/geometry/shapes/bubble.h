@@ -12,13 +12,6 @@ protected:
     double _width;
     
 
-    // Inside value
-    double _in;
-    
-    // Outside value
-    double _out;
-
-    
     /* ----------------------  Public member functions ----------------------  */
 
 public:
@@ -41,9 +34,6 @@ public:
 
     // Value
     const double value(const Vector3& v) const;
-
-    // Value
-    const Vector3 value( const Vector3& v, const Vector3& in, const Vector3& out ) const;
 
     // Value
     const double value(const Vector3& v, const double& val) const;

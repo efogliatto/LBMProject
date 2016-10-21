@@ -9,7 +9,7 @@ Fields
     {
         2
 	rho
-	U
+	f
     }
 }
 
@@ -34,11 +34,11 @@ rho
     
 }
 
-U
+f
 {
-    type latticeVectorField;
+    type latticePdfField;
     function none;
-    inside (1 1 1);
+    inside (0 10 20 30 40 50 60 70 80);
     shapesList
     {
         1
