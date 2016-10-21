@@ -19,6 +19,8 @@
 #include <writeVectorToVTK.h>
 #include <writePdfToVTK.h>
 
+#include <liEquilibrium.h>
+
 int main( int argc, char **argv ) {
 
     int pid, world;
@@ -64,7 +66,20 @@ int main( int argc, char **argv ) {
     if(pid == 0) { printf("\nReading field f\n\n\n");  }
     
 
-  
+    // Initial equilibrium distribution
+    {
+
+	unsigned int id;
+
+	for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
+
+	    liEquilibrium(&info, rho[id], U[id], f[id]);;
+
+	}
+	
+    }
+
+    
    
     // Synchronize initial fields
     syncScalarField(&info.parallel, rho );
