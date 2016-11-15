@@ -172,7 +172,6 @@ int main(int argc, char** argv) {
 
     cout << "Reading boundary nodes" << endl << endl;
 
-    // filename = "lattice/boundary";
     filename = vm["DQmodel"].as<string>() + "_lattice/boundary";
     inFile.open( filename.c_str() );
     if( !inFile.is_open() ){
@@ -297,6 +296,12 @@ int main(int argc, char** argv) {
     }    
 
 
+    // Assign boundary elements
+    for(vector< IOPatch<Vector3> >::iterator it = patches.begin() ; it != patches.end() ; it++)
+	it->setGlobalBdMap( globalBmap );
+    
+    
+
     // Write patch information
     for(uint pid = 0 ; pid < patches.size() ; pid++) {
 
@@ -325,6 +330,9 @@ int main(int argc, char** argv) {
 
     	// VTK Cells
     	patches[pid].writeVTKCells(  "vtkCells", folderName.str(), vtkCells );
+
+	// Boundary elements
+	patches[pid].writeBoundariesIds(  "boundary", folderName.str() );
 	
     }
 
