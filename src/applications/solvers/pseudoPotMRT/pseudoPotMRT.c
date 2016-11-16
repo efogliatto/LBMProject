@@ -21,7 +21,11 @@
 
 #include <liEquilibrium.h>
 
+#include <readBoundaryElements.h>
+
+
 int main( int argc, char **argv ) {
+
 
     int pid, world;
     
@@ -52,6 +56,10 @@ int main( int argc, char **argv ) {
     int** nb = readNeighbours(&info.lattice, &info.parallel);
     if(pid == 0) { printf("\nReading neighbour indices\n"); }
 
+    // Boundary elements
+    struct bdInfo bdElements = readBoundaryElements( pid, info.lattice.d, info.lattice.Q );
+   
+    
     // Density
     double* rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field rho\n");  }
@@ -65,7 +73,7 @@ int main( int argc, char **argv ) {
     double** swp = readPdfField("f", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field f\n\n\n");  }
     
-
+    
     // Initial equilibrium distribution
     {
 

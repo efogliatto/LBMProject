@@ -15,6 +15,10 @@ struct bdInfo {
     // Boundary names
     char** _bdNames;
 
+    // Indices per boundary
+    unsigned int** _idx;
+    
+
 
     // Number of fields that use boundaries
     unsigned int _nf;
@@ -24,6 +28,9 @@ struct bdInfo {
 
     // Boundary condition
     char** _bc;
+
+    // Dummy value
+    double** _value;
     
     
 };
