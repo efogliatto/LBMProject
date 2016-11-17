@@ -27,10 +27,10 @@ struct bdInfo {
     char** _fields;
 
     // Boundary condition
-    char** _bc;
+    unsigned int** _bc;
 
     // Dummy value
-    double** _value;
+    double*** _value;
     
     
 };

@@ -1,0 +1,33 @@
+fields
+{
+    1
+    f
+}
+
+f
+{
+    boundaryConditions
+    {
+        periodicBox_X0
+    	{
+	    type periodic;
+    	}
+
+        periodicBox_X1
+        {
+	    type periodic;
+        }
+
+        periodicBox_Y0
+        {
+	    type fixedU;
+            value (0 0 0);
+        }
+
+        periodicBox_Y1
+        {
+	    type fixedU;
+            value (0 0 0);
+        }
+    }
+}

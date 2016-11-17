@@ -6,6 +6,7 @@ add_library(io SHARED
   vtkPatchWriter.C
   C_IO/readBasicInfo.C
   C_IO/readBoundaryElements.C
+  C_IO/readBoundaryConditions.C
   C_IO/readVTKInfo.C
   C_IO/readLiModelInfo.C
   C_IO/readScalarField.C

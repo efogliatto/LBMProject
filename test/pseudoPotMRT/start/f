@@ -31,29 +31,3 @@ boundary
         value ( 0 0 0 0 0 0 0 0 0 );
     }
 }
-
-
-boundaryConditions
-{
-    semiPeriodicBox_X0
-    {
-	type periodic;
-    }
-
-    semiPeriodicBox_X1
-    {
-	type periodic;
-    }
-
-    semiPeriodicBox_Y0
-    {
-	type fixedVector;
-        value (0 0 0);
-    }
-
-    semiPeriodicBox_Y1
-    {
-	type fixedVector;
-        value (0 0 0);
-    }
-}

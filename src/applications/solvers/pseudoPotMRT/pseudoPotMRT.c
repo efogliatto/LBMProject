@@ -22,6 +22,7 @@
 #include <liEquilibrium.h>
 
 #include <readBoundaryElements.h>
+#include <readBoundaryConditions.h>
 
 
 int main( int argc, char **argv ) {
@@ -58,7 +59,8 @@ int main( int argc, char **argv ) {
 
     // Boundary elements
     struct bdInfo bdElements = readBoundaryElements( pid, info.lattice.d, info.lattice.Q );
-   
+    readBoundaryConditions( &bdElements );
+    
     
     // Density
     double* rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time);
