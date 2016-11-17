@@ -8,3 +8,6 @@ add_subdirectory (MPI_Sync)
 
 # IO
 add_subdirectory (IO)
+
+# Boundary conditions
+add_subdirectory (boundary)
