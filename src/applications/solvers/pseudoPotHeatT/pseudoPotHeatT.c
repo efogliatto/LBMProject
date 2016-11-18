@@ -21,6 +21,11 @@
 
 #include <liEquilibrium.h>
 
+#include <readBoundaryElements.h>
+#include <readBoundaryConditions.h>
+
+#include <updateBC.h>
+
 
 int main( int argc, char **argv ) {
 
@@ -53,17 +58,32 @@ int main( int argc, char **argv ) {
     // Neighbours indices
     int** nb = readNeighbours(&info.lattice, &info.parallel);
     if(pid == 0) { printf("\nReading neighbour indices\n"); }
+
     
+    // Boundary elements
+    struct bdInfo bdElements = readBoundaryElements( pid, info.lattice.d, info.lattice.Q );
+    readBoundaryConditions( &bdElements );
+    
+
+
+    // Macroscopic fields
+    struct macroFields mfields;
+
     
     // Density
-    double* rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time);
+    mfields.rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field rho\n");  }
 
     
     // Velocity
-    double** U = readVectorField("U", &info.lattice, &info.parallel, &info.time);
+    mfields.U = readVectorField("U", &info.lattice, &info.parallel, &info.time);
     if(pid == 0) { printf("\nReading field U\n");  }
 
+    
+    // Temperature
+    mfields.T = readScalarField("T", &info.lattice, &info.parallel, &info.time);
+    if(pid == 0) { printf("\nReading field T\n");  }
+    
     
     // Navier-Stokes field
     double** f   = readPdfField("f", &info.lattice, &info.parallel, &info.time);
@@ -78,7 +98,7 @@ int main( int argc, char **argv ) {
 
 	for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
 
-	    liEquilibrium(&info, rho[id], U[id], f[id]);;
+	    liEquilibrium(&info, mfields.rho[id], mfields.U[id], f[id]);;
 
 	}
 	
@@ -87,8 +107,9 @@ int main( int argc, char **argv ) {
     
    
     // Synchronize initial fields
-    syncScalarField(&info.parallel, rho );
-    syncPdfField(&info.parallel, U, 3 );
+    syncScalarField(&info.parallel, mfields.rho );
+    syncScalarField(&info.parallel, mfields.T );
+    syncPdfField(&info.parallel, mfields.U, 3 );
     syncPdfField(&info.parallel, f, info.lattice.Q );
 
 
@@ -98,7 +119,7 @@ int main( int argc, char **argv ) {
 	
 	
     	// Collide f (Navier-Stokes)
-    	liCollision( &info, info.fields._T, rho, U, nb, f );
+    	liCollision( &info, info.fields._T, mfields.rho, mfields.U, nb, f );
 	
     	// Stream
 	lbstream( f, swp, nb, &info.lattice, &info.parallel );
@@ -107,10 +128,10 @@ int main( int argc, char **argv ) {
     	// Update macroscopic fields
 
     	// Density
-    	liDensity( &info, rho, f );
+    	liDensity( &info, mfields.rho, f );
 	
     	// Velocity
-    	liVelocity( &info, rho, U, f, nb, info.fields._T  );
+    	liVelocity( &info, mfields.rho, mfields.U, f, nb, info.fields._T  );
 
 
 	
@@ -125,9 +146,9 @@ int main( int argc, char **argv ) {
 	    // VTK files 
 	    writeVTKFile(&vtk, &info.parallel, &info.lattice, &info.time);
 	    
-	    writeScalarToVTK("rho", rho, &info.lattice, &info.parallel, &info.time);
+	    writeScalarToVTK("rho", mfields.rho, &info.lattice, &info.parallel, &info.time);
 
-	    writeVectorToVTK("U", U, &info.lattice, &info.parallel, &info.time);
+	    writeVectorToVTK("U", mfields.U, &info.lattice, &info.parallel, &info.time);
 
 	    writePdfToVTK("f", f, &info.lattice, &info.parallel, &info.time);
 
