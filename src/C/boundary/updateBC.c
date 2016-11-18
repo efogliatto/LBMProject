@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void updateBC( struct bdInfo* bdElements, int** nb, double** field, char* fname, struct latticeInfo* lattice ) {
+void updateBC( struct bdInfo* bdElements, int** nb, double** field, char* fname, struct latticeInfo* lattice, struct macroFields* mfields ) {
 
     unsigned int fid = 0,
 	bndId;
