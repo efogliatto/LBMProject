@@ -1,0 +1,33 @@
+valuesAtPoints
+{
+    type uniform;
+    value 567;
+}
+
+
+boundary
+{
+    Box_X0
+    {
+	type fixedValue;
+	value 567;
+    }
+
+    Box_X1
+    {
+	type fixedValue;
+	value 756;
+    }
+
+    Box_Y0
+    {
+	type fixedValue;
+	value 567;
+    }
+
+    Box_Y1
+    {
+	type fixedValue;
+	value 567;
+    }
+}

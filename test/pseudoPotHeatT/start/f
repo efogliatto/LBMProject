@@ -1,0 +1,33 @@
+valuesAtPoints
+{
+    type uniform;
+    value ( 0 0 0 0 0 0 0 0 0 );
+}
+
+
+boundary
+{
+    Box_X0
+    {
+	type uniform;
+        value ( 0 0 0 0 0 0 0 0 0 );
+    }
+
+    Box_X1
+    {
+	type uniform;
+        value ( 0 0 0 0 0 0 0 0 0 );
+    }
+
+    Box_Y0
+    {
+	type uniform;
+        value ( 0 0 0 0 0 0 0 0 0 );
+    }
+
+    Box_Y1
+    {
+	type uniform;
+        value ( 0 0 0 0 0 0 0 0 0 );
+    }
+}

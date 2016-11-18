@@ -1,0 +1,36 @@
+fields
+{
+    valuesList
+    {
+        4
+	U
+	rho
+	f
+	T
+    }
+}
+
+
+rho
+{
+    type latticeScalarField;
+    value 36;
+}
+
+T
+{
+    type latticeScalarField;
+    value 567;
+}
+
+U
+{
+    type latticeVectorField;
+    value (0 0 0);
+}
+
+f
+{
+    type latticePdfField;
+    value (0 1 2 3 4 5 6 7 8);
+}
