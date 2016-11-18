@@ -1,12 +1,12 @@
 #include <updateBC.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-void updateBC( struct bdInfo* bdElements, int** nb, double** field, char* fname ) {
+void updateBC( struct bdInfo* bdElements, int** nb, double** field, char* fname, struct latticeInfo* lattice ) {
 
     unsigned int fid = 0,
-	bndId,
-	bcId;
+	bndId;
 
 
     // Select field index an apply BC
@@ -29,12 +29,23 @@ void updateBC( struct bdInfo* bdElements, int** nb, double** field, char* fname 
 
 	switch( bdElements->_bc[fid][bndId] ) {
 
-	    // bounceBack
+        // none - periodic
 	case 0:
-	    printf("\n[ERROR]  Unrecognized boundary condition\n\n");
+	    break;
+	    
+        // bounceBack
+	case 1:
+	    bounceBack( bdElements, nb, field, bndId, lattice );
+	    break;
 
+        // fixedT
+	case 4:
+	    printf("\n[ERROR]  Unrecognized boundary condition\n\n");
+	    break;
+	    
 	default:
 	    printf("\n[ERROR]  Unrecognized boundary condition\n\n");
+	    exit(1);
 	    
 
 	}
