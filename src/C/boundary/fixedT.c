@@ -15,7 +15,13 @@ void fixedT( struct bdInfo* bdElements, int** nb, double** field, int bndId, str
     // Move over boundary elements
     for( i = 0 ; i < bdElements->_nbel[bndId] ; i++ ) {
 
+	
+	// Boundary element id
 	int id = bdElements->_idx[bndId][i];
+
+	// Number of neighbours without reverse
+	unsigned int noneigh = 0;
+	
 	
 	// Move over lattice velocities
 	for( k = 0 ; k < lattice->Q ; k++ ) {
@@ -25,25 +31,50 @@ void fixedT( struct bdInfo* bdElements, int** nb, double** field, int bndId, str
 
 		// Need density and velocity at neighbour (reverse) node
 		int nbid = nb[id][ lattice->reverse[k] ];
-	
-		// Momentum equilibrium at neighbour
-		double f_eq_nb = f_eq(lattice->omega[k], mfields->rho[nbid], mfields->U[nbid], lattice->vel[k], lattice->cs2, lattice->c);
 
-		// Equilibrium at neighbour with patch T
-		double eq_bnd = mfields->Cv * bdElements->_value[fid][bndId][0] * f_eq_nb; 
+		if( nbid != -1 ) {
 
-		// Equilibrium at neighbour with local T
-		double eq_nb  = mfields->Cv * mfields->T[nbid] * f_eq_nb;
+		    // Momentum equilibrium at neighbour
+		    double f_eq_nb = f_eq(lattice->omega[k], mfields->rho[nbid], mfields->U[nbid], lattice->vel[k], lattice->cs2, lattice->c);
+
+		    // Equilibrium at neighbour with patch T
+		    double eq_bnd = mfields->Cv * bdElements->_value[fid][bndId][0] * f_eq_nb;
+
+		    // Equilibrium at neighbour with local T
+		    double eq_nb  = mfields->Cv * mfields->T[nbid] * f_eq_nb;
 
 
 
-		// Update distribution
-		field[id][k] = eq_bnd + (field[nbid][k] - eq_nb);
+		    // Update distribution
+		    field[id][k] = eq_bnd + (field[nbid][k] - eq_nb);
+		    
+		}
+
+
+		else {
+
+		    noneigh++;
+
+		}
 		
 
 	    }
 
 	}
+
+
+
+	// Apply correction for corners
+	if( noneigh != 0 ) {
+
+	    
+	}
+
+
+
+
+	
+	
 
     }
 

@@ -28,6 +28,9 @@
 #include <readBoundaryConditions.h>
 
 #include <updateBC.h>
+#include <updateBoundaryT.h>
+#include <updateBoundaryDens.h>
+#include <updateBoundaryVel.h>
 
 
 int main( int argc, char **argv ) {
@@ -74,6 +77,8 @@ int main( int argc, char **argv ) {
     // Macroscopic fields
     struct macroFields mfields;
 
+    mfields.Cv = info.fields._Cv;
+
     
     // Density
     mfields.rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time);
@@ -105,11 +110,21 @@ int main( int argc, char **argv ) {
     // Initial equilibrium distribution
     {
 
-	unsigned int id;
+	unsigned int id, k;
 
 	for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
 
-	    liEquilibrium(&info, mfields.rho[id], mfields.U[id], f[id]);;
+	    // f
+	    liEquilibrium(&info, mfields.rho[id], mfields.U[id], f[id]);
+
+	    // g
+	    for( k = 0 ; k < info.lattice.Q ; k++ ) {
+
+		g[id][k] = info.fields._Cv * mfields.T[id] * f[id][k];
+
+	    }
+	    
+	    
 
 	}
 	
@@ -137,6 +152,15 @@ int main( int argc, char **argv ) {
     	// Collide f (Navier-Stokes)
     	pseudoPotCollision( &info, mfields.T, mfields.rho, mfields.U, nb, f );
 
+    	/* // Density */
+    	/* liDensity( &info, mfields.rho, f ); */
+	
+    	/* // Velocity */
+    	/* pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
+
+
+	
+	
     	// Collide g (Temperature)
     	temperatureCollision( &info, mfields.T, mfields.rho, mfields.U, nb, g );
 	
@@ -144,7 +168,8 @@ int main( int argc, char **argv ) {
     	// Stream
 	lbstream( f, f_swp, nb, &info.lattice, &info.parallel );
 	lbstream( g, g_swp, nb, &info.lattice, &info.parallel );
-
+	
+	
 	
     	// Update macroscopic fields
 
@@ -157,6 +182,27 @@ int main( int argc, char **argv ) {
     	// Temperature
     	pseudoPotTemperature( &info, &mfields, g );
 
+
+
+
+	// Apply boundary conditions
+	updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields );
+	updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields );
+
+	// Update macroscopic fields only at boundary
+	updateBoundaryDens( &bdElements, f, &info.lattice, &mfields );
+	updateBoundaryVel( &info, &bdElements, f, &info.lattice, &mfields, nb );
+	updateBoundaryT( &bdElements, g, &info.lattice, &mfields );
+
+
+
+	// Sync fields
+	syncScalarField(&info.parallel, mfields.rho );
+	syncScalarField(&info.parallel, mfields.T );
+	syncPdfField(&info.parallel, mfields.U, 3 );
+	syncPdfField(&info.parallel, f, info.lattice.Q );
+	syncPdfField(&info.parallel, g, info.lattice.Q );
+	
 
 	
     	// Write fields

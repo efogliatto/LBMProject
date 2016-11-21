@@ -36,11 +36,11 @@ void lbstream( c_scalar** fld, c_scalar** swp, int** nb, struct latticeInfo* lat
 
 	    }
 
-	    else {
+	    /* else { */
 
-		swp[id][k] = fld[id][ lattice->reverse[k] ];
+	    /* 	swp[id][k] = fld[id][ lattice->reverse[k] ]; */
 		
-	    }
+	    /* } */
 	    
 	}
 

@@ -40,7 +40,7 @@ void updateBC( struct bdInfo* bdElements, int** nb, double** field, char* fname,
 
         // fixedT
 	case 4:
-	    printf("\n[ERROR]  Unrecognized boundary condition\n\n");
+	    fixedT( bdElements, nb, field, bndId, lattice, mfields, fid );
 	    break;
 	    
 	default:
@@ -51,6 +51,7 @@ void updateBC( struct bdInfo* bdElements, int** nb, double** field, char* fname,
 	}
 
     }
+
 
     
     
