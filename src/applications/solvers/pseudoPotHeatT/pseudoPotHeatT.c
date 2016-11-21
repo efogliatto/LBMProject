@@ -11,7 +11,7 @@
 #include <writePdfField.h>
 #include <readLiModelInfo.h>
 #include <readNeighbours.h>
-#include <liVelocity.h>
+#include <pseudoPotVelocity.h>
 #include <liDensity.h>
 #include <readVTKInfo.h>
 
@@ -142,6 +142,7 @@ int main( int argc, char **argv ) {
 	
     	// Stream
 	lbstream( f, f_swp, nb, &info.lattice, &info.parallel );
+	lbstream( g, g_swp, nb, &info.lattice, &info.parallel );
 
 	
     	// Update macroscopic fields
@@ -150,7 +151,7 @@ int main( int argc, char **argv ) {
     	liDensity( &info, mfields.rho, f );
 	
     	// Velocity
-    	liVelocity( &info, mfields.rho, mfields.U, f, nb, info.fields._T  );
+    	pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  );
 
 
 	
