@@ -82,6 +82,9 @@ public:
 
     // Boundaries indices
     const void readBoundariesIds(const std::string& fileName, const std::string& folderName);
+
+    // Read and update Boundary values
+    const void readBoundaryConditions( const std::string& fileName, const std::string& folderName, const bool& setInternal = false );
     
     
 };
@@ -776,7 +779,7 @@ const void IOPatch<T>::readBoundariesIds(const std::string& fileName, const std:
     uint npatch;
     inFile >> npatch;
 
-
+    
     // Read values
     for(uint i = 0 ; i < npatch ; i++) {
 
@@ -800,6 +803,7 @@ const void IOPatch<T>::readBoundariesIds(const std::string& fileName, const std:
 
     // Close file
     inFile.close();
+    
     
 }
 
@@ -883,5 +887,62 @@ const void IOPatch<T>::writeVTKCells(const std::string& fileName, const std::str
     
     
 }
+
+
+
+
+
+
+
+template<typename T>
+const void IOPatch<T>::readBoundaryConditions( const std::string& fileName, const std::string& folderName, const bool& setInternal) {
+
+    
+    // Open file as dictionary
+    dictionary dict( folderName + "/" + fileName );
+
+
+    // Set internal values
+    if(setInternal) {
+
+	T val = dict.lookUpEntry<T>( "valuesAtPoints/value" );
+	
+	for( uint i = 0 ; i < this->_localValues.size() ; i++ )
+	    this->_localValues[i] = val;
+
+
+	for( uint i = 0 ; i < this->_ghostValues.size() ; i++ )
+	    this->_ghostValues[i] = val;
+
+    }
+
+
+    
+    // Move over patch
+    for( auto bdmap : this->_boundaryMap ) {
+
+	// Boundary type
+	std::string bdtype = dict.lookUpEntry<string>( "boundary/" + bdmap.first + "/type" );
+
+	// Assign value to elements
+	if( bdtype.compare("fixedValue") == 0 ) {
+
+	    T val = dict.lookUpEntry<T>( "boundary/" + bdmap.first + "/value" );
+
+	    for( auto bdelem : bdmap.second ) {
+
+		this->_localValues[ bdelem ] = val;
+
+	    }
+	    
+	}
+	
+    }
+    
+
+    
+    
+}
+
 
 #endif // IOPATCH_H

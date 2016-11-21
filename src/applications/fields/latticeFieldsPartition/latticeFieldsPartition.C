@@ -126,14 +126,16 @@ int main(int argc, char** argv) {
 		// Read patch structure
 		fld.readNeighboursIds(  "neighbours", folderName.str() );
 		fld.readGlobalIdGhost(  "globalGhostsIds", folderName.str() );
+		fld.readBoundariesIds(  "boundary", folderName.str() );
+		fld.readBoundaryConditions(  fieldsList[fid], "start", true );
 
-		// Set local values
-		for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt)
-		    *pt = value;
+		// // Set local values
+		// for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt)
+		//     *pt = value;
 
-		// Set ghost values
-		for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
-		    *pt = value;
+		// // Set ghost values
+		// for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
+		//     *pt = value;
 
 		
 		// Set values using shapes
@@ -296,14 +298,18 @@ int main(int argc, char** argv) {
 		    // Read patch structure
 		    fld.readNeighboursIds(  "neighbours", folderName.str() );
 		    fld.readGlobalIdGhost(  "globalGhostsIds", folderName.str() );
+		    fld.readBoundariesIds(  "boundary", folderName.str() );
+		    fld.readBoundaryConditions(  fieldsList[fid], "start", true );
+		    
 
-		    // Set local values
-		    for(lbPatch_iterator<Vector3> pt = fld.begin() ; pt != fld.end() ; ++pt)
-			*pt = value;
+		    // // Set local values
+		    // for(lbPatch_iterator<Vector3> pt = fld.begin() ; pt != fld.end() ; ++pt)
+		    // 	*pt = value;
 
-		    // Set ghost values
-		    for(vector<Vector3>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
-			*pt = value;		    
+		    // // Set ghost values
+		    // for(vector<Vector3>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt)
+		    // 	*pt = value;
+		    
 
 
 
