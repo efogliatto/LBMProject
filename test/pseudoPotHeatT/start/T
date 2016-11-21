@@ -1,7 +1,7 @@
 valuesAtPoints
 {
     type uniform;
-    value 567;
+    value 300;
 }
 
 
@@ -10,24 +10,24 @@ boundary
     Box_X0
     {
 	type fixedValue;
-	value 567;
+	value 300;
     }
 
     Box_X1
     {
 	type fixedValue;
-	value 756;
+	value 400;
     }
 
     Box_Y0
     {
 	type fixedValue;
-	value 567;
+	value 300;
     }
 
     Box_Y1
     {
 	type fixedValue;
-	value 567;
+	value 300;
     }
 }

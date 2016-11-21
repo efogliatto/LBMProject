@@ -155,6 +155,12 @@ extern "C" {
     info.fields._G = (c_scalar)mp.lookUpEntry<double>("EOS/G");
 
 
+    // Temperature relaxation time
+    info.fields.tau_T = (c_scalar)mp.lookUpEntry<double>("g/tau");    
+
+    // Specific heat
+    info.fields._Cv = (c_scalar)mp.lookUpEntry<double>("g/Cv");
+
 
     // Forcing scheme coefficients
     

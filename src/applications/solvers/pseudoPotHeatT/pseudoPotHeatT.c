@@ -1,5 +1,7 @@
 #include <stdio.h>
-#include <liCollision.h>
+#include <pseudoPotCollision.h>
+#include <temperatureCollision.h>
+
 #include <timeOptions.h>
 #include <syncScalarField.h>
 #include <syncPdfField.h>
@@ -59,12 +61,14 @@ int main( int argc, char **argv ) {
     int** nb = readNeighbours(&info.lattice, &info.parallel);
     if(pid == 0) { printf("\nReading neighbour indices\n"); }
 
-    
+
     // Boundary elements
     struct bdInfo bdElements = readBoundaryElements( pid, info.lattice.d, info.lattice.Q );
     readBoundaryConditions( &bdElements );
     
 
+
+    
 
     // Macroscopic fields
     struct macroFields mfields;
@@ -87,8 +91,14 @@ int main( int argc, char **argv ) {
     
     // Navier-Stokes field
     double** f   = readPdfField("f", &info.lattice, &info.parallel, &info.time);
-    double** swp = readPdfField("f", &info.lattice, &info.parallel, &info.time);
-    if(pid == 0) { printf("\nReading field f\n\n\n");  }
+    double** f_swp = readPdfField("f", &info.lattice, &info.parallel, &info.time);
+    if(pid == 0) { printf("\nReading field f\n");  }
+    
+
+    // Temperature field
+    double** g     = readPdfField("g", &info.lattice, &info.parallel, &info.time);
+    double** g_swp = readPdfField("g", &info.lattice, &info.parallel, &info.time);
+    if(pid == 0) { printf("\nReading field g\n\n\n");  }
     
     
     // Initial equilibrium distribution
@@ -111,18 +121,27 @@ int main( int argc, char **argv ) {
     syncScalarField(&info.parallel, mfields.T );
     syncPdfField(&info.parallel, mfields.U, 3 );
     syncPdfField(&info.parallel, f, info.lattice.Q );
+    syncPdfField(&info.parallel, g, info.lattice.Q );
 
 
+
+
+
+    
     
     // Advance in time. Collide, stream, update and write
     while( updateTime(&info.time) ) {
 	
 	
     	// Collide f (Navier-Stokes)
-    	liCollision( &info, info.fields._T, mfields.rho, mfields.U, nb, f );
+    	pseudoPotCollision( &info, mfields.T, mfields.rho, mfields.U, nb, f );
+
+    	// Collide g (Temperature)
+    	temperatureCollision( &info, mfields.T, mfields.rho, mfields.U, nb, g );
+	
 	
     	// Stream
-	lbstream( f, swp, nb, &info.lattice, &info.parallel );
+	lbstream( f, f_swp, nb, &info.lattice, &info.parallel );
 
 	
     	// Update macroscopic fields
@@ -151,6 +170,8 @@ int main( int argc, char **argv ) {
 	    writeVectorToVTK("U", mfields.U, &info.lattice, &info.parallel, &info.time);
 
 	    writePdfToVTK("f", f, &info.lattice, &info.parallel, &info.time);
+
+	    writePdfToVTK("g", g, &info.lattice, &info.parallel, &info.time);
 
 	    writeVTKExtra(&vtk, &info.parallel, &info.time);
 	    

@@ -28,6 +28,13 @@ struct li_fieldsInfo {
     c_scalar sigma;
     c_scalar tau_e;
     c_scalar tau_c;
+
+
+    // Temperature relaxation parameters
+    double tau_T;
+
+    // Constant specific heat
+    c_scalar _Cv;;
     
     
 };
