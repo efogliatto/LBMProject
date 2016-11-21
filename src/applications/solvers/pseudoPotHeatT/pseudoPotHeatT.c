@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <pseudoPotCollision.h>
+#include <pseudoPotTemperature.h>
 #include <temperatureCollision.h>
 
 #include <timeOptions.h>
@@ -152,6 +153,9 @@ int main( int argc, char **argv ) {
 	
     	// Velocity
     	pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  );
+
+    	// Temperature
+    	pseudoPotTemperature( &info, &mfields, g );
 
 
 	
