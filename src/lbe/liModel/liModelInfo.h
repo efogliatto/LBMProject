@@ -35,6 +35,11 @@ struct li_fieldsInfo {
 
     // Constant specific heat
     c_scalar _Cv;;
+
+    // EOS index
+    // 0 : ideal gas
+    // 1 : Carnahan-Starling
+    unsigned int _eosIdx;
     
     
 };

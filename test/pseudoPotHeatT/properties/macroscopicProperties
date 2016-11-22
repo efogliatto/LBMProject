@@ -2,9 +2,9 @@ f
 {
 
     // Relaxation parameters
-    Lambda (1.0 1.1 1.1 1.0 1.1 1.0 1.1 0.6 0.6);    
+    Lambda (1.0 1.1 1.1 1.0 1.1 1.0 1.1 0.05 0.05);    
 
-    G (0 0 0);
+    G (0 -1 0);
 
     sigma 0.11;
     
@@ -14,7 +14,7 @@ g
 {
 
     // Relaxation parameters
-    tau 0.8;
+    tau 10;
 
     // Specific heat
     Cv 1;
@@ -23,6 +23,8 @@ g
 
 EOS
 {
+
+    model idealGas;
 
     a 0.5;
 

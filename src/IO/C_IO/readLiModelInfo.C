@@ -142,17 +142,43 @@ extern "C" {
     
 
 
-    // Carnahan - Starling constants
-    
-    info.fields._a = (c_scalar)mp.lookUpEntry<double>("EOS/a");
-    
-    info.fields._b = (c_scalar)mp.lookUpEntry<double>("EOS/b");
-    
-    info.fields._R = (c_scalar)mp.lookUpEntry<double>("EOS/R");
 
-    info.fields._T = (c_scalar)mp.lookUpEntry<double>("EOS/T");
 
-    info.fields._G = (c_scalar)mp.lookUpEntry<double>("EOS/G");
+    // Read model
+    string eosType = mp.lookUpEntry<string>("EOS/model");
+
+    if( eosType.compare("idealGas") == 0 ) {
+	
+	info.fields._eosIdx = 0;
+
+	info.fields._R = (c_scalar)mp.lookUpEntry<double>("EOS/R");	
+	
+    }
+    
+    else {
+
+	if( eosType.compare("Carnahan-Starling") == 0 ) {
+
+	    info.fields._eosIdx = 1;
+
+	    // Carnahan - Starling constants
+    
+	    info.fields._a = (c_scalar)mp.lookUpEntry<double>("EOS/a");
+    
+	    info.fields._b = (c_scalar)mp.lookUpEntry<double>("EOS/b");
+    
+	    info.fields._R = (c_scalar)mp.lookUpEntry<double>("EOS/R");
+
+	    info.fields._T = (c_scalar)mp.lookUpEntry<double>("EOS/T");
+
+	    info.fields._G = (c_scalar)mp.lookUpEntry<double>("EOS/G");
+	    
+	}
+
+    }
+    
+
+
 
 
     // Temperature relaxation time
