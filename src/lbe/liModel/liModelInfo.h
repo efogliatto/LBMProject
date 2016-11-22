@@ -40,6 +40,10 @@ struct li_fieldsInfo {
     // 0 : ideal gas
     // 1 : Carnahan-Starling
     unsigned int _eosIdx;
+
+
+    // Gravity vector
+    c_scalar _g[3];
     
     
 };

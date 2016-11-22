@@ -176,7 +176,15 @@ extern "C" {
 	}
 
     }
-    
+
+
+
+
+    // Gravity
+    Vector3 gravity = mp.lookUpEntry<Vector3>("f/g");
+    info.fields._g[0] = gravity.x();
+    info.fields._g[1] = gravity.y();
+    info.fields._g[2] = gravity.z();
 
 
 
