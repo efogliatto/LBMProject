@@ -1,5 +1,6 @@
 #include <pseudoPotTemperature.h>
 #include <syncScalarField.h>
+#include <stdio.h>
 
 void pseudoPotTemperature( struct liModelInfo* info, struct macroFields* mfields, double** g ) {
 

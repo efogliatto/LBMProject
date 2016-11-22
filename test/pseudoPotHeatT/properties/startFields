@@ -33,11 +33,11 @@ U
 f
 {
     type latticePdfField;
-    value (0 1 2 3 4 5 6 7 8);
+    value (0 0 0 0 0 0 0 0 0);
 }
 
 g
 {
     type latticePdfField;
-    value (0 1 2 3 4 5 6 7 8);
+    value (0 0 0 0 0 0 0 0 0);
 }
