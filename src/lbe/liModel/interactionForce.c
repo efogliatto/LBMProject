@@ -14,6 +14,12 @@ void interactionForce( struct liModelInfo* info, double F[3], double* rho, int**
     for( k = 0 ; k < info->lattice.Q ; k++ ) {
 
 	int neighId = nb[id][k];
+
+	if( neighId == -1 ) {
+	    
+	    neighId = nb[ id ][ info->lattice.reverse[k] ];
+	    
+	}
 	
 	// Do not use unexisting neighbour
 	if( neighId != -1 ) {

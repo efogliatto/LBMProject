@@ -152,11 +152,11 @@ int main( int argc, char **argv ) {
     	// Collide f (Navier-Stokes)
     	pseudoPotCollision( &info, mfields.T, mfields.rho, mfields.U, nb, f );
 
-    	// Density
-    	liDensity( &info, mfields.rho, f );
+    	/* // Density */
+    	/* liDensity( &info, mfields.rho, f ); */
 	
-    	// Velocity
-    	pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  );
+    	/* // Velocity */
+    	/* pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
 
 
 	
@@ -165,43 +165,43 @@ int main( int argc, char **argv ) {
     	temperatureCollision( &info, mfields.T, mfields.rho, mfields.U, nb, g );
 	
 	
-    	// Stream
-	lbstream( f, f_swp, nb, &info.lattice, &info.parallel );
-	lbstream( g, g_swp, nb, &info.lattice, &info.parallel );
+    	/* // Stream */
+	/* lbstream( f, f_swp, nb, &info.lattice, &info.parallel ); */
+	/* lbstream( g, g_swp, nb, &info.lattice, &info.parallel ); */
 	
 	
 	
-    	// Update macroscopic fields
+    	/* // Update macroscopic fields */
 
-    	// Density
-    	liDensity( &info, mfields.rho, f );
+    	/* // Density */
+    	/* liDensity( &info, mfields.rho, f ); */
 	
-    	// Velocity
-    	pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  );
+    	/* // Velocity */
+    	/* pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
 
-    	// Temperature
-    	pseudoPotTemperature( &info, &mfields, g );
-
-
-
-
-	// Apply boundary conditions
-	updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields );
-	updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields );
-
-	// Update macroscopic fields only at boundary
-	updateBoundaryDens( &bdElements, f, &info.lattice, &mfields );
-	updateBoundaryVel( &info, &bdElements, f, &info.lattice, &mfields, nb );
-	updateBoundaryT( &bdElements, g, &info.lattice, &mfields );
+    	/* // Temperature */
+    	/* pseudoPotTemperature( &info, &mfields, g ); */
 
 
 
-	// Sync fields
-	syncScalarField(&info.parallel, mfields.rho );
-	syncScalarField(&info.parallel, mfields.T );
-	syncPdfField(&info.parallel, mfields.U, 3 );
-	syncPdfField(&info.parallel, f, info.lattice.Q );
-	syncPdfField(&info.parallel, g, info.lattice.Q );
+
+	/* // Apply boundary conditions */
+	/* updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields ); */
+	/* updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields ); */
+
+	/* // Update macroscopic fields only at boundary */
+	/* updateBoundaryDens( &bdElements, f, &info.lattice, &mfields ); */
+	/* updateBoundaryVel( &info, &bdElements, f, &info.lattice, &mfields, nb ); */
+	/* updateBoundaryT( &bdElements, g, &info.lattice, &mfields ); */
+
+
+
+	/* // Sync fields */
+	/* syncScalarField(&info.parallel, mfields.rho ); */
+	/* syncScalarField(&info.parallel, mfields.T ); */
+	/* syncPdfField(&info.parallel, mfields.U, 3 ); */
+	/* syncPdfField(&info.parallel, f, info.lattice.Q ); */
+	/* syncPdfField(&info.parallel, g, info.lattice.Q ); */
 	
 
 	

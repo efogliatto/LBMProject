@@ -25,7 +25,7 @@ void temperatureCollision( struct liModelInfo* info, double* T, double* rho, dou
 	// Collide g
 	for( k = 0 ; k < info->lattice.Q ; k++ ) {
 
-	    g[id][k] = g[id][k]  -  info->fields.tau_T * (  g[id][k]  -  info->fields._Cv * T[id] * f_eq[k]  );
+	    g[id][k] = g[id][k]  -  (  g[id][k]  -  info->fields._Cv * T[id] * f_eq[k]  ) / info->fields.tau_T;
 
 	}
 
