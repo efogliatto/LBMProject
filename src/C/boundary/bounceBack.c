@@ -1,4 +1,5 @@
 #include <bounceBack.h>
+#include <stdio.h>
 
 void bounceBack( struct bdInfo* bdElements, int** nb, double** field, int bndId, struct latticeInfo* lattice ) {
 

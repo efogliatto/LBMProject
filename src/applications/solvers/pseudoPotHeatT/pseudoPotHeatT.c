@@ -171,22 +171,22 @@ int main( int argc, char **argv ) {
 	
 	
 	
-    	// Update macroscopic fields
+    	/* // Update macroscopic fields */
 
-    	// Density
-    	liDensity( &info, mfields.rho, f );
+    	/* // Density */
+    	/* liDensity( &info, mfields.rho, f ); */
 	
     	/* // Velocity */
     	/* pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
 
-    	// Temperature
-    	pseudoPotTemperature( &info, &mfields, g );
+    	/* // Temperature */
+    	/* pseudoPotTemperature( &info, &mfields, g ); */
 
 
 
 
-	/* // Apply boundary conditions */
-	/* updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields ); */
+	// Apply boundary conditions
+	updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields );
 	/* updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields ); */
 
 	/* // Update macroscopic fields only at boundary */
