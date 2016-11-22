@@ -186,8 +186,8 @@ int main( int argc, char **argv ) {
 
 
 	// Apply boundary conditions
-	updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields );
-	/* updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields ); */
+	/* updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields ); */
+	updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields );
 
 	/* // Update macroscopic fields only at boundary */
 	/* updateBoundaryDens( &bdElements, f, &info.lattice, &mfields ); */

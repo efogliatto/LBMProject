@@ -1,4 +1,5 @@
 #include <fixedT.h>
+#include <stdio.h>
 
 // Use f_i^{eq} = Cv * T * rho * w_i * (1 + (Ci * U)/Cs2 + (Ci * U)^2/2Cs4 - U^2/sCs2)
 double f_eq( double w, double rho, double U[3], int* ei, double cs2, double c );
@@ -18,6 +19,7 @@ void fixedT( struct bdInfo* bdElements, int** nb, double** field, int bndId, str
 	
 	// Boundary element id
 	int id = bdElements->_idx[bndId][i];
+
 
 	// Number of neighbours without reverse
 	unsigned int noneigh = 0;
@@ -39,10 +41,9 @@ void fixedT( struct bdInfo* bdElements, int** nb, double** field, int bndId, str
 
 		    // Equilibrium at neighbour with patch T
 		    double eq_bnd = mfields->Cv * bdElements->_value[fid][bndId][0] * f_eq_nb;
-
+		    
 		    // Equilibrium at neighbour with local T
 		    double eq_nb  = mfields->Cv * mfields->T[nbid] * f_eq_nb;
-
 
 
 		    // Update distribution
@@ -61,7 +62,6 @@ void fixedT( struct bdInfo* bdElements, int** nb, double** field, int bndId, str
 	    }
 
 	}
-
 
 
 	// Apply correction for corners
