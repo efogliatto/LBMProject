@@ -51,14 +51,14 @@ g
 
         Box_Y0
         {
-            type fixedT;
-	    value 0.97;
+            type adiabatic;
+	    normal 4;
         }
 
         Box_Y1
         {
-            type fixedT;
-	    value 0.97;
+            type adiabatic;
+	    normal 2;
         }
     }
 }

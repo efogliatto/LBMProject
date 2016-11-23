@@ -42,6 +42,11 @@ void updateBC( struct bdInfo* bdElements, int** nb, double** field, char* fname,
 	case 4:
 	    fixedT( bdElements, nb, field, bndId, lattice, mfields, fid );
 	    break;
+
+        // adiabatic
+	case 5:
+	    adiabatic( bdElements, nb, field, bndId, lattice, mfields, fid );
+	    break;	    
 	    
 	default:
 	    printf("\n[ERROR]  Unrecognized boundary condition\n\n");

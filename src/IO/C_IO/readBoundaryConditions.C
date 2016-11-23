@@ -55,7 +55,7 @@ extern "C" {
 	     2: fixedU
 	     3: fixedP
 	     4: fixedT
-	     5: fixedGradient
+	     5: adiabatic
 	 */
 	
 	for( uint fieldId = 0 ; fieldId < fields.size() ; fieldId++ ) {
@@ -132,18 +132,18 @@ extern "C" {
 		}
 
 		
-		if( bctype.compare("fixedGradient") == 0 ) {
+		if( bctype.compare("adiabatic") == 0 ) {
 
 		    info->_bc[fieldId][bcId] = 5;
 
 		    std::ostringstream entryval; 
-		    entryval << fields[fieldId] << "/boundaryConditions/" << info->_bdNames[bcId] << "/value"; 
+		    entryval << fields[fieldId] << "/boundaryConditions/" << info->_bdNames[bcId] << "/normal"; 
 		    
-		    Vector3 val = dict.lookUpEntry<Vector3>( entryval.str() );
+		    double val = dict.lookUpEntry<double>( entryval.str() );
 
-		    info->_value[fieldId][bcId][0] = val.x();
-		    info->_value[fieldId][bcId][1] = val.y();
-		    info->_value[fieldId][bcId][2] = val.z();		    
+		    info->_value[fieldId][bcId][0] = val;
+		    info->_value[fieldId][bcId][1] = val;
+		    info->_value[fieldId][bcId][2] = val;		    
 
 		}
 
