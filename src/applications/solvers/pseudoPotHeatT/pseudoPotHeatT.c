@@ -149,20 +149,20 @@ int main( int argc, char **argv ) {
     while( updateTime(&info.time) ) {
 	
 	
-    	// Collide f (Navier-Stokes)
-    	pseudoPotCollision( &info, mfields.T, mfields.rho, mfields.U, nb, f );
+    	/* // Collide f (Navier-Stokes) */
+    	/* pseudoPotCollision( &info, mfields.T, mfields.rho, mfields.U, nb, f ); */
 
-    	/* // Density */
-    	/* liDensity( &info, mfields.rho, f ); */
+    	// Density
+    	liDensity( &info, mfields.rho, f );
 	
-    	/* // Velocity */
-    	/* pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
+    	// Velocity
+    	pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  );
 
 
 	
 	
-    	// Collide g (Temperature)
-    	temperatureCollision( &info, mfields.T, mfields.rho, mfields.U, nb, g );
+    	/* // Collide g (Temperature) */
+    	/* temperatureCollision( &info, mfields.T, mfields.rho, mfields.U, nb, g ); */
 	
 	
     	/* // Stream */

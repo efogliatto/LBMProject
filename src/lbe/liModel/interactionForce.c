@@ -1,38 +1,43 @@
 #include <interactionForce.h>
 #include <potential.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void interactionForce( struct liModelInfo* info, double F[3], double* rho, int** nb, double T, unsigned int id ) {
 
     unsigned int i,k;
 
     // Initialize force term
-    for( i = 0 ; i < 3 ; i++) { F[i] = 0 ;}
+    for( i = 0 ; i < 3 ; i++) {
+
+	F[i] = 0 ;
+
+    }
 
     
     // Move over neighbours
     for( k = 0 ; k < info->lattice.Q ; k++ ) {
 
-	int neighId = nb[id][k];
+    	int neighId = nb[id][k];
 
-	if( neighId == -1 ) {
+    	if( neighId == -1 ) {
 	    
-	    neighId = nb[ id ][ info->lattice.reverse[k] ];
+    	    neighId = nb[ id ][ info->lattice.reverse[k] ];
 	    
-	}
+    	}
 	
-	// Do not use unexisting neighbour
-	if( neighId != -1 ) {
+    	// Do not use unexisting neighbour
+    	if( neighId != -1 ) {
 
-	    double alpha = info->lattice.weights[k] * potential(info, rho[neighId], T) * info->lattice.c;
+    	    double alpha = info->lattice.weights[k] * potential(info, rho[neighId], T) * info->lattice.c;
 	    
-	    for( i = 0 ; i < 3 ; i++ ) {
+    	    for( i = 0 ; i < 3 ; i++ ) {
 
-		F[i] +=  alpha * info->lattice.vel[ info->lattice.reverse[k] ][i] ;
+    		F[i] +=  alpha * info->lattice.vel[ info->lattice.reverse[k] ][i] ;
 
-	    }
+    	    }
 
-	}
+    	}
 
     }
 
@@ -43,9 +48,9 @@ void interactionForce( struct liModelInfo* info, double F[3], double* rho, int**
     
     for( i = 0 ; i < 3 ; i++) {
 	
-	F[i] =  F[i] * beta   +   rho[id] * info->fields._g[i]; 
+    	F[i] =  F[i] * beta   +   rho[id] * info->fields._g[i];
 	
-    }    
+    }
 
     
     

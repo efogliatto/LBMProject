@@ -151,7 +151,9 @@ extern "C" {
 	
 	info.fields._eosIdx = 0;
 
-	info.fields._R = (c_scalar)mp.lookUpEntry<double>("EOS/R");	
+	info.fields._R = (c_scalar)mp.lookUpEntry<double>("EOS/R");
+
+	info.fields._G = (c_scalar)mp.lookUpEntry<double>("EOS/G");
 	
     }
     
