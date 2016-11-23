@@ -32,8 +32,24 @@
 #include <updateBoundaryDens.h>
 #include <updateBoundaryVel.h>
 
+#include <string.h>
 
 int main( int argc, char **argv ) {
+
+
+
+    // Check for arguments
+    unsigned int ht = 1;
+    {
+	unsigned int arg;
+	for( arg = 0 ; arg < argc ; arg++) {
+
+	    if ( strcmp("--noHeatTransfer", argv[arg]) == 0 ) {
+		ht = 0;
+	    }
+	    
+	}
+    }
 
 
     int pid, world;
@@ -160,10 +176,14 @@ int main( int argc, char **argv ) {
 
 
 	
+
+	if( ht != 0 ) {
 	
-    	// Collide g (Temperature)
-    	temperatureCollision( &info, mfields.T, mfields.rho, mfields.U, nb, g );
+	    // Collide g (Temperature)
+	    temperatureCollision( &info, mfields.T, mfields.rho, mfields.U, nb, g );
 	
+	}
+
 	
     	// Stream
 	lbstream( f, f_swp, nb, &info.lattice, &info.parallel );
@@ -179,20 +199,22 @@ int main( int argc, char **argv ) {
     	// Velocity
     	pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  );
 
-    	// Temperature
-    	pseudoPotTemperature( &info, &mfields, g );
+	if( ht != 0 ) {
+	
+	    // Temperature
+	    pseudoPotTemperature( &info, &mfields, g );
 
-
+	}
 
 
 	// Apply boundary conditions
 	updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields );
-	updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields );
+	if( ht != 0 ) { updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields );  }
 
 	// Update macroscopic fields only at boundary
 	updateBoundaryDens( &bdElements, f, &info.lattice, &mfields );
 	updateBoundaryVel( &info, &bdElements, f, &info.lattice, &mfields, nb );
-	updateBoundaryT( &bdElements, g, &info.lattice, &mfields );
+	if( ht != 0 ) { updateBoundaryT( &bdElements, g, &info.lattice, &mfields ); }
 
 
 

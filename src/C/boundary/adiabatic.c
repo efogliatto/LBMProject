@@ -12,9 +12,13 @@ void adiabatic( struct bdInfo* bdElements, int** nb, double** field, int bndId, 
     // Indices
     unsigned int i, k;
 
-    // Temperature at wall
-    double Tw;
+    /* // Temperature at wall */
+    /* double Tw; */
 
+    // Boundary normal
+    uint normal = (uint)bdElements->_value[fid][bndId][0];
+
+    
     // Move over boundary elements
     for( i = 0 ; i < bdElements->_nbel[bndId] ; i++ ) {
 
@@ -22,63 +26,55 @@ void adiabatic( struct bdInfo* bdElements, int** nb, double** field, int bndId, 
 	// Boundary element id
 	int id = bdElements->_idx[bndId][i];
 
+	// Neighbour id in normal direction
+	uint nid = nb[id][normal];
 
-	// Number of neighbours without reverse
-	unsigned int noneigh = 0;
+
+
+
+	/* // Wall temperature */
+	/* Tw = mfields->T[nid]; */
 	
 	
 	// Move over lattice velocities
 	for( k = 0 ; k < lattice->Q ; k++ ) {
 
-	    // Wall temperature
-	    Tw = mfields->T[   nb[  id  ][  (uint)bdElements->_value[fid][bndId][0]  ]   ];
 
-	    if ( nb[id][k] == -1 ) {
+	    // Simple copy
+	    field[id][k] = field[nid][k];
+
+	    
+	    /* if ( nb[id][k] == -1 ) { */
 
 
-		// Need density and velocity at neighbour (reverse) node
-		int nbid = nb[id][ lattice->reverse[k] ];
+	    /* 	// Need density and velocity at neighbour (reverse) node */
+	    /* 	int nbid = nb[id][ lattice->reverse[k] ]; */
 
-		if( nbid != -1 ) {
+	    /* 	if( nbid != -1 ) { */
 
-		    // Momentum equilibrium at neighbour
-		    double f_eq_nb = f_eq(lattice->omega[k], mfields->rho[nbid], mfields->U[nbid], lattice->vel[k], lattice->cs2, lattice->c);
+	    /* 	    // Momentum equilibrium at neighbour */
+	    /* 	    double f_eq_nb = f_eq(lattice->omega[k], mfields->rho[nbid], mfields->U[nbid], lattice->vel[k], lattice->cs2, lattice->c); */
 
-		    // Equilibrium at neighbour with patch T
-		    double eq_bnd = mfields->Cv * Tw * f_eq_nb;
+	    /* 	    // Equilibrium at neighbour with patch T */
+	    /* 	    double eq_bnd = mfields->Cv * Tw * f_eq_nb; */
 		    
-		    // Equilibrium at neighbour with local T
-		    double eq_nb  = mfields->Cv * mfields->T[nbid] * f_eq_nb;
+	    /* 	    // Equilibrium at neighbour with local T */
+	    /* 	    double eq_nb  = mfields->Cv * mfields->T[nbid] * f_eq_nb; */
 
 
-		    // Update distribution
-		    field[id][k] = eq_bnd + (field[nbid][k] - eq_nb);
+	    /* 	    // Update distribution */
+	    /* 	    field[id][k] = eq_bnd + (field[nbid][k] - eq_nb); */
 		    
-		}
-
-
-		else {
-
-		    noneigh++;
-
-		}
+	    /* 	} */
 		
 
-	    }
+	    /* } */
 
-	}
-
-
-	// Apply correction for corners
-	if( noneigh != 0 ) {
 
 	    
 	}
 
 
-
-
-	
 	
 
     }
