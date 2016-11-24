@@ -12,9 +12,11 @@ void pseudoPotVelocity( struct liModelInfo* info, double* rho, double** v, doubl
     // Move over points
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
 
+	
 	// Compute interaction force
 	totalForce( info, F, rho, nb, T[id], id );
 
+	
 	// Initialize velocities
 	for(k = 0 ; k < 3 ; k++) {
 	    v[id][k] = 0;

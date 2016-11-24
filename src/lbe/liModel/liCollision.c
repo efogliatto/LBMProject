@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <matVecMult.h>
 #include <liMRTForce.h>
-#include <interactionForce.h>
+#include <totalForce.h>
 #include <potential.h>
 #include <syncPdfField.h>
 
@@ -20,6 +20,9 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
     double* Sbar  = (double*)malloc( info->lattice.Q * sizeof(double) );   // MRT force
     double* S     = (double*)malloc( info->lattice.Q * sizeof(double) );   // MRT force
 
+
+    // Interaction force
+    double Fm[3];
     
     // Interaction force
     double F[3];
@@ -41,11 +44,14 @@ void liCollision( struct liModelInfo* info, double T, double* rho, double** v, i
 	matVecMult(info->fields.Lambda, alpha, beta, info->lattice.Q);
 
 	// Interaction force
-	interactionForce( info, F, rho, nb, T, id);
+	interactionForce( info, Fm, rho, nb, T, id);
 
+	// Total force
+	totalForce( info, F, rho, nb, T, id);
+	
 	// MRT force
 	double psi = potential(info, rho[id], info->fields._T);
-	liMRTForce(info, v[id], F, psi, Sbar);
+	liMRTForce(info, v[id], F, Fm, psi, Sbar);
 	
 	// Force in velocity space. S = inv(M) * S_bar
 	matVecMult(info->fields.invM, Sbar, S, info->lattice.Q);

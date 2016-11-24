@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <matVecMult.h>
 #include <liMRTForce.h>
-#include <interactionForce.h>
+#include <totalForce.h>
 #include <potential.h>
 #include <syncPdfField.h>
 
@@ -22,8 +22,10 @@ void pseudoPotCollision( struct liModelInfo* info, double* T, double* rho, doubl
 
     
     // Interaction force
-    double F[3];
+    double Fm[3];
 
+    // Total force
+    double F[3];
 
     
     // Move over points
@@ -41,11 +43,14 @@ void pseudoPotCollision( struct liModelInfo* info, double* T, double* rho, doubl
 	matVecMult(info->fields.Lambda, alpha, beta, info->lattice.Q);
 
 	// Interaction force
-	interactionForce( info, F, rho, nb, T[id], id);
+	interactionForce( info, Fm, rho, nb, T[id], id);
+
+	// Total force
+	totalForce( info, F, rho, nb, T[id], id);	
 
 	// MRT force
 	double psi = potential(info, rho[id], T[id]);
-	liMRTForce(info, v[id], F, psi, Sbar);
+	liMRTForce(info, v[id], F, Fm, psi, Sbar);
 	
 	// Force in velocity space. S = inv(M) * S_bar
 	matVecMult(info->fields.invM, Sbar, S, info->lattice.Q);
