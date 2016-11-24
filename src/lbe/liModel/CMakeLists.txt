@@ -1,12 +1,12 @@
 #------------------ Generacion de bibliotecas ------------------#
  
-# Basic lattice-Boltzmann Equation library. Liang model
+# Basic lattice-Boltzmann Equation library. Li model
 add_library(limodel SHARED
   p_eos.c
   potential.c
   interactionForce.c
   totalForce.c
-  # liDensity.c
+  liDensity.c
   # liVelocity.c
   liMRTForce.c
   liEquilibrium.c
