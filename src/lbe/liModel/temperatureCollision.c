@@ -33,7 +33,7 @@ void temperatureCollision( struct liModelInfo* info, double* T, double* rho, dou
 	for( k = 0 ; k < info->lattice.Q ; k++ ) {
 
 	    // Interaction force
-	    interactionForce( info, F, rho, nb, T[id], id);
+	    interactionForce( info, F, rho, nb, T, id);
 	    
 	    // Correction term
 	    kappa = ( 1 - 0.5 / info->fields.tau_T) * info->lattice.omega[k] * info->fields._Cv * T[id] / info->lattice.cs2;

@@ -14,7 +14,7 @@ void pseudoPotVelocity( struct liModelInfo* info, double* rho, double** v, doubl
 
 	
 	// Compute interaction force
-	totalForce( info, F, rho, nb, T[id], id );
+	totalForce( info, F, rho, nb, T, id );
 
 	
 	// Initialize velocities

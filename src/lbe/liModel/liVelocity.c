@@ -2,7 +2,7 @@
 #include <interactionForce.h>
 #include <syncPdfField.h>
 
-void liVelocity( struct liModelInfo* info, double* rho, double** v, double** f, int** nb, double T ) {
+void liVelocity( struct liModelInfo* info, double* rho, double** v, double** f, int** nb, double* T ) {
 
     unsigned int id, j, k;
 

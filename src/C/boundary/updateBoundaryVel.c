@@ -24,7 +24,7 @@ void updateBoundaryVel( struct liModelInfo* info, struct bdInfo* bdElements, dou
 
 
 	    // Compute interaction force
-	    interactionForce( info, F, mfields->rho, nb, mfields->T[id], id );
+	    interactionForce( info, F, mfields->rho, nb, mfields->T, id );
 
 	    // Initialize velocities
 	    for(k = 0 ; k < 3 ; k++) {

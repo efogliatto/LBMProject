@@ -43,10 +43,10 @@ void pseudoPotCollision( struct liModelInfo* info, double* T, double* rho, doubl
 	matVecMult(info->fields.Lambda, alpha, beta, info->lattice.Q);
 
 	// Interaction force
-	interactionForce( info, Fm, rho, nb, T[id], id);
+	interactionForce( info, Fm, rho, nb, T, id);
 
 	// Total force
-	totalForce( info, F, rho, nb, T[id], id);	
+	totalForce( info, F, rho, nb, T, id);	
 
 	// MRT force
 	double psi = potential(info, rho[id], T[id]);

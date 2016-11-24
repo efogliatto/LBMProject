@@ -4,6 +4,6 @@
 #include <liModelInfo.h>
 #include <interactionForce.h>
 
-void totalForce( struct liModelInfo* info, double F[3], double* rho, int** nb, double T, unsigned int id );
+void totalForce( struct liModelInfo* info, double F[3], double* rho, int** nb, double* T, unsigned int id );
 
 #endif // TOTALFORCE_H

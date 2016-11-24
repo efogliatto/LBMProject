@@ -6,11 +6,11 @@ add_library(limodel SHARED
   potential.c
   interactionForce.c
   totalForce.c
-  liDensity.c
-  liVelocity.c
+  # liDensity.c
+  # liVelocity.c
   liMRTForce.c
   liEquilibrium.c
-  liCollision.c
+  # liCollision.c
   pseudoPotCollision.c
   temperatureCollision.c
   pseudoPotVelocity.c
