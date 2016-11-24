@@ -48,7 +48,7 @@ void interactionForce( struct liModelInfo* info, double F[3], double* rho, int**
     
     for( i = 0 ; i < 3 ; i++) {
 	
-    	F[i] =  F[i] * beta   +   rho[id] * info->fields._g[i];
+    	F[i] =  F[i] * beta;
 	
     }
 
