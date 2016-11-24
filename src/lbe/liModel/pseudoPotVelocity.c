@@ -1,5 +1,5 @@
 #include <pseudoPotVelocity.h>
-#include <interactionForce.h>
+#include <totalForce.h>
 #include <syncPdfField.h>
 
 void pseudoPotVelocity( struct liModelInfo* info, double* rho, double** v, double** f, int** nb, double* T ) {
@@ -13,7 +13,7 @@ void pseudoPotVelocity( struct liModelInfo* info, double* rho, double** v, doubl
     for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
 
 	// Compute interaction force
-	interactionForce( info, F, rho, nb, T[id], id );
+	totalForce( info, F, rho, nb, T[id], id );
 
 	// Initialize velocities
 	for(k = 0 ; k < 3 ; k++) {
