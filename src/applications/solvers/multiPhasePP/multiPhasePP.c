@@ -22,7 +22,7 @@
 #include <writeVectorToVTK.h>
 #include <writePdfToVTK.h>
 
-/* #include <liEquilibrium.h> */
+#include <equilibrium.h>
 
 #include <readBoundaryElements.h>
 #include <readBoundaryConditions.h>
@@ -125,35 +125,26 @@ int main( int argc, char **argv ) {
     // Navier-Stokes field
     struct lbeField f = readLbeField("f", &info.lattice, &info.parallel, &info.time);
     
-
-    /* // Temperature field */
-    /* double** g     = readPdfField("g", &info.lattice, &info.parallel, &info.time); */
-    /* double** g_swp = readPdfField("g", &info.lattice, &info.parallel, &info.time); */
-    /* if(pid == 0) { printf("\nReading field g\n\n\n");  } */
+    // Energy field
+    struct lbeField g = readLbeField("g", &info.lattice, &info.parallel, &info.time);
     
-    
-    /* // Initial equilibrium distribution */
-    /* { */
 
-    /* 	unsigned int id, k; */
+    // Initial equilibrium distribution
+    {
 
-    /* 	for( id = 0 ; id < info.lattice.nlocal ; id++ ) { */
+    	unsigned int id;
 
-    /* 	    // f */
-    /* 	    liEquilibrium(&info, mfields.rho[id], mfields.U[id], f[id]); */
+    	for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
 
-    /* 	    // g */
-    /* 	    for( k = 0 ; k < info.lattice.Q ; k++ ) { */
+    	    // f
+    	    equilibrium(&info, &mfields, &f, id);
 
-    /* 	    	g[id][k] = info.fields._Cv * mfields.T[id] * f[id][k]; */
+    	    // g
+    	    equilibrium(&info, &mfields, &g, id);
 
-    /* 	    } */
-	    
-	    
-
-    /* 	} */
+    	}
 	
-    /* } */
+    }
 
     
    

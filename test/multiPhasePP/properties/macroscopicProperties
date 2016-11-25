@@ -20,6 +20,8 @@ g
 
     // Specific heat
     Cv 1;
+
+    Collision liTemp;
     
 }
 
