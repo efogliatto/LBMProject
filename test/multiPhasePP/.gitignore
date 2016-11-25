@@ -1,0 +1,7 @@
+# Ignore everything in this directory
+*lattice/
+processor*/
+[0-9]*/
+*.pvd
+# Except this file
+!.gitignore

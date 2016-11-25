@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Clean case
+rm -rf processor*
+rm -rf [0-9]*
+rm -rf *.csv
+rm -rf *.pvd
+rm -rf log.*
+rm -rf *lattice
+rm -rf slurm* host*

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Compute lattice
+latticeMesh -d D2Q9
+
+# lattice partitioning
+latticeMeshPartition -n $1 -d D2Q9
+
+# field partitioning
+latticeFieldsPartition -n $1 -d D2Q9

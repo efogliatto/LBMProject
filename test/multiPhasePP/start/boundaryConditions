@@ -1,0 +1,64 @@
+fields
+{
+    2
+    f
+    g
+}
+
+f
+{
+    boundaryConditions
+    {
+        Box_X0
+    	{
+	    type bounceBack;
+    	}
+
+        Box_X1
+        {
+	    type bounceBack;
+        }
+
+        Box_Y0
+        {
+	    type bounceBack;
+        }
+
+        Box_Y1
+        {
+	    type bounceBack;
+        }
+    }
+}
+
+
+
+g
+{
+    boundaryConditions
+    {
+        Box_X0
+    	{
+            type fixedT;
+	    value 1.03;
+    	}
+
+        Box_X1
+        {
+            type fixedT;
+	    value 0.97;
+        }
+
+        Box_Y0
+        {
+            type adiabatic;
+	    normal 4;
+        }
+
+        Box_Y1
+        {
+            type adiabatic;
+	    normal 2;
+        }
+    }
+}
