@@ -38,6 +38,7 @@
 #include <macroDensity.h>
 #include <macroVelocity.h>
 #include <macroTemperature.h>
+#include <updateBoundaries.h>
 
 int main( int argc, char **argv ) {
 
@@ -204,11 +205,11 @@ int main( int argc, char **argv ) {
 
 	
 
-
-    	/* // Apply boundary conditions */
-    	/* updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields ); */
-    	/* if( ht != 0 ) { updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields );  } */
-
+    	// Apply boundary conditions
+    	updateBoundaries( &bdElements, &f, &info.lattice, &mfields, nb );
+    	if( ht != 0 ) {
+	    updateBoundaries( &bdElements, &g, &info.lattice, &mfields, nb );
+	}
 
 
 
