@@ -4,4 +4,8 @@
 add_library(basiclbe SHARED
   equilibrium.c
   collision.c
+  macroDensity.c
+  macroVelocity.c
+  macroTemperature.c
+  updateBoundaries.c
   )

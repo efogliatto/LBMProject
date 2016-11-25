@@ -35,6 +35,9 @@
 
 #include <readLbeField.h>
 #include <collision.h>
+#include <macroDensity.h>
+#include <macroVelocity.h>
+#include <macroTemperature.h>
 
 int main( int argc, char **argv ) {
 
@@ -171,61 +174,51 @@ int main( int argc, char **argv ) {
     	// Collide f (Navier-Stokes)
 	collision( &info, &mfields, &f, nb );
 
+    	// Stream f
+    	lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel );
+	
+
+	
 	
 	// Collide g (Temperature)
-	if( ht != 0 ) {
+	if( ht != 0 ) {	    
 	    collision( &info, &mfields, &g, nb );
 	}
 
-	
-	
-    	/* // Density */
-    	/* liDensity( &info, mfields.rho, f ); */
-	
-    	/* // Velocity */
-    	/* pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
-      
-
-	
-    	// Stream
-    	lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel );
+    	// Stream f	
     	lbstream( g.value, g.swap, nb, &info.lattice, &info.parallel );
 	
-	
-	
-    	/* // Update macroscopic fields */
 
-    	/* // Density */
-    	/* liDensity( &info, mfields.rho, f ); */
 	
-    	/* // Velocity */
-    	/* pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
-
-    	/* if( ht != 0 ) { */
 	
-    	/*     // Temperature */
-    	/*     pseudoPotTemperature( &info, &mfields, g ); */
+    	// Update macroscopic density
+    	macroDensity( &info, &mfields, &f );
+		
+    	// Update macroscopic velocity
+	macroVelocity( &info, &mfields, &f, nb );
 
-    	/* } */
+	// Update macroscopic temperature
+    	if( ht != 0 ) {
+	    macroTemperature( &info, &mfields, &g );
+    	}
+
+	
 
 
     	/* // Apply boundary conditions */
     	/* updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields ); */
     	/* if( ht != 0 ) { updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields );  } */
 
-    	/* // Update macroscopic fields only at boundary */
-    	/* updateBoundaryDens( &bdElements, f, &info.lattice, &mfields ); */
-    	/* updateBoundaryVel( &info, &bdElements, f, &info.lattice, &mfields, nb ); */
-    	/* if( ht != 0 ) { updateBoundaryT( &bdElements, g, &info.lattice, &mfields ); } */
 
 
 
-    	/* // Sync fields */
-    	/* syncScalarField(&info.parallel, mfields.rho ); */
-    	/* syncScalarField(&info.parallel, mfields.T ); */
-    	/* syncPdfField(&info.parallel, mfields.U, 3 ); */
-    	/* syncPdfField(&info.parallel, f, info.lattice.Q ); */
-    	/* syncPdfField(&info.parallel, g, info.lattice.Q ); */
+
+    	// Sync fields
+    	syncScalarField(&info.parallel, mfields.rho );
+    	syncScalarField(&info.parallel, mfields.T );
+    	syncPdfField(&info.parallel, mfields.U, 3 );
+    	syncPdfField(&info.parallel, f.value, info.lattice.Q );
+    	syncPdfField(&info.parallel, g.value, info.lattice.Q );
 	
 
 	
