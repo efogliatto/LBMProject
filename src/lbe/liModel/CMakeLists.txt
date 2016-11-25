@@ -16,4 +16,7 @@ add_library(limodel SHARED
   pseudoPotVelocity.c
   pseudoPotTemperature.c
   liSRTCollision.c
+  liVelocity_local.c
+  liDensity_local.c
+  liTemperature_local.c
   )

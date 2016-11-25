@@ -115,7 +115,8 @@ template<typename T>
 const void IOPatch<T>::writeLocalValues(const std::string& fileName, const std::string& folderName) const {
 
     // Create folder if it does not exist
-    system( ("mkdir -p " + folderName).c_str() );
+    uint status = system( ("mkdir -p " + folderName).c_str() );
+    if(status){}
     
     // Open file
     std::ofstream outFile;
@@ -146,7 +147,8 @@ template<typename T>
 const void IOPatch<T>::writeAllValues(const std::string& fileName, const std::string& folderName, const bool& writeAscii) const {
 
     // Create folder if it does not exist
-    system( ("mkdir -p " + folderName).c_str() );
+    uint status = system( ("mkdir -p " + folderName).c_str() );
+    if(status){}
 
     std::ofstream outFile;
     
@@ -281,7 +283,8 @@ template<typename T>
 const void IOPatch<T>::writeNeighboursIds(const std::string& fileName, const std::string& folderName) const {
 
     // Create folder if it does not exist
-    system( ("mkdir -p " + folderName).c_str() );
+    uint status = system( ("mkdir -p " + folderName).c_str() );
+    if(status){}
     
     // Open file
     std::ofstream outFile;
@@ -361,7 +364,8 @@ template<typename T>
 const void IOPatch<T>::writeGlobalIdLocal(const std::string& fileName, const std::string& folderName) const {
 
     // Create folder if it does not exist
-    system( ("mkdir -p " + folderName).c_str() );
+    uint status = system( ("mkdir -p " + folderName).c_str() );
+    if(status){}
     
     // Open file
     std::ofstream outFile;
@@ -423,7 +427,8 @@ template<typename T>
 const void IOPatch<T>::writeGlobalIdGhost(const std::string& fileName, const std::string& folderName) const {
 
     // Create folder if it does not exist
-    system( ("mkdir -p " + folderName).c_str() );
+    uint status = system( ("mkdir -p " + folderName).c_str() );
+    if(status){}
     
     // Open file
     std::ofstream outFile;
@@ -489,7 +494,8 @@ template<typename T>
 const void IOPatch<T>::writeRecvMapsIds(const std::string& fileName, const std::string& folderName) const {
 
     // Create folder if it does not exist
-    system( ("mkdir -p " + folderName).c_str() );
+    uint status = system( ("mkdir -p " + folderName).c_str() );
+    if(status){}
     
     // Open file
     std::ofstream outFile;
@@ -617,7 +623,8 @@ template<typename T>
 const void IOPatch<T>::writeSendMapsIds(const std::string& fileName, const std::string& folderName) const {
 
     // Create folder if it does not exist
-    system( ("mkdir -p " + folderName).c_str() );
+    uint status = system( ("mkdir -p " + folderName).c_str() );
+    if(status){}
     
     // Open file
     std::ofstream outFile;
@@ -726,7 +733,8 @@ template<typename T>
 const void IOPatch<T>::writeBoundariesIds(const std::string& fileName, const std::string& folderName) const {
 
     // Create folder if it does not exist
-    system( ("mkdir -p " + folderName).c_str() );
+    uint status = system( ("mkdir -p " + folderName).c_str() );
+if(status){}
     
     // Open file
     std::ofstream outFile;
@@ -858,7 +866,8 @@ const void IOPatch<T>::writeVTKCells(const std::string& fileName, const std::str
     // Write info to file
     
     // Create folder if it does not exist
-    system( ("mkdir -p " + folderName).c_str() );
+    uint status = system( ("mkdir -p " + folderName).c_str() );
+    if(status){}
     
     // Open file
     std::ofstream outFile;

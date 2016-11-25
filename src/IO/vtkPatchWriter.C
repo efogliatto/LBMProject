@@ -239,7 +239,8 @@ const void vtkPatchWriter::writeVTK() const {
     // Create folder if it doesnt exist
     ostringstream folder;
     folder << "processor" << _pid << "/" << _time.currentTime();    
-    system( ("mkdir -p " + folder.str()).c_str() );
+    uint status = system( ("mkdir -p " + folder.str()).c_str() );
+    if(status){}
     
     ostringstream fname;
     fname << "processor" << _pid << "/" << _time.currentTime() << "/fields.vtu";
@@ -427,8 +428,8 @@ const void vtkPatchWriter::writeRAW() const {
     // Create folder if it doesnt exist
     ostringstream folder;
     folder << "processor" << _pid << "/" << _time.currentTime();    
-    system( ("mkdir -p " + folder.str()).c_str() );
-    
+    uint status = system( ("mkdir -p " + folder.str()).c_str() );
+    if(status){}
 
     // Write Scalar fields
     for(uint i = 0 ; i < _scalarFields.size() ; i++) {
