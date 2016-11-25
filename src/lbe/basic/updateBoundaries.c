@@ -44,7 +44,7 @@ void updateBoundaries( struct bdInfo* bdElements, struct lbeField* field, struct
 
         // adiabatic
 	case 5:
-	    /* adiabatic( bdElements, nb, field->value, bndId, lattice, mfields, fid ); */
+	    adiabatic( bdElements, field, lattice, mfields, nb, fid, bndId );
 	    break;
 	    
 	default:

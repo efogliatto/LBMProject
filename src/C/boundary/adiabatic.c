@@ -1,13 +1,10 @@
 #include <adiabatic.h>
 #include <stdio.h>
-
-// Use f_i^{eq} = Cv * T * rho * w_i * (1 + (Ci * U)/Cs2 + (Ci * U)^2/2Cs4 - U^2/sCs2)
-double f_eq( double w, double rho, double U[3], int* ei, double cs2, double c );
+#include <lbgkEquilibrium.h>
 
 
 // Uses "value" as lattice direction. Uses this value as boundary temperature
-
-void adiabatic( struct bdInfo* bdElements, int** nb, double** field, int bndId, struct latticeInfo* lattice, struct macroFields* mfields, int fid ) {
+void adiabatic( struct bdInfo* bdElements, struct lbeField* field, struct latticeInfo* lattice, struct macroFields* mfields, int** nb, int fid, int bndId ) {
 
     // Indices
     unsigned int i, k;
@@ -41,7 +38,7 @@ void adiabatic( struct bdInfo* bdElements, int** nb, double** field, int bndId, 
 
 
 	    // Simple copy
-	    field[id][k] = field[nid][k];
+	    field->value[id][k] = field->value[nid][k];
 
 	    
 	    /* if ( nb[id][k] == -1 ) { */
@@ -80,15 +77,3 @@ void adiabatic( struct bdInfo* bdElements, int** nb, double** field, int bndId, 
     }
 
 }
-
-
-
-
-/* double f_eq_( double w, double rho, double U[3], int* ei, double cs2, double c ) { */
-
-/*     double dot1 = c*ei[0]*U[0] + c*ei[1]*U[1] + c*ei[2]*U[2]; */
-/*     double dot2 = U[0]*U[0] + U[1]*U[1] + U[2]*U[2]; */
-    
-/*     return w * rho * (1 + dot1/cs2 + dot1*dot1/(2*cs2*cs2) - dot2*0.5/cs2); */
-    
-/* } */
