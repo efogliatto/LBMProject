@@ -2,6 +2,7 @@
 
 void equilibrium( struct liModelInfo* info, struct macroFields* mfields, struct lbeField* field, unsigned int id ) {
 
+    
     // Apply equilibrium model according to field.colId
     switch(field->colId) {
 

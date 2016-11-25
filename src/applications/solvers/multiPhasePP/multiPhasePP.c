@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <pseudoPotCollision.h>
 #include <pseudoPotTemperature.h>
 #include <temperatureCollision.h>
 
@@ -36,6 +34,7 @@
 
 
 #include <readLbeField.h>
+#include <collision.h>
 
 int main( int argc, char **argv ) {
 
@@ -148,119 +147,122 @@ int main( int argc, char **argv ) {
 
     
    
-    /* // Synchronize initial fields */
-    /* syncScalarField(&info.parallel, mfields.rho ); */
-    /* syncScalarField(&info.parallel, mfields.T ); */
-    /* syncPdfField(&info.parallel, mfields.U, 3 ); */
-    /* syncPdfField(&info.parallel, f, info.lattice.Q ); */
-    /* syncPdfField(&info.parallel, g, info.lattice.Q ); */
+    // Synchronize initial fields
+    syncScalarField(&info.parallel, mfields.rho );
+    syncScalarField(&info.parallel, mfields.T );
+    syncPdfField(&info.parallel, mfields.U, 3 );
+    syncPdfField(&info.parallel, f.value, info.lattice.Q );
+    syncPdfField(&info.parallel, g.value, info.lattice.Q );
+
+    if(pid == 0){printf("\n\n");}
+
+
+
 
 
 
 
 
     
-    
-    /* // Advance in time. Collide, stream, update and write */
-    /* while( updateTime(&info.time) ) { */
+    // Advance in time. Collide, stream, update and write
+    while( updateTime(&info.time) ) {
 	
 	
-    /* 	// Collide f (Navier-Stokes) */
-    /* 	pseudoPotCollision( &info, mfields.T, mfields.rho, mfields.U, nb, f ); */
-
-    /* 	// Density */
-    /* 	liDensity( &info, mfields.rho, f ); */
-	
-    /* 	// Velocity */
-    /* 	pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
-
+    	// Collide f (Navier-Stokes)
+	collision( &info, &mfields, &f, nb );
 
 	
-
-    /* 	if( ht != 0 ) { */
-	
-    /* 	    // Collide g (Temperature) */
-    /* 	    temperatureCollision( &info, mfields.T, mfields.rho, mfields.U, nb, g ); */
-	
-    /* 	} */
+	// Collide g (Temperature)
+	if( ht != 0 ) {
+	    collision( &info, &mfields, &g, nb );
+	}
 
 	
-    /* 	// Stream */
-    /* 	lbstream( f, f_swp, nb, &info.lattice, &info.parallel ); */
-    /* 	lbstream( g, g_swp, nb, &info.lattice, &info.parallel ); */
+	
+    	/* // Density */
+    	/* liDensity( &info, mfields.rho, f ); */
+	
+    	/* // Velocity */
+    	/* pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
+      
+
+	
+    	// Stream
+    	lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel );
+    	lbstream( g.value, g.swap, nb, &info.lattice, &info.parallel );
 	
 	
 	
-    /* 	// Update macroscopic fields */
+    	/* // Update macroscopic fields */
 
-    /* 	// Density */
-    /* 	liDensity( &info, mfields.rho, f ); */
+    	/* // Density */
+    	/* liDensity( &info, mfields.rho, f ); */
 	
-    /* 	// Velocity */
-    /* 	pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
+    	/* // Velocity */
+    	/* pseudoPotVelocity( &info, mfields.rho, mfields.U, f, nb, mfields.T  ); */
 
-    /* 	if( ht != 0 ) { */
+    	/* if( ht != 0 ) { */
 	
-    /* 	    // Temperature */
-    /* 	    pseudoPotTemperature( &info, &mfields, g ); */
+    	/*     // Temperature */
+    	/*     pseudoPotTemperature( &info, &mfields, g ); */
 
-    /* 	} */
-
-
-    /* 	// Apply boundary conditions */
-    /* 	updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields ); */
-    /* 	if( ht != 0 ) { updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields );  } */
-
-    /* 	// Update macroscopic fields only at boundary */
-    /* 	updateBoundaryDens( &bdElements, f, &info.lattice, &mfields ); */
-    /* 	updateBoundaryVel( &info, &bdElements, f, &info.lattice, &mfields, nb ); */
-    /* 	if( ht != 0 ) { updateBoundaryT( &bdElements, g, &info.lattice, &mfields ); } */
+    	/* } */
 
 
+    	/* // Apply boundary conditions */
+    	/* updateBC( &bdElements, nb, f, "f", &info.lattice, &mfields ); */
+    	/* if( ht != 0 ) { updateBC( &bdElements, nb, g, "g", &info.lattice, &mfields );  } */
 
-    /* 	// Sync fields */
-    /* 	syncScalarField(&info.parallel, mfields.rho ); */
-    /* 	syncScalarField(&info.parallel, mfields.T ); */
-    /* 	syncPdfField(&info.parallel, mfields.U, 3 ); */
-    /* 	syncPdfField(&info.parallel, f, info.lattice.Q ); */
-    /* 	syncPdfField(&info.parallel, g, info.lattice.Q ); */
+    	/* // Update macroscopic fields only at boundary */
+    	/* updateBoundaryDens( &bdElements, f, &info.lattice, &mfields ); */
+    	/* updateBoundaryVel( &info, &bdElements, f, &info.lattice, &mfields, nb ); */
+    	/* if( ht != 0 ) { updateBoundaryT( &bdElements, g, &info.lattice, &mfields ); } */
+
+
+
+    	/* // Sync fields */
+    	/* syncScalarField(&info.parallel, mfields.rho ); */
+    	/* syncScalarField(&info.parallel, mfields.T ); */
+    	/* syncPdfField(&info.parallel, mfields.U, 3 ); */
+    	/* syncPdfField(&info.parallel, f, info.lattice.Q ); */
+    	/* syncPdfField(&info.parallel, g, info.lattice.Q ); */
 	
 
 	
-    /* 	// Write fields */
-    /* 	if( writeFlag(&info.time) ) { */
+    	// Write fields
+    	if( writeFlag(&info.time) ) {
 	    
-    /* 	    if(pid == 0) { */
-    /* 		printf("Time = %.2f (%d)\n", (double)info.time.current * info.time.tstep, info.time.current); */
-    /* 		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info.time) ); */
-    /* 	    } */
+    	    if(pid == 0) {
+    		printf("Time = %.2f (%d)\n", (double)info.time.current * info.time.tstep, info.time.current);
+    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info.time) );
+    	    }
 	    
-    /* 	    // VTK files  */
-    /* 	    writeVTKFile(&vtk, &info.parallel, &info.lattice, &info.time); */
+    	    // VTK files
+    	    writeVTKFile(&vtk, &info.parallel, &info.lattice, &info.time);
 	    
-    /* 	    writeScalarToVTK("rho", mfields.rho, &info.lattice, &info.parallel, &info.time); */
+    	    writeScalarToVTK("rho", mfields.rho, &info.lattice, &info.parallel, &info.time);
 
-    /* 	    writeScalarToVTK("T", mfields.T, &info.lattice, &info.parallel, &info.time);	     */
+    	    writeScalarToVTK("T", mfields.T, &info.lattice, &info.parallel, &info.time);
 
-    /* 	    writeVectorToVTK("U", mfields.U, &info.lattice, &info.parallel, &info.time); */
+    	    writeVectorToVTK("U", mfields.U, &info.lattice, &info.parallel, &info.time);
 
-    /* 	    writePdfToVTK("f", f, &info.lattice, &info.parallel, &info.time); */
+    	    writePdfToVTK("f", f.value, &info.lattice, &info.parallel, &info.time);
 
-    /* 	    writePdfToVTK("g", g, &info.lattice, &info.parallel, &info.time); */
+    	    writePdfToVTK("g", g.value, &info.lattice, &info.parallel, &info.time);
 
-    /* 	    writeVTKExtra(&vtk, &info.parallel, &info.time); */
+    	    writeVTKExtra(&vtk, &info.parallel, &info.time);
 	    
-    /* 	} */
+    	}
 	
 
-    /* } */
+    }
 
 
     
-    /* // Print info */
-    /* if(pid == 0) { */
-    /* 	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info.time) ); */
-    /* } */
+    // Print info
+    if(pid == 0) {
+    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info.time) );
+    }
 
 
     MPI_Finalize();
