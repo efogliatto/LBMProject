@@ -8,4 +8,5 @@ add_library(basiclbe SHARED
   macroVelocity.c
   macroTemperature.c
   updateBoundaries.c
+  updateBoundaryElements.c
   )

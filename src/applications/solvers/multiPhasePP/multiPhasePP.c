@@ -1,5 +1,11 @@
-#include <pseudoPotTemperature.h>
-#include <temperatureCollision.h>
+#include <readLbeField.h>
+#include <collision.h>
+#include <macroDensity.h>
+#include <macroVelocity.h>
+#include <macroTemperature.h>
+#include <updateBoundaries.h>
+#include <updateBoundaryElements.h>
+
 
 #include <timeOptions.h>
 #include <syncScalarField.h>
@@ -10,8 +16,6 @@
 #include <writePdfField.h>
 #include <readLiModelInfo.h>
 #include <readNeighbours.h>
-/* #include <pseudoPotVelocity.h> */
-/* #include <liDensity.h> */
 #include <readVTKInfo.h>
 
 #include <writeVTKFile.h>
@@ -33,12 +37,6 @@
 #include <string.h>
 
 
-#include <readLbeField.h>
-#include <collision.h>
-#include <macroDensity.h>
-#include <macroVelocity.h>
-#include <macroTemperature.h>
-#include <updateBoundaries.h>
 
 int main( int argc, char **argv ) {
 
@@ -205,11 +203,16 @@ int main( int argc, char **argv ) {
 
 	
 
-    	/* // Apply boundary conditions */
-    	/* updateBoundaries( &bdElements, &f, &info, &mfields, nb ); */
-    	/* if( ht != 0 ) { */
-	/*     updateBoundaries( &bdElements, &g, &info, &mfields, nb ); */
-	/* } */
+    	// Apply boundary conditions
+    	updateBoundaries( &bdElements, &f, &info.lattice, &mfields, nb );
+    	if( ht != 0 ) {
+	    updateBoundaries( &bdElements, &g, &info.lattice, &mfields, nb );
+	}
+
+    	updateBoundaryElements( &bdElements, &f, &info, &mfields, nb );
+    	if( ht != 0 ) {
+	    updateBoundaryElements( &bdElements, &g, &info, &mfields, nb );
+	}
 
 
 
