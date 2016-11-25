@@ -7,6 +7,8 @@ f
     g (0 0 0);
 
     sigma 0.11;
+
+    Collision liMRT;
     
 }
 

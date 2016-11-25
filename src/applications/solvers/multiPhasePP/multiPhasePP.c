@@ -12,8 +12,8 @@
 #include <writePdfField.h>
 #include <readLiModelInfo.h>
 #include <readNeighbours.h>
-#include <pseudoPotVelocity.h>
-#include <liDensity.h>
+/* #include <pseudoPotVelocity.h> */
+/* #include <liDensity.h> */
 #include <readVTKInfo.h>
 
 #include <writeVTKFile.h>
@@ -22,17 +22,20 @@
 #include <writeVectorToVTK.h>
 #include <writePdfToVTK.h>
 
-#include <liEquilibrium.h>
+/* #include <liEquilibrium.h> */
 
 #include <readBoundaryElements.h>
 #include <readBoundaryConditions.h>
 
-#include <updateBC.h>
-#include <updateBoundaryT.h>
-#include <updateBoundaryDens.h>
-#include <updateBoundaryVel.h>
+/* #include <updateBC.h> */
+/* #include <updateBoundaryT.h> */
+/* #include <updateBoundaryDens.h> */
+/* #include <updateBoundaryVel.h> */
 
 #include <string.h>
+
+
+#include <readLbeField.h>
 
 int main( int argc, char **argv ) {
 
@@ -73,51 +76,54 @@ int main( int argc, char **argv ) {
 
 
     
-    /* // Simulation properties */
-    /* struct liModelInfo info = readLiModelInfo( pid, world ); */
+    // Simulation properties
+    struct liModelInfo info = readLiModelInfo( pid, world );
 
-    /* // VTK properties */
-    /* struct vtkInfo vtk = readVTKInfo(&info.lattice, &info.parallel); */
+    // VTK properties
+    struct vtkInfo vtk = readVTKInfo(&info.lattice, &info.parallel);
     
 
-    /* // Neighbours indices */
-    /* int** nb = readNeighbours(&info.lattice, &info.parallel); */
-    /* if(pid == 0) { printf("\nReading neighbour indices\n"); } */
+    // Neighbours indices
+    int** nb = readNeighbours(&info.lattice, &info.parallel);
+    if(pid == 0) { printf("\nReading neighbour indices\n"); }
 
 
-    /* // Boundary elements */
-    /* struct bdInfo bdElements = readBoundaryElements( pid, info.lattice.d, info.lattice.Q ); */
-    /* readBoundaryConditions( &bdElements ); */
+    // Boundary elements
+    struct bdInfo bdElements = readBoundaryElements( pid, info.lattice.d, info.lattice.Q );
+    readBoundaryConditions( &bdElements );
     
 
 
     
 
-    /* // Macroscopic fields */
-    /* struct macroFields mfields; */
+    // Macroscopic fields
+    struct macroFields mfields;
 
-    /* mfields.Cv = info.fields._Cv; */
-
-    
-    /* // Density */
-    /* mfields.rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time); */
-    /* if(pid == 0) { printf("\nReading field rho\n");  } */
+    mfields.Cv = info.fields._Cv;
 
     
-    /* // Velocity */
-    /* mfields.U = readVectorField("U", &info.lattice, &info.parallel, &info.time); */
-    /* if(pid == 0) { printf("\nReading field U\n");  } */
+    
+    // Density
+    mfields.rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time);
+    if(pid == 0) { printf("\nReading field rho\n");  }
 
     
-    /* // Temperature */
-    /* mfields.T = readScalarField("T", &info.lattice, &info.parallel, &info.time); */
-    /* if(pid == 0) { printf("\nReading field T\n");  } */
+    // Velocity
+    mfields.U = readVectorField("U", &info.lattice, &info.parallel, &info.time);
+    if(pid == 0) { printf("\nReading field U\n");  }
+
     
-    
-    /* // Navier-Stokes field */
-    /* double** f   = readPdfField("f", &info.lattice, &info.parallel, &info.time); */
-    /* double** f_swp = readPdfField("f", &info.lattice, &info.parallel, &info.time); */
-    /* if(pid == 0) { printf("\nReading field f\n");  } */
+    // Temperature
+    mfields.T = readScalarField("T", &info.lattice, &info.parallel, &info.time);
+    if(pid == 0) { printf("\nReading field T\n");  }
+
+
+
+
+    // LBE fields
+
+    // Navier-Stokes field
+    struct lbeField f = readLbeField("f", &info.lattice, &info.parallel, &info.time);
     
 
     /* // Temperature field */

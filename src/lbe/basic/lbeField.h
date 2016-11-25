@@ -8,6 +8,9 @@ struct lbeField {
     
     // Distribution functions
     double** value;
+
+    // Swap value
+    double** swap;
     
     // Field name
     char* name;
