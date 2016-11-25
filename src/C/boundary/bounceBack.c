@@ -1,7 +1,7 @@
 #include <bounceBack.h>
 #include <stdio.h>
 
-void bounceBack( struct bdInfo* bdElements, int** nb, double** field, int bndId, struct latticeInfo* lattice ) {
+void bounceBack( struct bdInfo* bdElements, struct lbeField* field, struct latticeInfo* lattice, int** nb, int bndId ) {
 
     unsigned int i, k;
 
@@ -15,7 +15,7 @@ void bounceBack( struct bdInfo* bdElements, int** nb, double** field, int bndId,
 
 	    if ( nb[id][k] == -1 ) {
 
-		field[id][k] = field[id][lattice->reverse[k]];
+		field->value[id][k] = field->value[id][lattice->reverse[k]];
 
 	    }
 

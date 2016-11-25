@@ -205,11 +205,11 @@ int main( int argc, char **argv ) {
 
 	
 
-    	// Apply boundary conditions
-    	updateBoundaries( &bdElements, &f, &info.lattice, &mfields, nb );
-    	if( ht != 0 ) {
-	    updateBoundaries( &bdElements, &g, &info.lattice, &mfields, nb );
-	}
+    	/* // Apply boundary conditions */
+    	/* updateBoundaries( &bdElements, &f, &info, &mfields, nb ); */
+    	/* if( ht != 0 ) { */
+	/*     updateBoundaries( &bdElements, &g, &info, &mfields, nb ); */
+	/* } */
 
 
 

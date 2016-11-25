@@ -19,4 +19,5 @@ add_library(limodel SHARED
   liVelocity_local.c
   liDensity_local.c
   liTemperature_local.c
+  lbgkEquilibrium.c
   )

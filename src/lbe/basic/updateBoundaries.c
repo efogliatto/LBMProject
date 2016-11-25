@@ -34,18 +34,18 @@ void updateBoundaries( struct bdInfo* bdElements, struct lbeField* field, struct
 	    
         // bounceBack
 	case 1:
-	    bounceBack( bdElements, nb, field->value, bndId, lattice );
+	    bounceBack( bdElements, field, lattice, nb, bndId );
 	    break;
 
         // fixedT
 	case 4:
-	    fixedT( bdElements, nb, field->value, bndId, lattice, mfields, fid );
+	    fixedT( bdElements, field, lattice, mfields, nb, fid, bndId );
 	    break;
 
         // adiabatic
 	case 5:
-	    adiabatic( bdElements, nb, field->value, bndId, lattice, mfields, fid );
-	    break;	    
+	    /* adiabatic( bdElements, nb, field->value, bndId, lattice, mfields, fid ); */
+	    break;
 	    
 	default:
 	    printf("\n[ERROR]  Unrecognized boundary condition \n\n\n");
