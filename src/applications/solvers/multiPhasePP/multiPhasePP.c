@@ -165,68 +165,68 @@ int main( int argc, char **argv ) {
     while( updateTime(&info.time) ) {
 	
 	
-    	// Collide f (Navier-Stokes)
-	collision( &info, &mfields, &f, nb );
+    	/* // Collide f (Navier-Stokes) */
+	/* collision( &info, &mfields, &f, nb ); */
 
-    	// Update macroscopic density
-    	macroDensity( &info, &mfields, &f );
+    	/* // Update macroscopic density */
+    	/* macroDensity( &info, &mfields, &f ); */
 		
-    	// Update macroscopic velocity
-	macroVelocity( &info, &mfields, &f, nb );
+    	/* // Update macroscopic velocity */
+	/* macroVelocity( &info, &mfields, &f, nb ); */
 
 
 	
 
 	
 	
-	// Collide g (Temperature)
-	if( ht != 0 ) {	    
-	    collision( &info, &mfields, &g, nb );
-	}
+	/* // Collide g (Temperature) */
+	/* if( ht != 0 ) {	     */
+	/*     collision( &info, &mfields, &g, nb ); */
+	/* } */
 
 
-    	// Stream f
-    	lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel );
+    	/* // Stream f */
+    	/* lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel ); */
 
-    	// Stream g
-    	lbstream( g.value, g.swap, nb, &info.lattice, &info.parallel );
+    	/* // Stream g */
+    	/* lbstream( g.value, g.swap, nb, &info.lattice, &info.parallel ); */
 	
 
 	
 	
-    	// Update macroscopic density
-    	macroDensity( &info, &mfields, &f );
+    	/* // Update macroscopic density */
+    	/* macroDensity( &info, &mfields, &f ); */
 		
-    	// Update macroscopic velocity
-	macroVelocity( &info, &mfields, &f, nb );
+    	/* // Update macroscopic velocity */
+	/* macroVelocity( &info, &mfields, &f, nb ); */
 
-	// Update macroscopic temperature
-    	if( ht != 0 ) {
-	    macroTemperature( &info, &mfields, &g );
-    	}
+	/* // Update macroscopic temperature */
+    	/* if( ht != 0 ) { */
+	/*     macroTemperature( &info, &mfields, &g ); */
+    	/* } */
 
 	
 
-    	// Apply boundary conditions
-    	updateBoundaries( &bdElements, &f, &info.lattice, &mfields, nb );
-    	if( ht != 0 ) {
-	    updateBoundaries( &bdElements, &g, &info.lattice, &mfields, nb );
-	}
+    	/* // Apply boundary conditions */
+    	/* updateBoundaries( &bdElements, &f, &info.lattice, &mfields, nb ); */
+    	/* if( ht != 0 ) { */
+	/*     updateBoundaries( &bdElements, &g, &info.lattice, &mfields, nb ); */
+	/* } */
 
-    	updateBoundaryElements( &bdElements, &f, &info, &mfields, nb );
-    	if( ht != 0 ) {
-	    updateBoundaryElements( &bdElements, &g, &info, &mfields, nb );
-	}
-
-
+    	/* updateBoundaryElements( &bdElements, &f, &info, &mfields, nb ); */
+    	/* if( ht != 0 ) { */
+	/*     updateBoundaryElements( &bdElements, &g, &info, &mfields, nb ); */
+	/* } */
 
 
-    	// Sync fields
-    	syncScalarField(&info.parallel, mfields.rho );
-    	syncScalarField(&info.parallel, mfields.T );
-    	syncPdfField(&info.parallel, mfields.U, 3 );
-    	syncPdfField(&info.parallel, f.value, info.lattice.Q );
-    	syncPdfField(&info.parallel, g.value, info.lattice.Q );
+
+
+    	/* // Sync fields */
+    	/* syncScalarField(&info.parallel, mfields.rho ); */
+    	/* syncScalarField(&info.parallel, mfields.T ); */
+    	/* syncPdfField(&info.parallel, mfields.U, 3 ); */
+    	/* syncPdfField(&info.parallel, f.value, info.lattice.Q ); */
+    	/* syncPdfField(&info.parallel, g.value, info.lattice.Q ); */
 	
 
 	
