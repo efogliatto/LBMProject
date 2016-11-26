@@ -29,11 +29,6 @@
 #include <readBoundaryElements.h>
 #include <readBoundaryConditions.h>
 
-/* #include <updateBC.h> */
-/* #include <updateBoundaryT.h> */
-/* #include <updateBoundaryDens.h> */
-/* #include <updateBoundaryVel.h> */
-
 #include <string.h>
 
 
@@ -173,8 +168,13 @@ int main( int argc, char **argv ) {
     	// Collide f (Navier-Stokes)
 	collision( &info, &mfields, &f, nb );
 
-    	// Stream f
-    	lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel );
+    	// Update macroscopic density
+    	macroDensity( &info, &mfields, &f );
+		
+    	// Update macroscopic velocity
+	macroVelocity( &info, &mfields, &f, nb );
+
+
 	
 
 	
@@ -184,7 +184,11 @@ int main( int argc, char **argv ) {
 	    collision( &info, &mfields, &g, nb );
 	}
 
-    	// Stream f	
+
+    	// Stream f
+    	lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel );
+
+    	// Stream g
     	lbstream( g.value, g.swap, nb, &info.lattice, &info.parallel );
 	
 
