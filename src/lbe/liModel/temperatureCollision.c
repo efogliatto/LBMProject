@@ -39,9 +39,9 @@ void temperatureCollision( struct liModelInfo* info, double* T, double* rho, dou
 	    kappa = ( 1 - 0.5 / info->fields.tau_T) * info->lattice.omega[k] * info->fields._Cv * T[id] / info->lattice.cs2;
 	    
 	    dot = 0;
-	    for( j = 0 ; j < 3 ; j++) {
-		dot += info->lattice.c * info->lattice.vel[k][j] * F[j]; 
-	    }
+	    /* for( j = 0 ; j < 3 ; j++) { */
+	    /* 	dot += info->lattice.c * info->lattice.vel[k][j] * F[j];  */
+	    /* } */
 
 
 	    // Collision

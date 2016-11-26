@@ -180,7 +180,7 @@ int main( int argc, char **argv ) {
 	
 	
 	/* // Collide g (Temperature) */
-	/* if( ht != 0 ) {	     */
+	/* if( ht != 0 ) { */
 	/*     collision( &info, &mfields, &g, nb ); */
 	/* } */
 
@@ -221,12 +221,12 @@ int main( int argc, char **argv ) {
 
 
 
-    	/* // Sync fields */
-    	/* syncScalarField(&info.parallel, mfields.rho ); */
-    	/* syncScalarField(&info.parallel, mfields.T ); */
-    	/* syncPdfField(&info.parallel, mfields.U, 3 ); */
-    	/* syncPdfField(&info.parallel, f.value, info.lattice.Q ); */
-    	/* syncPdfField(&info.parallel, g.value, info.lattice.Q ); */
+    	// Sync fields
+    	syncScalarField(&info.parallel, mfields.rho );
+    	syncScalarField(&info.parallel, mfields.T );
+    	syncPdfField(&info.parallel, mfields.U, 3 );
+    	syncPdfField(&info.parallel, f.value, info.lattice.Q );
+    	syncPdfField(&info.parallel, g.value, info.lattice.Q );
 	
 
 	
