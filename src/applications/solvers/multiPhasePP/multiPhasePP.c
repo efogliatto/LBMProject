@@ -179,18 +179,19 @@ int main( int argc, char **argv ) {
 
 	
 	
-	/* // Collide g (Temperature) */
-	/* if( ht != 0 ) { */
-	/*     collision( &info, &mfields, &g, nb ); */
-	/* } */
+	// Collide g (Temperature)
+	if( ht != 0 ) {
+	    collision( &info, &mfields, &g, nb );
+	}
 
 
     	/* // Stream f */
     	/* lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel ); */
 
-    	/* // Stream g */
-    	/* lbstream( g.value, g.swap, nb, &info.lattice, &info.parallel ); */
-	
+    	// Stream g
+	if( ht != 0 ) {
+	    lbstream( g.value, g.swap, nb, &info.lattice, &info.parallel );
+	}
 
 	
 	
@@ -200,23 +201,23 @@ int main( int argc, char **argv ) {
     	/* // Update macroscopic velocity */
 	/* macroVelocity( &info, &mfields, &f, nb ); */
 
-	/* // Update macroscopic temperature */
-    	/* if( ht != 0 ) { */
-	/*     macroTemperature( &info, &mfields, &g ); */
-    	/* } */
+	// Update macroscopic temperature
+    	if( ht != 0 ) {
+	    macroTemperature( &info, &mfields, &g );
+    	}
 
 	
 
     	/* // Apply boundary conditions */
     	/* updateBoundaries( &bdElements, &f, &info.lattice, &mfields, nb ); */
-    	/* if( ht != 0 ) { */
-	/*     updateBoundaries( &bdElements, &g, &info.lattice, &mfields, nb ); */
-	/* } */
+    	if( ht != 0 ) {
+	    updateBoundaries( &bdElements, &g, &info.lattice, &mfields, nb );
+	}
 
     	/* updateBoundaryElements( &bdElements, &f, &info, &mfields, nb ); */
-    	/* if( ht != 0 ) { */
-	/*     updateBoundaryElements( &bdElements, &g, &info, &mfields, nb ); */
-	/* } */
+    	if( ht != 0 ) {
+	    updateBoundaryElements( &bdElements, &g, &info, &mfields, nb );
+	}
 
 
 

@@ -13,7 +13,7 @@ void fixedT( struct bdInfo* bdElements, struct lbeField* field, struct latticeIn
     double eq_bnd = 0;
     double eq_nb = 0;
 
-
+    
     // Move over boundary elements
     for( i = 0 ; i < bdElements->_nbel[bndId] ; i++ ) {
 
@@ -28,6 +28,7 @@ void fixedT( struct bdInfo* bdElements, struct lbeField* field, struct latticeIn
 	
 	// Move over lattice velocities
 	for( k = 0 ; k < lattice->Q ; k++ ) {
+
 
 	    if ( nb[id][k] == -1 ) {
 
@@ -57,10 +58,10 @@ void fixedT( struct bdInfo* bdElements, struct lbeField* field, struct latticeIn
 		    }
 
 
-
 		    // Update distribution
 		    field->value[id][k] = eq_bnd + (field->value[nbid][k] - eq_nb);
-		    
+		    /* printf("%d %d\n", id, nbid); */
+
 		}
 
 
