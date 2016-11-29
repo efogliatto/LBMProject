@@ -2,11 +2,11 @@ f
 {
 
     // Relaxation parameters. Need lambda until modification of readLiModelInfo
-    Lambda (1.0 1.1 1.1 1.0 1.1 1.0 1.1 0.05 0.05);
+    Lambda (1.0 1.1 1.1 1.0 1.1 1.0 1.1 1.25 1.25);
     
     tau 0.8;
 
-    g (0 0 0);
+    g (0 -2.35e-04 0);
 
     sigma 0.11;
 
