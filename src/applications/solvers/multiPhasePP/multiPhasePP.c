@@ -38,13 +38,21 @@ int main( int argc, char **argv ) {
 
 
     // Check for arguments
-    unsigned int ht = 1;
+    unsigned int ht = 1, frozen = 1;
     {
 	unsigned int arg;
 	for( arg = 0 ; arg < argc ; arg++) {
 
 	    if ( strcmp("--noHeatTransfer", argv[arg]) == 0 ) {
 		ht = 0;
+	    }
+
+	    else {
+
+		if ( strcmp("--frozenFlow", argv[arg]) == 0 ) {
+		    frozen = 0;
+		}
+		
 	    }
 	    
 	}
@@ -164,29 +172,33 @@ int main( int argc, char **argv ) {
     // Advance in time. Collide, stream, update and write
     while( updateTime(&info.time) ) {
 	
-	
-    	/* // Collide f (Navier-Stokes) */
-	/* collision( &info, &mfields, &f, nb ); */
 
-    	/* // Update macroscopic density */
-    	/* macroDensity( &info, &mfields, &f ); */
+	if( frozen != 0 ) {
+
+	    // Collide f (Navier-Stokes)
+	    collision( &info, &mfields, &f, nb );
+
+	    // Update macroscopic density
+	    macroDensity( &info, &mfields, &f );
 		
-    	/* // Update macroscopic velocity */
-	/* macroVelocity( &info, &mfields, &f, nb ); */
+	    // Update macroscopic velocity
+	    macroVelocity( &info, &mfields, &f, nb );
 
-
+	}
 	
 
 	
 	
-	/* // Collide g (Temperature) */
-	/* if( ht != 0 ) { */
-	/*     collision( &info, &mfields, &g, nb ); */
-	/* } */
+	// Collide g (Temperature)
+	if( ht != 0 ) {
+	    collision( &info, &mfields, &g, nb );
+	}
 
 
-    	/* // Stream f */
-    	/* lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel ); */
+    	// Stream f
+	if( frozen != 0 ) {
+	    lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel );
+	}
 
     	// Stream g
 	if( ht != 0 ) {
@@ -194,27 +206,34 @@ int main( int argc, char **argv ) {
 	}
 
 	
-	
-    	/* // Update macroscopic density */
-    	/* macroDensity( &info, &mfields, &f ); */
+	if( frozen != 0 ) {
+	    
+	    // Update macroscopic density
+	    macroDensity( &info, &mfields, &f );
 		
-    	/* // Update macroscopic velocity */
-	/* macroVelocity( &info, &mfields, &f, nb ); */
+	    // Update macroscopic velocity
+	    macroVelocity( &info, &mfields, &f, nb );
 
-	/* // Update macroscopic temperature */
-    	/* if( ht != 0 ) { */
-	/*     macroTemperature( &info, &mfields, &g ); */
-    	/* } */
+	}
+	
+	// Update macroscopic temperature
+    	if( ht != 0 ) {
+	    macroTemperature( &info, &mfields, &g );
+    	}
 
 	
 
-    	/* /\* // Apply boundary conditions *\/ */
-    	/* /\* updateBoundaries( &bdElements, &f, &info.lattice, &mfields, nb ); *\/ */
+    	// Apply boundary conditions
+	if( frozen != 0 ) {
+	    updateBoundaries( &bdElements, &f, &info.lattice, &mfields, nb );
+	}
     	if( ht != 0 ) {
 	    updateBoundaries( &bdElements, &g, &info.lattice, &mfields, nb );
 	}
 
-    	/* /\* updateBoundaryElements( &bdElements, &f, &info, &mfields, nb ); *\/ */
+	if( frozen != 0 ) {
+	    updateBoundaryElements( &bdElements, &f, &info, &mfields, nb );
+	}
     	if( ht != 0 ) {
 	    updateBoundaryElements( &bdElements, &g, &info, &mfields, nb );
 	}

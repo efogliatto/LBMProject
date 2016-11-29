@@ -18,6 +18,7 @@ void updateBoundaryElements( struct bdInfo* bdElements, struct lbeField* field, 
 
 	    // Boundary element id
 	    id = bdElements->_idx[bndId][i];
+	    
 
 	    switch(field->colId) {
 
