@@ -7,15 +7,17 @@
 
 void updateBoundaryElements( struct bdInfo* bdElements, struct lbeField* field, struct liModelInfo* info, struct macroFields* mfields, int** nb ) {
 
-    unsigned int bndId, id;
+    unsigned int bndId, i, id;
 
 
     // Move over boundaries
     for( bndId = 0 ; bndId < bdElements->_nb ; bndId++ ) {
 	
 	// Move over boundary elements
-	for( id = 0 ; id < bdElements->_nbel[bndId] ; id++ ) {
+	for( i = 0 ; i < bdElements->_nbel[bndId] ; i++ ) {
 
+	    // Boundary element id
+	    id = bdElements->_idx[bndId][i];
 
 	    switch(field->colId) {
 
