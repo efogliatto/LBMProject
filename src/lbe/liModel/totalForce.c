@@ -1,4 +1,5 @@
 #include <totalForce.h>
+#include <stdio.h>
 
 void totalForce( struct liModelInfo* info, double F[3], double* rho, int** nb, double* T, unsigned int id ) {
 
@@ -12,10 +13,9 @@ void totalForce( struct liModelInfo* info, double F[3], double* rho, int** nb, d
     
     for( i = 0 ; i < 3 ; i++) {
 	
-    	F[i] =  F[i]  +   rho[id] * info->fields._g[i];
+    	F[i] +=  (rho[id] - info->fields.rho_0) * info->fields._g[i];
 	
     }
-
     
     
 }

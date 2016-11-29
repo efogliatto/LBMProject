@@ -44,6 +44,9 @@ struct li_fieldsInfo {
 
     // Gravity vector
     c_scalar _g[3];
+
+    // Reference density
+    c_scalar rho_0;
     
     
 };

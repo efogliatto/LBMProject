@@ -188,7 +188,9 @@ extern "C" {
     info.fields._g[1] = gravity.y();
     info.fields._g[2] = gravity.z();
 
-
+    // Reference density
+    info.fields.rho_0 = mp.lookUpEntry<double>("f/rho_0");
+    
 
 
     // Temperature relaxation time
