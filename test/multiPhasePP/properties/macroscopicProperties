@@ -18,7 +18,7 @@ g
 {
 
     // Relaxation parameters
-    tau 10;
+    tau 0.92;
 
     // Specific heat
     Cv 1;
@@ -37,8 +37,6 @@ EOS
     b 4.0;
 
     R 1.0;
-
-    T 0.0329;
 
     G 1;
     

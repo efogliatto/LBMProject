@@ -1,7 +1,7 @@
 #------------------ Unit tests ------------------#
 
 set ( PROJECT_LINK_LIBS libbasic.so libtime.so liblbmodel.so libio.so libfields.so libgeometry.so )
-link_directories( ~/LBMProject_v3/lib )
+link_directories( ~/LBMProject/lib )
 
 
 # Test 1. basicPatch
@@ -64,6 +64,6 @@ target_link_libraries(test14 ${PROJECT_LINK_LIBS} ${Boost_LIBRARIES} ${MPI_LIBRA
 add_executable(test15 "test15.C")
 target_link_libraries(test15 ${PROJECT_LINK_LIBS} ${Boost_LIBRARIES} ${MPI_LIBRARIES} ${PROJECT_LINK_LIBS})
 
-# mpiTest. Testign mpi functionality in c program
-add_executable(mpiTest "mpiTest.c")
-target_link_libraries(mpiTest ${PROJECT_LINK_LIBS} ${Boost_LIBRARIES} ${MPI_LIBRARIES} ${PROJECT_LINK_LIBS} liblbe.so libC_operations.so)
+# # mpiTest. Testign mpi functionality in c program
+# add_executable(mpiTest "mpiTest.c")
+# target_link_libraries(mpiTest ${PROJECT_LINK_LIBS} ${Boost_LIBRARIES} ${MPI_LIBRARIES} ${PROJECT_LINK_LIBS} liblbe.so libC_operations.so)
