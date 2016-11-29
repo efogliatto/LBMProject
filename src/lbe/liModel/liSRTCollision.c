@@ -73,6 +73,7 @@ void liSRTCollision( struct liModelInfo* info, struct macroFields* mfields, stru
 
     // Deallocate memory
     free(feq);
+    free(force);
 
 
 
