@@ -22,5 +22,9 @@ SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} --std=c++11 -Wall" )
 # Compiler options for C
 SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall" )
 
+# # Linker flags
+# SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
+# SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pg")
+
 # Directorio con fuentes
 add_subdirectory (src)
