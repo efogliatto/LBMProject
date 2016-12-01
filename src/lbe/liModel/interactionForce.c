@@ -5,7 +5,9 @@
 
 void interactionForce( struct liModelInfo* info, double F[3], double* rho, int** nb, double* T, unsigned int id ) {
 
-    unsigned int i,k;
+    unsigned int i,
+	k,
+	noneigh = 0;
 
     // Initialize force term
     for( i = 0 ; i < 3 ; i++) {
@@ -20,14 +22,16 @@ void interactionForce( struct liModelInfo* info, double F[3], double* rho, int**
 
     	int neighId = nb[id][k];
 
+	// Do not compute interaction force (fluid-fluid) over boundary nodes
     	if( neighId == -1 ) {
 	    
-    	    neighId = nb[ id ][ info->lattice.reverse[k] ];
+    	    /* neighId = nb[ id ][ info->lattice.reverse[k] ]; */
+	    noneigh++;
 	    
     	}
 	
     	// Do not use unexisting neighbour
-    	if( neighId != -1 ) {
+    	if(  ( neighId != -1 )  &&  (noneigh == 0)  ) {
 
     	    double alpha = info->lattice.weights[k] * potential(info, rho[neighId], T[neighId]) * info->lattice.c;
 	    
@@ -42,14 +46,29 @@ void interactionForce( struct liModelInfo* info, double F[3], double* rho, int**
     }
 
 
-    // Extra constant
 
-    double beta = -info->fields._G * potential(info, rho[id], T[id]);
+
+    if(noneigh == 0) {
+	
+	// Extra constant
+	double beta = -info->fields._G * potential(info, rho[id], T[id]);
     
-    for( i = 0 ; i < 3 ; i++) {
+	for( i = 0 ; i < 3 ; i++) {
 	
-    	F[i] =  F[i] * beta;
+	    F[i] =  F[i] * beta;
 	
+	}
+
+    }
+
+    else {
+
+	for( i = 0 ; i < 3 ; i++) {
+	
+	    F[i] =  0;
+	
+	}
+
     }
 
     
