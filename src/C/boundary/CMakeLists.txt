@@ -3,5 +3,6 @@
 add_library(boundary SHARED
   bounceBack.c
   fixedT.c
+  fixedU.c
   adiabatic.c
   )

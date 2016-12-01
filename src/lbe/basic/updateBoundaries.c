@@ -37,6 +37,11 @@ void updateBoundaries( struct bdInfo* bdElements, struct lbeField* field, struct
 	    bounceBack( bdElements, field, lattice, nb, bndId );
 	    break;
 
+        // fixedU
+	case 2:
+	    fixedU( bdElements, field, lattice, mfields, nb, fid, bndId );
+	    break;
+	    
         // fixedT
 	case 4:
 	    fixedT( bdElements, field, lattice, mfields, nb, fid, bndId );
