@@ -171,11 +171,31 @@ extern "C" {
     
 	    info.fields._R = (c_scalar)mp.lookUpEntry<double>("EOS/R");
 
-	    info.fields._T = (c_scalar)mp.lookUpEntry<double>("EOS/T");
-
 	    info.fields._G = (c_scalar)mp.lookUpEntry<double>("EOS/G");
 	    
 	}
+
+	else {
+
+	    if( eosType.compare("Peng-Robinson") == 0 ) {
+
+		info.fields._eosIdx = 2;
+
+		// Peng-Robinson constants
+    
+		info.fields._a = (c_scalar)mp.lookUpEntry<double>("EOS/a");
+    
+		info.fields._b = (c_scalar)mp.lookUpEntry<double>("EOS/b");
+    
+		info.fields._R = (c_scalar)mp.lookUpEntry<double>("EOS/R");
+
+		info.fields._G = (c_scalar)mp.lookUpEntry<double>("EOS/G");
+
+		info.fields._omega = (c_scalar)mp.lookUpEntry<double>("EOS/omega");		
+	    
+	    }
+
+	}	
 
     }
 
