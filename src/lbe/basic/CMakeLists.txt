@@ -9,4 +9,5 @@ add_library(basiclbe SHARED
   macroTemperature.c
   updateBoundaries.c
   updateBoundaryElements.c
+  lbgkEquilibrium_id.c
   )

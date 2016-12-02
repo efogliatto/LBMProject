@@ -16,7 +16,8 @@ f
 
         Box_X1
         {
-	    type bounceBack;
+	    type fixedU;
+	    value ( 0 0 0 );
         }
 
         Box_Y0

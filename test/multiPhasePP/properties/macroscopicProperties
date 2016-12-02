@@ -8,6 +8,8 @@ f
 
     g (0 -2.35e-04 0);
 
+    rho_0 0;
+
     sigma 0.11;
 
     Collision liMRT;

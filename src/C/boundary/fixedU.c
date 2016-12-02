@@ -1,7 +1,7 @@
 #include <fixedU.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <lbgkEquilibrium.h>
+#include <lbgkEquilibrium_id.h>
 
 
 void fixedU( struct bdInfo* bdElements, struct lbeField* field, struct latticeInfo* lattice, struct macroFields* mfields, int** nb, int fid, int bndId ) {
@@ -9,8 +9,6 @@ void fixedU( struct bdInfo* bdElements, struct lbeField* field, struct latticeIn
     
     unsigned int i, k;
 
-    double* f_eq_nb = (double*)malloc( lattice->Q * sizeof(double) );
-    double* f_eq_local = (double*)malloc( lattice->Q * sizeof(double) );
     
     // Velocity at boundary
     double Uw[3];
@@ -45,15 +43,17 @@ void fixedU( struct bdInfo* bdElements, struct lbeField* field, struct latticeIn
 
 		    // MRT Li
 		    case 0: {
-			lbgkEquilibrium(lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb);
-			lbgkEquilibrium(lattice, mfields->rho[nbid], Uw, f_eq_local);
+			field->value[id][k] = lbgkEquilibrium_id(lattice, mfields->rho[nbid], Uw, k)
+			    + field->value[nbid][k]
+			    - lbgkEquilibrium_id(lattice, mfields->rho[nbid], mfields->U[nbid], k);
 			break;
 		    }
 
 		    // SRT Li
 		    case 1: {
-			lbgkEquilibrium(lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb);
-			lbgkEquilibrium(lattice, mfields->rho[nbid], Uw, f_eq_local);
+			field->value[id][k] = lbgkEquilibrium_id(lattice, mfields->rho[nbid], Uw, k)
+			    + field->value[nbid][k]
+			    - lbgkEquilibrium_id(lattice, mfields->rho[nbid], mfields->U[nbid], k);
 			break;
 		    }			
 
@@ -66,8 +66,7 @@ void fixedU( struct bdInfo* bdElements, struct lbeField* field, struct latticeIn
 		    }
 
 
-		    // Update distribution
-		    field->value[id][k] = f_eq_local[k] + field->value[nbid][k] - f_eq_nb[k];
+
 
 		}
 		
@@ -82,9 +81,5 @@ void fixedU( struct bdInfo* bdElements, struct lbeField* field, struct latticeIn
 	
 
     }
-
-
-    free(f_eq_nb);
-    free(f_eq_local);
 
 }
