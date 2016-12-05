@@ -31,7 +31,7 @@
 
 #include <string.h>
 
-
+#include <latticeMesh.h>
 
 int main( int argc, char **argv ) {
 
@@ -81,22 +81,27 @@ int main( int argc, char **argv ) {
 
     
     // Simulation properties
+    struct latticeMesh mesh;
+    
     struct liModelInfo info = readLiModelInfo( pid, world );
+    mesh.time = info.time;
+    mesh.parallel = info.parallel;
+    mesh.lattice = info.lattice;
 
     // VTK properties
-    struct vtkInfo vtk = readVTKInfo(&info.lattice, &info.parallel);
+    mesh.vtk = readVTKInfo(&mesh.lattice, &mesh.parallel);
     
 
     // Neighbours indices
-    int** nb = readNeighbours(&info.lattice, &info.parallel);
     if(pid == 0) { printf("\nReading neighbour indices\n"); }
+    mesh.nb = readNeighbours(&mesh.lattice, &mesh.parallel);
 
 
     // Boundary elements
-    struct bdInfo bdElements = readBoundaryElements( pid, info.lattice.d, info.lattice.Q );
+    struct bdInfo bdElements = readBoundaryElements( pid, mesh.lattice.d, mesh.lattice.Q );
     readBoundaryConditions( &bdElements );
     
-
+    
 
     
 
@@ -108,17 +113,17 @@ int main( int argc, char **argv ) {
     
     
     // Density
-    mfields.rho = readScalarField("rho", &info.lattice, &info.parallel, &info.time);
+    mfields.rho = readScalarField("rho", &mesh.lattice, &mesh.parallel, &mesh.time);
     if(pid == 0) { printf("\nReading field rho\n");  }
 
     
     // Velocity
-    mfields.U = readVectorField("U", &info.lattice, &info.parallel, &info.time);
+    mfields.U = readVectorField("U", &mesh.lattice, &mesh.parallel, &mesh.time);
     if(pid == 0) { printf("\nReading field U\n");  }
 
     
     // Temperature
-    mfields.T = readScalarField("T", &info.lattice, &info.parallel, &info.time);
+    mfields.T = readScalarField("T", &mesh.lattice, &mesh.parallel, &mesh.time);
     if(pid == 0) { printf("\nReading field T\n");  }
 
 
@@ -127,10 +132,10 @@ int main( int argc, char **argv ) {
     // LBE fields
 
     // Navier-Stokes field
-    struct lbeField f = readLbeField("f", &info.lattice, &info.parallel, &info.time);
+    struct lbeField f = readLbeField("f", &mesh.lattice, &mesh.parallel, &mesh.time);
     
     // Energy field
-    struct lbeField g = readLbeField("g", &info.lattice, &info.parallel, &info.time);
+    struct lbeField g = readLbeField("g", &mesh.lattice, &mesh.parallel, &mesh.time);
     
 
     // Initial equilibrium distribution
@@ -138,7 +143,7 @@ int main( int argc, char **argv ) {
 
     	unsigned int id;
 
-    	for( id = 0 ; id < info.lattice.nlocal ; id++ ) {
+    	for( id = 0 ; id < mesh.lattice.nlocal ; id++ ) {
 
     	    // f
     	    equilibrium(&info, &mfields, &f, id);
@@ -153,11 +158,11 @@ int main( int argc, char **argv ) {
     
    
     // Synchronize initial fields
-    syncScalarField(&info.parallel, mfields.rho );
-    syncScalarField(&info.parallel, mfields.T );
-    syncPdfField(&info.parallel, mfields.U, 3 );
-    syncPdfField(&info.parallel, f.value, info.lattice.Q );
-    syncPdfField(&info.parallel, g.value, info.lattice.Q );
+    syncScalarField(&mesh.parallel, mfields.rho );
+    syncScalarField(&mesh.parallel, mfields.T );
+    syncPdfField(&mesh.parallel, mfields.U, 3 );
+    syncPdfField(&mesh.parallel, f.value, mesh.lattice.Q );
+    syncPdfField(&mesh.parallel, g.value, mesh.lattice.Q );
 
     if(pid == 0){printf("\n\n");}
 
@@ -170,19 +175,19 @@ int main( int argc, char **argv ) {
 
     
     // Advance in time. Collide, stream, update and write
-    while( updateTime(&info.time) ) {
+    while( updateTime(&mesh.time) ) {
 	
 
 	if( frozen != 0 ) {
 
 	    // Collide f (Navier-Stokes)
-	    collision( &info, &mfields, &f, nb );
+	    collision( &info, &mfields, &f, mesh.nb );
 
 	    // Update macroscopic density
 	    macroDensity( &info, &mfields, &f );
 		
 	    // Update macroscopic velocity
-	    macroVelocity( &info, &mfields, &f, nb );
+	    macroVelocity( &info, &mfields, &f, mesh.nb );
 
 	}
 	
@@ -191,18 +196,18 @@ int main( int argc, char **argv ) {
 	
 	// Collide g (Temperature)
 	if( ht != 0 ) {
-	    collision( &info, &mfields, &g, nb );
+	    collision( &info, &mfields, &g, mesh.nb );
 	}
 
 
     	// Stream f
 	if( frozen != 0 ) {
-	    lbstream( f.value, f.swap, nb, &info.lattice, &info.parallel );
+	    lbstream( f.value, f.swap, mesh.nb, &mesh.lattice, &mesh.parallel );
 	}
 
     	// Stream g
 	if( ht != 0 ) {
-	    lbstream( g.value, g.swap, nb, &info.lattice, &info.parallel );
+	    lbstream( g.value, g.swap, mesh.nb, &mesh.lattice, &mesh.parallel );
 	}
 
 	
@@ -212,7 +217,7 @@ int main( int argc, char **argv ) {
 	    macroDensity( &info, &mfields, &f );
 		
 	    // Update macroscopic velocity
-	    macroVelocity( &info, &mfields, &f, nb );
+	    macroVelocity( &info, &mfields, &f, mesh.nb );
 
 	}
 	
@@ -225,54 +230,54 @@ int main( int argc, char **argv ) {
 
     	// Apply boundary conditions
 	if( frozen != 0 ) {
-	    updateBoundaries( &bdElements, &f, &info.lattice, &mfields, nb );
+	    updateBoundaries( &bdElements, &f, &mesh.lattice, &mfields, mesh.nb );
 	}
     	if( ht != 0 ) {
-	    updateBoundaries( &bdElements, &g, &info.lattice, &mfields, nb );
+	    updateBoundaries( &bdElements, &g, &mesh.lattice, &mfields, mesh.nb );
 	}
 
 	// Update macro values at boundary elements
 	if( frozen != 0 ) {
-	    updateBoundaryElements( &bdElements, &f, &info, &mfields, nb );
+	    updateBoundaryElements( &bdElements, &f, &info, &mfields, mesh.nb );
 	}
     	if( ht != 0 ) {
-	    updateBoundaryElements( &bdElements, &g, &info, &mfields, nb );
+	    updateBoundaryElements( &bdElements, &g, &info, &mfields, mesh.nb );
 	}
 
 
 
 
     	// Sync fields
-    	syncScalarField(&info.parallel, mfields.rho );
-    	syncScalarField(&info.parallel, mfields.T );
-    	syncPdfField(&info.parallel, mfields.U, 3 );
-    	syncPdfField(&info.parallel, f.value, info.lattice.Q );
-    	syncPdfField(&info.parallel, g.value, info.lattice.Q );
+    	syncScalarField(&mesh.parallel, mfields.rho );
+    	syncScalarField(&mesh.parallel, mfields.T );
+    	syncPdfField(&mesh.parallel, mfields.U, 3 );
+    	syncPdfField(&mesh.parallel, f.value, mesh.lattice.Q );
+    	syncPdfField(&mesh.parallel, g.value, mesh.lattice.Q );
 	
 
 	
     	// Write fields
-    	if( writeFlag(&info.time) ) {
+    	if( writeFlag(&mesh.time) ) {
 	    
     	    if(pid == 0) {
-    		printf("Time = %.2f (%d)\n", (double)info.time.current * info.time.tstep, info.time.current);
-    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&info.time) );
+    		printf("Time = %.2f (%d)\n", (double)mesh.time.current * mesh.time.tstep, mesh.time.current);
+    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&mesh.time) );
     	    }
 	    
     	    // VTK files
-    	    writeVTKFile(&vtk, &info.parallel, &info.lattice, &info.time);
+    	    writeVTKFile(&mesh.vtk, &mesh.parallel, &mesh.lattice, &mesh.time);
 	    
-    	    writeScalarToVTK("rho", mfields.rho, &info.lattice, &info.parallel, &info.time);
+    	    writeScalarToVTK("rho", mfields.rho, &mesh.lattice, &mesh.parallel, &mesh.time);
 
-    	    writeScalarToVTK("T", mfields.T, &info.lattice, &info.parallel, &info.time);
+    	    writeScalarToVTK("T", mfields.T, &mesh.lattice, &mesh.parallel, &mesh.time);
 
-    	    writeVectorToVTK("U", mfields.U, &info.lattice, &info.parallel, &info.time);
+    	    writeVectorToVTK("U", mfields.U, &mesh.lattice, &mesh.parallel, &mesh.time);
 
-    	    writePdfToVTK("f", f.value, &info.lattice, &info.parallel, &info.time);
+    	    writePdfToVTK("f", f.value, &mesh.lattice, &mesh.parallel, &mesh.time);
 
-    	    writePdfToVTK("g", g.value, &info.lattice, &info.parallel, &info.time);
+    	    writePdfToVTK("g", g.value, &mesh.lattice, &mesh.parallel, &mesh.time);
 
-    	    writeVTKExtra(&vtk, &info.parallel, &info.time);
+    	    writeVTKExtra(&mesh.vtk, &mesh.parallel, &mesh.time);
 	    
     	}
 	
@@ -283,7 +288,7 @@ int main( int argc, char **argv ) {
     
     // Print info
     if(pid == 0) {
-    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&info.time) );
+    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) );
     }
 
 

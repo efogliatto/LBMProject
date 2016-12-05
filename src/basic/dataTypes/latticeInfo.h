@@ -3,6 +3,8 @@
 
 #include <scalars_C.h>
 
+// Basically, DdQq model info
+
 struct latticeInfo {
 
     c_scalar size;
@@ -19,6 +21,7 @@ struct latticeInfo {
     // Directional derivatives
     char* dd;
 
+    // Interaction force weights
     double* weights;
     
 };
