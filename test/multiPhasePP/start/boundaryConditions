@@ -11,23 +11,23 @@ f
     {
         Box_X0
     	{
-	    type bounceBack;
+	    type none;
     	}
 
         Box_X1
         {
 	    type fixedU;
-	    value ( 0 0 0 );
+	    value ( 0 -1 0 );
         }
 
         Box_Y0
         {
-	    type bounceBack;
+	    type none;
         }
 
         Box_Y1
         {
-	    type bounceBack;
+	    type none;
         }
     }
 }

@@ -16,7 +16,7 @@ boundary
     Box_X1
     {
         type fixedValue;
-	value ( 0 0 0 );
+	value ( 0 -1 0 );
     }
 
     Box_Y0

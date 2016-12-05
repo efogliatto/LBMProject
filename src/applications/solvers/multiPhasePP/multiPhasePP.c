@@ -231,6 +231,7 @@ int main( int argc, char **argv ) {
 	    updateBoundaries( &bdElements, &g, &info.lattice, &mfields, nb );
 	}
 
+	// Update macro values at boundary elements
 	if( frozen != 0 ) {
 	    updateBoundaryElements( &bdElements, &f, &info, &mfields, nb );
 	}
