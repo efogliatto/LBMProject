@@ -5,6 +5,9 @@ add_library(io SHARED
   dictionary.C
   vtkPatchWriter.C
   C_IO/readBasicInfo.C
+  C_IO/readLatticeInfo.C
+  C_IO/readMPIInfo.C
+  C_IO/readTimeInfo.C
   C_IO/readLbeField.C
   C_IO/readBoundaryElements.C
   C_IO/readBoundaryConditions.C

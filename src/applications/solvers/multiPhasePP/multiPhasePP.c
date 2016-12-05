@@ -31,7 +31,10 @@
 
 #include <string.h>
 
+
 #include <latticeMesh.h>
+#include <readTimeInfo.h>
+#include <readLatticeInfo.h>
 
 int main( int argc, char **argv ) {
 
@@ -84,9 +87,9 @@ int main( int argc, char **argv ) {
     struct latticeMesh mesh;
     
     struct liModelInfo info = readLiModelInfo( pid, world );
-    mesh.time = info.time;
+    mesh.time = readTimeInfo();
     mesh.parallel = info.parallel;
-    mesh.lattice = info.lattice;
+    mesh.lattice = readLatticeInfo(&mesh.time, pid);
 
     // VTK properties
     mesh.vtk = readVTKInfo(&mesh.lattice, &mesh.parallel);
@@ -98,8 +101,8 @@ int main( int argc, char **argv ) {
 
 
     // Boundary elements
-    struct bdInfo bdElements = readBoundaryElements( pid, mesh.lattice.d, mesh.lattice.Q );
-    readBoundaryConditions( &bdElements );
+    mesh.bdElements = readBoundaryElements( pid, mesh.lattice.d, mesh.lattice.Q );
+    readBoundaryConditions( &mesh.bdElements );
     
     
 
@@ -230,18 +233,18 @@ int main( int argc, char **argv ) {
 
     	// Apply boundary conditions
 	if( frozen != 0 ) {
-	    updateBoundaries( &bdElements, &f, &mesh.lattice, &mfields, mesh.nb );
+	    updateBoundaries( &mesh.bdElements, &f, &mesh.lattice, &mfields, mesh.nb );
 	}
     	if( ht != 0 ) {
-	    updateBoundaries( &bdElements, &g, &mesh.lattice, &mfields, mesh.nb );
+	    updateBoundaries( &mesh.bdElements, &g, &mesh.lattice, &mfields, mesh.nb );
 	}
 
 	// Update macro values at boundary elements
 	if( frozen != 0 ) {
-	    updateBoundaryElements( &bdElements, &f, &info, &mfields, mesh.nb );
+	    updateBoundaryElements( &mesh.bdElements, &f, &info, &mfields, mesh.nb );
 	}
     	if( ht != 0 ) {
-	    updateBoundaryElements( &bdElements, &g, &info, &mfields, mesh.nb );
+	    updateBoundaryElements( &mesh.bdElements, &g, &info, &mfields, mesh.nb );
 	}
 
 

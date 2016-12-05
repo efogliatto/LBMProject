@@ -5,6 +5,7 @@
 #include <latticeInfo.h>
 #include <mpiInfo.h>
 #include <vtkInfo.h>
+#include <bdInfo.h>
 
 
 #define MPI_BUFF_SIZE 100
@@ -27,6 +28,9 @@ struct latticeMesh {
 
     // VTK properties
     struct vtkInfo vtk;
+
+    // Boundary elements
+    struct bdInfo bdElements;
 };
 
 
