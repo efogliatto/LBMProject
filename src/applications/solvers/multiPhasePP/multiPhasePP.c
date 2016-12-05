@@ -15,8 +15,7 @@
 #include <writeVectorField.h>
 #include <writePdfField.h>
 #include <readLiModelInfo.h>
-/* #include <readNeighbours.h> */
-/* #include <readVTKInfo.h> */
+
 
 #include <writeVTKFile.h>
 #include <writeVTKExtra.h>
@@ -25,17 +24,9 @@
 #include <writePdfToVTK.h>
 
 #include <equilibrium.h>
-
-/* #include <readBoundaryElements.h> */
-/* #include <readBoundaryConditions.h> */
-
 #include <string.h>
-
-
 #include <readLatticeMesh.h>
-/* #include <readTimeInfo.h> */
-/* #include <readLatticeInfo.h> */
-/* #include <readMPIInfo.h> */
+
 
 int main( int argc, char **argv ) {
 
@@ -88,25 +79,7 @@ int main( int argc, char **argv ) {
     struct latticeMesh mesh = readLatticeMesh( pid, world );
     
     struct liModelInfo info = readLiModelInfo( pid, world );
-    /* mesh.time = readTimeInfo(); */
-    /* mesh.lattice = readLatticeInfo(&mesh.time, pid); */
-    /* mesh.parallel = readMPIInfo(pid, world, mesh.lattice.nlocal); */
-
-    /* // VTK properties */
-    /* mesh.vtk = readVTKInfo(&mesh.lattice, &mesh.parallel); */
-    
-
-    /* // Neighbours indices */
-    /* if(pid == 0) { printf("\nReading neighbour indices\n"); } */
-    /* mesh.nb = readNeighbours(&mesh.lattice, &mesh.parallel); */
-
-
-    /* // Boundary elements */
-    /* mesh.bdElements = readBoundaryElements( pid, mesh.lattice.d, mesh.lattice.Q ); */
-    /* readBoundaryConditions( &mesh.bdElements ); */
-    
-    
-
+   
     
 
     // Macroscopic fields
@@ -115,6 +88,7 @@ int main( int argc, char **argv ) {
     mfields.Cv = info.fields._Cv;
 
     
+
     
     // Density
     mfields.rho = readScalarField("rho", &mesh.lattice, &mesh.parallel, &mesh.time);
@@ -131,6 +105,7 @@ int main( int argc, char **argv ) {
     if(pid == 0) { printf("\nReading field T\n");  }
 
 
+    
 
 
     // LBE fields
@@ -150,10 +125,10 @@ int main( int argc, char **argv ) {
     	for( id = 0 ; id < mesh.lattice.nlocal ; id++ ) {
 
     	    // f
-    	    equilibrium(&info, &mfields, &f, id);
+    	    equilibrium(&mesh, &mfields, &f, id);
 
     	    // g
-    	    equilibrium(&info, &mfields, &g, id);
+    	    equilibrium(&mesh, &mfields, &g, id);
 
     	}
 	
