@@ -35,6 +35,7 @@
 #include <latticeMesh.h>
 #include <readTimeInfo.h>
 #include <readLatticeInfo.h>
+#include <readMPIInfo.h>
 
 int main( int argc, char **argv ) {
 
@@ -88,8 +89,8 @@ int main( int argc, char **argv ) {
     
     struct liModelInfo info = readLiModelInfo( pid, world );
     mesh.time = readTimeInfo();
-    mesh.parallel = info.parallel;
     mesh.lattice = readLatticeInfo(&mesh.time, pid);
+    mesh.parallel = readMPIInfo(pid, world, mesh.lattice.nlocal);
 
     // VTK properties
     mesh.vtk = readVTKInfo(&mesh.lattice, &mesh.parallel);
