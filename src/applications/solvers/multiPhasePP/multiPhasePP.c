@@ -15,8 +15,8 @@
 #include <writeVectorField.h>
 #include <writePdfField.h>
 #include <readLiModelInfo.h>
-#include <readNeighbours.h>
-#include <readVTKInfo.h>
+/* #include <readNeighbours.h> */
+/* #include <readVTKInfo.h> */
 
 #include <writeVTKFile.h>
 #include <writeVTKExtra.h>
@@ -26,16 +26,16 @@
 
 #include <equilibrium.h>
 
-#include <readBoundaryElements.h>
-#include <readBoundaryConditions.h>
+/* #include <readBoundaryElements.h> */
+/* #include <readBoundaryConditions.h> */
 
 #include <string.h>
 
 
-#include <latticeMesh.h>
-#include <readTimeInfo.h>
-#include <readLatticeInfo.h>
-#include <readMPIInfo.h>
+#include <readLatticeMesh.h>
+/* #include <readTimeInfo.h> */
+/* #include <readLatticeInfo.h> */
+/* #include <readMPIInfo.h> */
 
 int main( int argc, char **argv ) {
 
@@ -85,25 +85,25 @@ int main( int argc, char **argv ) {
 
     
     // Simulation properties
-    struct latticeMesh mesh;
+    struct latticeMesh mesh = readLatticeMesh( pid, world );
     
     struct liModelInfo info = readLiModelInfo( pid, world );
-    mesh.time = readTimeInfo();
-    mesh.lattice = readLatticeInfo(&mesh.time, pid);
-    mesh.parallel = readMPIInfo(pid, world, mesh.lattice.nlocal);
+    /* mesh.time = readTimeInfo(); */
+    /* mesh.lattice = readLatticeInfo(&mesh.time, pid); */
+    /* mesh.parallel = readMPIInfo(pid, world, mesh.lattice.nlocal); */
 
-    // VTK properties
-    mesh.vtk = readVTKInfo(&mesh.lattice, &mesh.parallel);
+    /* // VTK properties */
+    /* mesh.vtk = readVTKInfo(&mesh.lattice, &mesh.parallel); */
     
 
-    // Neighbours indices
-    if(pid == 0) { printf("\nReading neighbour indices\n"); }
-    mesh.nb = readNeighbours(&mesh.lattice, &mesh.parallel);
+    /* // Neighbours indices */
+    /* if(pid == 0) { printf("\nReading neighbour indices\n"); } */
+    /* mesh.nb = readNeighbours(&mesh.lattice, &mesh.parallel); */
 
 
-    // Boundary elements
-    mesh.bdElements = readBoundaryElements( pid, mesh.lattice.d, mesh.lattice.Q );
-    readBoundaryConditions( &mesh.bdElements );
+    /* // Boundary elements */
+    /* mesh.bdElements = readBoundaryElements( pid, mesh.lattice.d, mesh.lattice.Q ); */
+    /* readBoundaryConditions( &mesh.bdElements ); */
     
     
 
