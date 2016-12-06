@@ -9,15 +9,15 @@ f
 {
     boundaryConditions
     {
-        Box_X0
+        Box_Y1
     	{
-	    type none;
+	    type fixedU;
+	    value ( 1 0 0 );
     	}
 
         Box_X1
         {
-	    type fixedU;
-	    value ( 0 -1 0 );
+	    type none;
         }
 
         Box_Y0
@@ -25,7 +25,7 @@ f
 	    type none;
         }
 
-        Box_Y1
+        Box_X0
         {
 	    type none;
         }

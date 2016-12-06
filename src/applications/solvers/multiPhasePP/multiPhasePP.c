@@ -109,22 +109,22 @@ int main( int argc, char **argv ) {
     struct lbeField g = readLbeField("g", &mesh.lattice, &mesh.parallel, &mesh.time);
     
 
-    /* // Initial equilibrium distribution */
-    /* { */
+    // Initial equilibrium distribution
+    {
 
-    /* 	unsigned int id; */
+    	unsigned int id;
 
-    /* 	for( id = 0 ; id < mesh.lattice.nlocal ; id++ ) { */
+    	for( id = 0 ; id < mesh.lattice.nlocal ; id++ ) {
 
-    /* 	    // f */
-    /* 	    equilibrium(&mesh, &mfields, &f, id); */
+    	    // f
+    	    equilibrium(&mesh, &mfields, &f, id);
 
-    /* 	    // g */
-    /* 	    equilibrium(&mesh, &mfields, &g, id); */
+    	    // g
+    	    equilibrium(&mesh, &mfields, &g, id);
 
-    /* 	} */
+    	}
 	
-    /* } */
+    }
 
     
    
@@ -151,7 +151,7 @@ int main( int argc, char **argv ) {
     	// Collide f (Navier-Stokes)
     	if( frozen != 0 ) {
 
-    	    collision( &mesh, &mfields, &f );
+    	    /* collision( &mesh, &mfields, &f ); */
 
     	    // Update macroscopic density
     	    macroDensity( &mesh, &mfields, &f );
@@ -168,11 +168,11 @@ int main( int argc, char **argv ) {
 
 
 	
-    	/* // Stream f */
-    	/* if( frozen != 0 ) {  lbstream( &mesh, &f );  } */
+    	// Stream f
+    	if( frozen != 0 ) {  lbstream( &mesh, &f );  }
 
-    	/* // Stream g */
-    	/* if( ht != 0 ) {  lbstream( &mesh, &g );  } */
+    	// Stream g
+    	if( ht != 0 ) {  lbstream( &mesh, &g );  }
 
 	
 
