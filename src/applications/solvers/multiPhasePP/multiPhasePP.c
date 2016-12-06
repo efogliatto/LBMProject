@@ -168,11 +168,11 @@ int main( int argc, char **argv ) {
 
 
 	
-    	// Stream f
-    	if( frozen != 0 ) {  lbstream( &mesh, &f );  }
+    	/* // Stream f */
+    	/* if( frozen != 0 ) {  lbstream( &mesh, &f );  } */
 
-    	// Stream g
-    	if( ht != 0 ) {  lbstream( &mesh, &g );  }
+    	/* // Stream g */
+    	/* if( ht != 0 ) {  lbstream( &mesh, &g );  } */
 
 	
 
