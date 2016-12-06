@@ -11,7 +11,7 @@ add_library(limodel SHARED
   liMRTForce.c
   liEquilibrium.c
   # liCollision.c
-  pseudoPotCollision.c
+  # pseudoPotCollision.c
   temperatureCollision.c
   pseudoPotVelocity.c
   pseudoPotTemperature.c

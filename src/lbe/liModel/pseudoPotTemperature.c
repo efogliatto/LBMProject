@@ -2,33 +2,33 @@
 #include <syncScalarField.h>
 #include <stdio.h>
 
-void pseudoPotTemperature( struct liModelInfo* info, struct macroFields* mfields, double** g ) {
+void pseudoPotTemperature( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
     unsigned int id, k;
 
     
     // Move over points
-    for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
+    for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
 
     	// Initialize Temperature
 	double acum = 0;
 
 
 	// Move over model velocities
-	for(k = 0 ; k < info->lattice.Q ; k++) {
+	for(k = 0 ; k < mesh->lattice.Q ; k++) {
 
-	    acum += g[id][k];
+	    acum += field->value[id][k];
 		    
 	}
 
 
 	// Compute T
-	mfields->T[id] = acum / (mfields->rho[id] * info->fields._Cv);
+	mfields->T[id] = acum / (mfields->rho[id] * mfields->Cv);
 
     }
 
 
     // Synchronize field
-    syncScalarField( &info->parallel, mfields->T );
+    syncScalarField( &mesh->parallel, mfields->T );
     
 }

@@ -1,4 +1,5 @@
-#include <readLbeField.h>
+#include <IOOptions.h>
+
 #include <collision.h>
 #include <macroDensity.h>
 #include <macroVelocity.h>
@@ -11,21 +12,11 @@
 #include <syncScalarField.h>
 #include <syncPdfField.h>
 #include <lbstream.h>
-#include <writeScalarField.h>
-#include <writeVectorField.h>
-#include <writePdfField.h>
-#include <readLiModelInfo.h>
 
-
-#include <writeVTKFile.h>
-#include <writeVTKExtra.h>
-#include <writeScalarToVTK.h>
-#include <writeVectorToVTK.h>
-#include <writePdfToVTK.h>
 
 #include <equilibrium.h>
-#include <string.h>
-#include <readLatticeMesh.h>
+
+
 
 
 int main( int argc, char **argv ) {
@@ -54,6 +45,8 @@ int main( int argc, char **argv ) {
     }
 
 
+    
+
     int pid, world;
     
     // Initialize mpi
@@ -76,16 +69,14 @@ int main( int argc, char **argv ) {
 
     
     // Simulation properties
-    struct latticeMesh mesh = readLatticeMesh( pid, world );
-    
-    struct liModelInfo info = readLiModelInfo( pid, world );
+    struct latticeMesh mesh = readLatticeMesh( pid, world );    
    
     
 
     // Macroscopic fields
     struct macroFields mfields;
-
-    mfields.Cv = info.fields._Cv;
+    
+    mfields.Cv = readScalarEntry("properties/macroscopicProperties", "EOS/Cv");;
 
     
 
@@ -156,72 +147,58 @@ int main( int argc, char **argv ) {
     // Advance in time. Collide, stream, update and write
     while( updateTime(&mesh.time) ) {
 	
-
+	// Collide f (Navier-Stokes)
 	if( frozen != 0 ) {
 
-	    // Collide f (Navier-Stokes)
-	    collision( &info, &mfields, &f, mesh.nb );
+	    collision( &mesh, &mfields, &f );
 
 	    // Update macroscopic density
-	    macroDensity( &info, &mfields, &f );
+	    macroDensity( &mesh, &mfields, &f );
 		
 	    // Update macroscopic velocity
-	    macroVelocity( &info, &mfields, &f, mesh.nb );
+	    macroVelocity( &mesh, &mfields, &f );
 
 	}
 	
 
-	
-	
 	// Collide g (Temperature)
-	if( ht != 0 ) {
-	    collision( &info, &mfields, &g, mesh.nb );
-	}
+	if( ht != 0 ) {  collision( &mesh, &mfields, &g );  }
 
 
+
+	
     	// Stream f
-	if( frozen != 0 ) {
-	    lbstream( f.value, f.swap, mesh.nb, &mesh.lattice, &mesh.parallel );
-	}
+	if( frozen != 0 ) {  lbstream( &mesh, &f );  }
 
     	// Stream g
-	if( ht != 0 ) {
-	    lbstream( g.value, g.swap, mesh.nb, &mesh.lattice, &mesh.parallel );
-	}
+	if( ht != 0 ) {  lbstream( &mesh, &g );  }
+
+	
 
 	
 	if( frozen != 0 ) {
 	    
 	    // Update macroscopic density
-	    macroDensity( &info, &mfields, &f );
+	    macroDensity( &mesh, &mfields, &f );
 		
 	    // Update macroscopic velocity
-	    macroVelocity( &info, &mfields, &f, mesh.nb );
+	    macroVelocity( &mesh, &mfields, &f );
 
 	}
 	
 	// Update macroscopic temperature
-    	if( ht != 0 ) {
-	    macroTemperature( &info, &mfields, &g );
-    	}
+    	if( ht != 0 ) {	    macroTemperature( &mesh, &mfields, &g );    }
 
 	
 
+	
     	// Apply boundary conditions
-	if( frozen != 0 ) {
-	    updateBoundaries( &mesh.bdElements, &f, &mesh.lattice, &mfields, mesh.nb );
-	}
-    	if( ht != 0 ) {
-	    updateBoundaries( &mesh.bdElements, &g, &mesh.lattice, &mfields, mesh.nb );
-	}
+	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  }
+    	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
 	// Update macro values at boundary elements
-	if( frozen != 0 ) {
-	    updateBoundaryElements( &mesh.bdElements, &f, &info, &mfields, mesh.nb );
-	}
-    	if( ht != 0 ) {
-	    updateBoundaryElements( &mesh.bdElements, &g, &info, &mfields, mesh.nb );
-	}
+	if( frozen != 0 ) {  updateBoundaryElements( &mesh, &mfields, &g );  }
+    	if( ht != 0 )     {  updateBoundaryElements( &mesh, &mfields, &g );	}
 
 
 

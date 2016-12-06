@@ -8,6 +8,7 @@ add_library(io SHARED
   C_IO/readLatticeInfo.C
   C_IO/readMPIInfo.C
   C_IO/readTimeInfo.C
+  C_IO/readEOSInfo.C
   C_IO/readLatticeMesh.C
   C_IO/readLbeField.C
   C_IO/readBoundaryElements.C
@@ -15,6 +16,7 @@ add_library(io SHARED
   C_IO/readVTKInfo.C
   C_IO/readLiModelInfo.C
   C_IO/readScalarField.C
+  C_IO/readScalarEntry.C
   C_IO/readVectorField.C
   C_IO/readPdfField.C
   C_IO/readNeighbours.C

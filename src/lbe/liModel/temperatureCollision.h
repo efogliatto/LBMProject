@@ -1,8 +1,10 @@
 #ifndef TEMPERATURECOLLISION_H
 #define TEMPERATURECOLLISION_H
 
-#include <liModelInfo.h>
+#include <latticeMesh.h>
+#include <macroFields.h>
+#include <lbeField.h>
 
-void temperatureCollision( struct liModelInfo* info, double* T, double* rho, double** v, int** nb, double** g );
+void temperatureCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
 
 #endif // TEMPERATURECOLLISION_H

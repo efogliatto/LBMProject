@@ -1,7 +1,7 @@
 #include <liTemperature_local.h>
 #include <stdio.h>
 
-void liTemperature_local( struct liModelInfo* info, struct macroFields* mfields, double** g, unsigned int id ) {
+void liTemperature_local( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int id ) {
 
     unsigned int k;
 
@@ -11,15 +11,15 @@ void liTemperature_local( struct liModelInfo* info, struct macroFields* mfields,
 
 
     // Move over model velocities
-    for(k = 0 ; k < info->lattice.Q ; k++) {
+    for(k = 0 ; k < mesh->lattice.Q ; k++) {
 
-	acum += g[id][k];
+	acum += field->value[id][k];
 		    
     }
 
 
     // Compute T
-    mfields->T[id] = acum / (mfields->rho[id] * info->fields._Cv);
+    mfields->T[id] = acum / (mfields->rho[id] * mfields->Cv);
    
 
 }

@@ -1,6 +1,6 @@
 #include <lbstream.h>
 
-void lbstream( c_scalar** fld, c_scalar** swp, int** nb, struct latticeInfo* lattice, struct mpiInfo* parallel ) {
+void lbstream( struct latticeMesh* mesh, struct lbeField* field ) {
 
     unsigned int id, k;
 
@@ -8,12 +8,12 @@ void lbstream( c_scalar** fld, c_scalar** swp, int** nb, struct latticeInfo* lat
     // Copy all values to swap
 
     // Move over points
-    for( id = 0 ; id < lattice->nlocal ; id++ ) {
+    for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
 
     	// Move over velocities
-    	for( k = 0 ; k < lattice->Q ; k++ ) {
+    	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-    	    swp[id][k] = fld[id][k];
+    	    field->swap[id][k] = field->value[id][k];
 	    
     	}
 
@@ -23,25 +23,19 @@ void lbstream( c_scalar** fld, c_scalar** swp, int** nb, struct latticeInfo* lat
     // Copy only neighbours to swap
     
     // Move over points
-    for( id = 0 ; id < lattice->nlocal ; id++ ) {
+    for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
 
 	// Move over velocities
-	for( k = 0 ; k < lattice->Q ; k++ ) {
+	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-	    int neighId = nb[id][k];
+	    int neighId = mesh->nb[id][k];
 
 	    if( neighId != -1 ) {
 
-		swp[id][k] = fld[neighId][k];
+		field->swap[id][k] = field->value[neighId][k];
 
 	    }
-
-	    /* else { */
-
-	    /* 	swp[id][k] = fld[id][ lattice->reverse[k] ]; */
-		
-	    /* } */
-	    
+    
 	}
 
     }
@@ -51,12 +45,12 @@ void lbstream( c_scalar** fld, c_scalar** swp, int** nb, struct latticeInfo* lat
     // Copy back from swap
     
     // Move over points
-    for( id = 0 ; id < lattice->nlocal ; id++ ) {
+    for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
 
 	// Move over velocities
-	for( k = 0 ; k < lattice->Q ; k++ ) {
+	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-	    fld[id][k] = swp[id][k];
+	    field->value[id][k] = field->swap[id][k];
 	    
 	}
 
@@ -66,6 +60,6 @@ void lbstream( c_scalar** fld, c_scalar** swp, int** nb, struct latticeInfo* lat
 
     
     // Sync fields
-    syncPdfField( parallel, fld, lattice->Q );
+    syncPdfField( &mesh->parallel, &field->value, mesh->lattice.Q );
     
 }

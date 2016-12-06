@@ -35,7 +35,7 @@ struct li_fieldsInfo {
     double tau_T;
 
     // Constant specific heat
-    c_scalar _Cv;;
+    c_scalar _Cv;
 
     // EOS index
     // 0 : ideal gas

@@ -1,8 +1,8 @@
 #ifndef POTENTIAL_H
 #define POTENTIAL_H
 
-#include <liModelInfo.h>
+#include <latticeMesh.h>
 
-double potential( struct liModelInfo* info, double rho, double T );
+double potential( struct latticeMesh* mesh, double rho, double T );
 
 #endif // POTENTIAL_H

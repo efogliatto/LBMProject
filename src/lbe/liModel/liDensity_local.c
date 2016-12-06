@@ -1,15 +1,15 @@
 #include <liDensity_local.h>
 
-void liDensity_local( struct liModelInfo* info, double* rho, double** f, unsigned int id ) {
+void liDensity_local( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int id ) {
 
     unsigned int k;
     
-    rho[id] = 0;
+    mfields->rho[id] = 0;
 	
     // Move over velocities
-    for(k = 0 ; k < info->lattice.Q ; k++) {
+    for(k = 0 ; k < mesh->lattice.Q ; k++) {
 
-	rho[id] += f[id][k];
+	mfields->rho[id] += field->value[id][k];
 
     }
 

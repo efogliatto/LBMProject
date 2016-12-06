@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void updateBoundaries( struct bdInfo* bdElements, struct lbeField* field, struct latticeInfo* lattice, struct macroFields* mfields, int** nb ) {
+void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
     unsigned int fid = 0,
 	bndId;
@@ -10,9 +10,9 @@ void updateBoundaries( struct bdInfo* bdElements, struct lbeField* field, struct
 
     // Select field index an apply BC
     unsigned int i;
-    for( i = 0 ; i < bdElements->_nf ; i++ ) {
+    for( i = 0 ; i < mesh->bdElements._nf ; i++ ) {
 
-	if( strcmp(field->name, bdElements->_fields[i]) == 0 ) {
+	if( strcmp(field->name, mesh->bdElements._fields[i]) == 0 ) {
 
 	    fid = i;
 
@@ -24,9 +24,9 @@ void updateBoundaries( struct bdInfo* bdElements, struct lbeField* field, struct
     
     // Move over boundaries and apply condition
     
-    for( bndId = 0 ; bndId < bdElements->_nb ; bndId++ ) {
+    for( bndId = 0 ; bndId < mesh->bdElements._nb ; bndId++ ) {
 
-	switch( bdElements->_bc[fid][bndId] ) {
+	switch( mesh->bdElements._bc[fid][bndId] ) {
 
         // none - periodic
 	case 0:
@@ -34,22 +34,22 @@ void updateBoundaries( struct bdInfo* bdElements, struct lbeField* field, struct
 	    
         // bounceBack
 	case 1:
-	    bounceBack( bdElements, field, lattice, nb, bndId );
+	    bounceBack( &mesh->bdElements, field, &mesh->lattice, mesh->nb, bndId );
 	    break;
 
         // fixedU
 	case 2:
-	    fixedU( bdElements, field, lattice, mfields, nb, fid, bndId );
+	    fixedU( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
 	    break;
 	    
         // fixedT
 	case 4:
-	    fixedT( bdElements, field, lattice, mfields, nb, fid, bndId );
+	    fixedT( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
 	    break;
 
         // adiabatic
 	case 5:
-	    adiabatic( bdElements, field, lattice, mfields, nb, fid, bndId );
+	    adiabatic( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
 	    break;
 	    
 	default:

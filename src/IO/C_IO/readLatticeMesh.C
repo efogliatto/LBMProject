@@ -8,6 +8,7 @@
 #include <readNeighbours.h>
 #include <readBoundaryElements.h>
 #include <readBoundaryConditions.h>
+#include <readEOSInfo.h>
 
 #include <stdio.h>
 
@@ -43,7 +44,9 @@ extern "C" {
 	mesh.bdElements = readBoundaryElements( pid, mesh.lattice.d, mesh.lattice.Q );
 	readBoundaryConditions( &mesh.bdElements );
     
-       
+	// EOS
+	mesh.EOS = readEOSInfo();
+	
     
 	return mesh;
     

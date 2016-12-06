@@ -1,9 +1,10 @@
 #ifndef LBSTREAM_H
 #define LBSTREAM_H
 
-#include <latticeInfo.h>
+#include <latticeMesh.h>
+#include <lbeField.h>
 #include <syncPdfField.h>
 
-void lbstream( c_scalar** fld, c_scalar** swp, int** nb, struct latticeInfo* info, struct mpiInfo* parallel );
+void lbstream( struct latticeMesh* mesh, struct lbeField* field );
 
 #endif // LBSTREAM_H

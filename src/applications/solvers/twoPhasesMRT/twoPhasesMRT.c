@@ -123,9 +123,9 @@ int main( int argc, char **argv ) {
 	liangCollision(&fields, &info);
 
 	
-	// Stream
-	lbstream( fields.h, fields.swp, fields.nb, &info.lattice, &info.parallel );
-	lbstream( fields.g, fields.swp, fields.nb, &info.lattice, &info.parallel );
+	/* // Stream */
+	/* lbstream( fields.h, fields.swp, fields.nb, &info.lattice, &info.parallel ); */
+	/* lbstream( fields.g, fields.swp, fields.nb, &info.lattice, &info.parallel ); */
 
 
 

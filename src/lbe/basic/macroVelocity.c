@@ -2,7 +2,7 @@
 #include <pseudoPotVelocity.h>
 #include <stdlib.h>
 
-void macroVelocity( struct liModelInfo* info, struct macroFields* mfields, struct lbeField* field, int** nb ) {
+void macroVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
     
     // Apply collision model
@@ -10,13 +10,13 @@ void macroVelocity( struct liModelInfo* info, struct macroFields* mfields, struc
 
     // Li MRT Model
     case 0:
-	pseudoPotVelocity( info, mfields->rho, mfields->U, field->value, nb, mfields->T  );
+	pseudoPotVelocity( mesh, mfields, field );
 	break;
 
 
     // Li SRT Model
     case 1:
-	pseudoPotVelocity( info, mfields->rho, mfields->U, field->value, nb, mfields->T  );
+	pseudoPotVelocity( mesh, mfields, field );
 	break;
 	
 	

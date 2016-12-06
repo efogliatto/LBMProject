@@ -2,7 +2,7 @@
 #include <totalForce.h>
 #include <syncPdfField.h>
 
-void pseudoPotVelocity( struct liModelInfo* info, double* rho, double** v, double** f, int** nb, double* T ) {
+void pseudoPotVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
     unsigned int id, j, k;
 
@@ -10,16 +10,16 @@ void pseudoPotVelocity( struct liModelInfo* info, double* rho, double** v, doubl
     double F[3];
     
     // Move over points
-    for( id = 0 ; id < info->lattice.nlocal ; id++ ) {
+    for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
 
 	
 	// Compute interaction force
-	totalForce( info, F, rho, nb, T, id );
+	totalForce( mesh, F, mfields->rho, mfields->T, id );
 
 	
 	// Initialize velocities
 	for(k = 0 ; k < 3 ; k++) {
-	    v[id][k] = 0;
+	    mfields->U[id][k] = 0;
 	}	
 	
 
@@ -28,9 +28,9 @@ void pseudoPotVelocity( struct liModelInfo* info, double* rho, double** v, doubl
 	for( j = 0 ; j < 3 ; j++ ) {
 
 	    // Move over model velocities
-	    for(k = 0 ; k < info->lattice.Q ; k++) {
+	    for(k = 0 ; k < mesh->lattice.Q ; k++) {
 
-		v[id][j] += info->lattice.vel[k][j] * f[id][k] * info->lattice.c;
+		mfields->U[id][j] += mesh->lattice.vel[k][j] * field->value[id][k] * mesh->lattice.c;
 		    
 	    }
 	    
@@ -40,7 +40,7 @@ void pseudoPotVelocity( struct liModelInfo* info, double* rho, double** v, doubl
 	// Add interaction force and divide by density
 	for( j = 0 ; j < 3 ; j++ ) {
 
-	    v[id][j] = ( v[id][j]   +   F[j] * info->time.tstep * 0.5  ) / rho[id];
+	    mfields->U[id][j] = ( mfields->U[id][j]   +   F[j] * mesh->time.tstep * 0.5  ) / mfields->rho[id];
 
 	}
 	
@@ -49,6 +49,6 @@ void pseudoPotVelocity( struct liModelInfo* info, double* rho, double** v, doubl
 
 
     // Synchronize field
-    syncPdfField( &info->parallel, v, 3 );
+    syncPdfField( &mesh->parallel, mfields->U, 3 );
     
 }

@@ -1,10 +1,10 @@
 #ifndef MACROVELOCITY_H
 #define MACROVELOCITY_H
 
-#include <liModelInfo.h>
+#include <latticeMesh.h>
 #include <macroFields.h>
 #include <lbeField.h>
 
-void macroVelocity( struct liModelInfo* info, struct macroFields* mfields, struct lbeField* field, int** nb );
+void macroVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
 
 #endif // MACROVELOCITY_H

@@ -3,8 +3,8 @@
 
 #include <macroFields.h>
 #include <lbeField.h>
-#include <liModelInfo.h>
+#include <latticeMesh.h>
 
-void collision( struct liModelInfo* info, struct macroFields* mfields, struct lbeField* field, int** nb );
+void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
 
 #endif // COLLISION_H

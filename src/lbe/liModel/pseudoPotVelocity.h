@@ -1,8 +1,10 @@
 #ifndef PSEUDOPOTVELOCITY_H
 #define PSEUDOPOTVELOCITY_H
 
-#include <liModelInfo.h>
+#include <latticeMesh.h>
+#include <macroFields.h>
+#include <lbeField.h>
 
-void pseudoPotVelocity( struct liModelInfo* info, double* rho, double** v, double** f, int** nb, double* T );
+void pseudoPotVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
 
 #endif // PSEUDOPOTVELOCITY_H

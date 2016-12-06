@@ -1,21 +1,21 @@
-#include <macroDensity.h>
+#include <basicDensity.h>
 #include <liDensity.h>
 #include <stdlib.h>
 
-void macroDensity( struct liModelInfo* info, struct macroFields* mfields, struct lbeField* field ) {
+void macroDensity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
     // Apply collision model
     switch(field->colId) {
 
     // Li MRT Model
     case 0:
-	liDensity( info, mfields->rho, field->value );
+	basicDensity( mesh, mfields, field );
 	break;
 
 
     // Li SRT Model
     case 1:
-	liDensity( info, mfields->rho, field->value );
+	basicDensity( mesh, mfields, field );
 	break;
 	
 	

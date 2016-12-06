@@ -1,10 +1,9 @@
 #include <collision.h>
 #include <liSRTCollision.h>
 #include <temperatureCollision.h>
-#include <pseudoPotCollision.h>
 #include <stdlib.h>
 
-void collision( struct liModelInfo* info, struct macroFields* mfields, struct lbeField* field, int** nb ) {
+void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
 
     // Apply collision model
@@ -12,19 +11,19 @@ void collision( struct liModelInfo* info, struct macroFields* mfields, struct lb
 
     // Li MRT Model
     case 0:
-	pseudoPotCollision( info, mfields->T, mfields->rho, mfields->U, nb, field->value );
+	/* pseudoPotCollision( info, mfields->T, mfields->rho, mfields->U, nb, field->value ); */
 	break;
 
 
     // Li SRT Model
     case 1:
-	liSRTCollision(info, mfields, field, nb);
+	liSRTCollision( mesh, mfields, field );
 	break;
 
 	
     // Li SRT Model. Temperature
     case 2:
-	temperatureCollision( info, mfields->T, mfields->rho, mfields->U, nb, field->value );
+	temperatureCollision( mesh, mfields, field );
 	break;
 	
 	

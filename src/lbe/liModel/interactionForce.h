@@ -1,8 +1,8 @@
 #ifndef INTERACTIONFORCE_H
 #define INTERACTIONFORCE_H
 
-#include <liModelInfo.h>
+#include <latticeMesh.h>
 
-void interactionForce( struct liModelInfo* info, double F[3], double* rho, int** nb, double* T, unsigned int id );
+void interactionForce( struct latticeMesh* mesh, double F[3], double* rho, double* T, unsigned int id );
 
 #endif // INTERACTIONFORCE_H

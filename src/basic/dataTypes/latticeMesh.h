@@ -6,6 +6,7 @@
 #include <mpiInfo.h>
 #include <vtkInfo.h>
 #include <bdInfo.h>
+#include <EOSInfo.h>
 
 
 #define MPI_BUFF_SIZE 100
@@ -31,6 +32,9 @@ struct latticeMesh {
 
     // Boundary elements
     struct bdInfo bdElements;
+
+    // EOS information
+    struct EOSInfo EOS;
 };
 
 

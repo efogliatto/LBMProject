@@ -2,7 +2,7 @@
 #include <totalForce.h>
 
 
-void liVelocity_local( struct liModelInfo* info, double* rho, double** v, double** f, int** nb, double* T, unsigned int id ) {
+void liVelocity_local( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int id ) {
 
     unsigned int j, k;
 
@@ -10,23 +10,23 @@ void liVelocity_local( struct liModelInfo* info, double* rho, double** v, double
     double F[3];
  	
     // Compute interaction force
-    totalForce( info, F, rho, nb, T, id );
+    totalForce( mesh, F, mfields->rho, mfields->T, id );
 
 	
     // Initialize velocities
     for(k = 0 ; k < 3 ; k++) {
-	v[id][k] = 0;
+	mfields->U[id][k] = 0;
     }	
 	
 
 
     // Move over velocity components
-    for( j = 0 ; j < info->lattice.d ; j++ ) {
+    for( j = 0 ; j < mesh->lattice.d ; j++ ) {
 
 	// Move over model velocities
-	for(k = 0 ; k < info->lattice.Q ; k++) {
+	for(k = 0 ; k < mesh->lattice.Q ; k++) {
 
-	    v[id][j] += info->lattice.vel[k][j] * f[id][k] * info->lattice.c;
+	    mfields->U[id][j] += mesh->lattice.vel[k][j] * field->value[id][k] * mesh->lattice.c;
 		    
 	}
 	    
@@ -36,7 +36,7 @@ void liVelocity_local( struct liModelInfo* info, double* rho, double** v, double
     // Add interaction force and divide by density
     for( j = 0 ; j < 3 ; j++ ) {
 
-	v[id][j] = ( v[id][j]   +   F[j] * info->time.tstep * 0.5  ) / rho[id];
+	mfields->U[id][j] = ( mfields->U[id][j]   +   F[j] * mesh->time.tstep * 0.5  ) / mfields->rho[id];
 
     }
 	

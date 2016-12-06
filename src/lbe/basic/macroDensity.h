@@ -5,6 +5,6 @@
 #include <macroFields.h>
 #include <lbeField.h>
 
-void macroDensity( struct liModelInfo* info, struct macroFields* mfields, struct lbeField* field );
+void macroDensity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
 
 #endif // MACRODENSITY_H

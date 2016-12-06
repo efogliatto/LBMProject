@@ -3,7 +3,8 @@
 
 #include <liModelInfo.h>
 #include <interactionForce.h>
+#include <latticeMesh.h>
 
-void totalForce( struct liModelInfo* info, double F[3], double* rho, int** nb, double* T, unsigned int id );
+void totalForce( struct latticeMesh* mesh, double F[3], double* rho, double* T, unsigned int id );
 
 #endif // TOTALFORCE_H

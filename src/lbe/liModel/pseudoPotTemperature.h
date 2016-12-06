@@ -1,9 +1,10 @@
 #ifndef PSEUDOPOTTEMPERATURE_H
 #define PSEUDOPOTTEMPERATURE_H
 
-#include <liModelInfo.h>
+#include <latticeMesh.h>
 #include <macroFields.h>
+#include <lbeField.h>
 
-void pseudoPotTemperature( struct liModelInfo* info, struct macroFields* mfields, double** g );
+void pseudoPotTemperature( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
 
 #endif // PSEUDOPOTTEMPERATURE_H
