@@ -60,6 +60,6 @@ void lbstream( struct latticeMesh* mesh, struct lbeField* field ) {
 
     
     // Sync fields
-    syncPdfField( &mesh->parallel, &field->value, mesh->lattice.Q );
+    syncPdfField( &mesh->parallel, field->value, mesh->lattice.Q );
     
 }

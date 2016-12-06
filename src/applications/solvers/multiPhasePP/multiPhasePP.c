@@ -74,9 +74,10 @@ int main( int argc, char **argv ) {
     
 
     // Macroscopic fields
-    struct macroFields mfields;
+    struct macroFields mfields;    
+    mfields.Cv = readScalarEntry("properties/macroscopicProperties", "EOS/Cv");
+
     
-    mfields.Cv = readScalarEntry("properties/macroscopicProperties", "EOS/Cv");;
 
     
 
@@ -147,57 +148,57 @@ int main( int argc, char **argv ) {
     // Advance in time. Collide, stream, update and write
     while( updateTime(&mesh.time) ) {
 	
-	// Collide f (Navier-Stokes)
-	if( frozen != 0 ) {
+    	// Collide f (Navier-Stokes)
+    	if( frozen != 0 ) {
 
-	    collision( &mesh, &mfields, &f );
+    	    collision( &mesh, &mfields, &f );
 
-	    // Update macroscopic density
-	    macroDensity( &mesh, &mfields, &f );
+    	    // Update macroscopic density
+    	    macroDensity( &mesh, &mfields, &f );
 		
-	    // Update macroscopic velocity
-	    macroVelocity( &mesh, &mfields, &f );
+    	    // Update macroscopic velocity
+    	    macroVelocity( &mesh, &mfields, &f );
 
-	}
+    	}
 	
 
-	// Collide g (Temperature)
-	if( ht != 0 ) {  collision( &mesh, &mfields, &g );  }
+    	// Collide g (Temperature)
+    	if( ht != 0 ) {  collision( &mesh, &mfields, &g );  }
 
 
 
 	
     	// Stream f
-	if( frozen != 0 ) {  lbstream( &mesh, &f );  }
+    	if( frozen != 0 ) {  lbstream( &mesh, &f );  }
 
     	// Stream g
-	if( ht != 0 ) {  lbstream( &mesh, &g );  }
+    	if( ht != 0 ) {  lbstream( &mesh, &g );  }
 
 	
 
 	
-	if( frozen != 0 ) {
+    	if( frozen != 0 ) {
 	    
-	    // Update macroscopic density
-	    macroDensity( &mesh, &mfields, &f );
+    	    // Update macroscopic density
+    	    macroDensity( &mesh, &mfields, &f );
 		
-	    // Update macroscopic velocity
-	    macroVelocity( &mesh, &mfields, &f );
+    	    // Update macroscopic velocity
+    	    macroVelocity( &mesh, &mfields, &f );
 
-	}
+    	}
 	
-	// Update macroscopic temperature
+    	// Update macroscopic temperature
     	if( ht != 0 ) {	    macroTemperature( &mesh, &mfields, &g );    }
 
 	
 
 	
     	// Apply boundary conditions
-	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  }
+    	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  }
     	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
-	// Update macro values at boundary elements
-	if( frozen != 0 ) {  updateBoundaryElements( &mesh, &mfields, &g );  }
+    	// Update macro values at boundary elements
+    	if( frozen != 0 ) {  updateBoundaryElements( &mesh, &mfields, &g );  }
     	if( ht != 0 )     {  updateBoundaryElements( &mesh, &mfields, &g );	}
 
 
