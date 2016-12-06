@@ -109,22 +109,22 @@ int main( int argc, char **argv ) {
     struct lbeField g = readLbeField("g", &mesh.lattice, &mesh.parallel, &mesh.time);
     
 
-    // Initial equilibrium distribution
-    {
+    /* // Initial equilibrium distribution */
+    /* { */
 
-    	unsigned int id;
+    /* 	unsigned int id; */
 
-    	for( id = 0 ; id < mesh.lattice.nlocal ; id++ ) {
+    /* 	for( id = 0 ; id < mesh.lattice.nlocal ; id++ ) { */
 
-    	    // f
-    	    equilibrium(&mesh, &mfields, &f, id);
+    /* 	    // f */
+    /* 	    equilibrium(&mesh, &mfields, &f, id); */
 
-    	    // g
-    	    equilibrium(&mesh, &mfields, &g, id);
+    /* 	    // g */
+    /* 	    equilibrium(&mesh, &mfields, &g, id); */
 
-    	}
+    /* 	} */
 	
-    }
+    /* } */
 
     
    
@@ -177,29 +177,29 @@ int main( int argc, char **argv ) {
 	
 
 	
-    	if( frozen != 0 ) {
+    	/* if( frozen != 0 ) { */
 	    
-    	    // Update macroscopic density
-    	    macroDensity( &mesh, &mfields, &f );
+    	/*     // Update macroscopic density */
+    	/*     macroDensity( &mesh, &mfields, &f ); */
 		
-    	    // Update macroscopic velocity
-    	    macroVelocity( &mesh, &mfields, &f );
+    	/*     // Update macroscopic velocity */
+    	/*     macroVelocity( &mesh, &mfields, &f ); */
 
-    	}
+    	/* } */
 	
-    	// Update macroscopic temperature
-    	if( ht != 0 ) {	    macroTemperature( &mesh, &mfields, &g );    }
-
-	
+    	/* // Update macroscopic temperature */
+    	/* if( ht != 0 ) {	    macroTemperature( &mesh, &mfields, &g );    } */
 
 	
-    	// Apply boundary conditions
-    	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  }
-    	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
-    	// Update macro values at boundary elements
-    	if( frozen != 0 ) {  updateBoundaryElements( &mesh, &mfields, &g );  }
-    	if( ht != 0 )     {  updateBoundaryElements( &mesh, &mfields, &g );	}
+	
+    	/* // Apply boundary conditions */
+    	/* if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  } */
+    	/* if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  } */
+
+    	/* // Update macro values at boundary elements */
+    	/* if( frozen != 0 ) {  updateBoundaryElements( &mesh, &mfields, &g );  } */
+    	/* if( ht != 0 )     {  updateBoundaryElements( &mesh, &mfields, &g );	} */
 
 
 

@@ -19,10 +19,9 @@ void liSRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     // Total force
     double F[3];
 
-    
     // Move over points
     for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
-	
+
 
 	// Compute equilibrium
 	lbgkEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], feq);

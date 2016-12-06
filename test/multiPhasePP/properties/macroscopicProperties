@@ -6,13 +6,7 @@ f
     
     tau 0.8;
 
-    g (0 -2.35e-04 0);
-
-    rho_0 0;
-
-    sigma 0.11;
-
-    Collision liMRT;
+    Collision liSRT;
     
 }
 
@@ -41,5 +35,14 @@ EOS
     R 1.0;
 
     G 1;
-    
+
+    g (0 -2.35e-04 0);
+
+    rho_0 0;
+
+    sigma 0.11;
+
+    // Specific heat
+    Cv 1;
+
 }
