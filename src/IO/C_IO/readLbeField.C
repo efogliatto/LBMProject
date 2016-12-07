@@ -74,6 +74,11 @@ extern "C" {
 
 		// Read srt
 		field.tau = macroDict.lookUpEntry<double>(name + "/tau");
+		field.tau_A = macroDict.lookUpEntry<double>(name + "/tau_A");
+		field.tau_B = macroDict.lookUpEntry<double>(name + "/tau_B");
+
+		field.kappa_A = macroDict.lookUpEntry<double>(name + "/kappa_A");
+		field.kappa_B = macroDict.lookUpEntry<double>(name + "/kappa_B");	
 		
 	    }
 	    
@@ -85,6 +90,11 @@ extern "C" {
 
 		    // Read srt
 		    field.tau = macroDict.lookUpEntry<double>(name + "/tau");
+		    field.tau_A = macroDict.lookUpEntry<double>(name + "/tau_A");
+		    field.tau_B = macroDict.lookUpEntry<double>(name + "/tau_B");
+
+		    field.kappa_A = macroDict.lookUpEntry<double>(name + "/kappa_A");
+		    field.kappa_B = macroDict.lookUpEntry<double>(name + "/kappa_B");		    
 		    
 		}
 		
