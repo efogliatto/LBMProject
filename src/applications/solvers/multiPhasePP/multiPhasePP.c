@@ -147,6 +147,7 @@ int main( int argc, char **argv ) {
     
     // Advance in time. Collide, stream, update and write
     while( updateTime(&mesh.time) ) {
+
 	
     	// Collide f (Navier-Stokes)
     	if( frozen != 0 ) {  collision( &mesh, &mfields, &f );  }
@@ -161,9 +162,9 @@ int main( int argc, char **argv ) {
     	    // Update macroscopic velocity
     	    macroVelocity( &mesh, &mfields, &f );
 
-	    collision( &mesh, &mfields, &g );
+    	    collision( &mesh, &mfields, &g );
 
-	}
+    	}
 
 
 

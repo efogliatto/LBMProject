@@ -1,5 +1,4 @@
 #include <liMRTCollision.h>
-/* #include <lbgkEquilibrium.h> */
 #include <stdlib.h>
 #include <matVecMult.h>
 #include <liMRTForce.h>
@@ -23,7 +22,7 @@ void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     
     // Move over points
     for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
-
+	
 	double umag = mfields->U[id][0] * mfields->U[id][0]  +  mfields->U[id][1] * mfields->U[id][1];
 	
 	// Compute equilibrium in momentum space

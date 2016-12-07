@@ -50,6 +50,18 @@ extern "C" {
 	    }
 
 	    field.sigma = macroDict.lookUpEntry<double>(name + "/sigma");
+
+
+	    mrt = macroDict.lookUpEntry<pdf>(name + "/Lambda_A");
+	    field.Lambda_A = new double[ mrt.size() ];
+	    for( uint i = 0 ; i < mrt.size() ; i++) {	field.Lambda_A[i] = mrt[i];    }
+
+	    mrt = macroDict.lookUpEntry<pdf>(name + "/Lambda_B");
+	    field.Lambda_B = new double[ mrt.size() ];
+	    for( uint i = 0 ; i < mrt.size() ; i++) {	field.Lambda_B[i] = mrt[i];    }	    
+	    
+	    field.kappa_A = macroDict.lookUpEntry<double>(name + "/kappa_A");
+	    field.kappa_B = macroDict.lookUpEntry<double>(name + "/kappa_B");
 	    
 	}
 
