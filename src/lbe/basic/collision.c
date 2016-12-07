@@ -1,4 +1,5 @@
 #include <collision.h>
+#include <liMRTCollision.h>
 #include <liSRTCollision.h>
 #include <temperatureCollision.h>
 #include <stdlib.h>
@@ -11,9 +12,7 @@ void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lb
 
     // Li MRT Model
     case 0:
-	/* pseudoPotCollision( info, mfields->T, mfields->rho, mfields->U, nb, field->value ); */
-	printf("\n\n[ERROR]  Collision model is not yet implemented\n\n");
-	exit(1);	
+	liMRTCollision( mesh, mfields, field );
 	break;
 
 
