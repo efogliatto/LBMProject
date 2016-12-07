@@ -34,7 +34,7 @@ void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, st
 	    
         // bounceBack
 	case 1:
-	    bounceBack( &mesh->bdElements, field, &mesh->lattice, mesh->nb, bndId );
+	    bounceBack( &mesh->bdElements, field, &mesh->lattice, mesh->nb, bndId, mfields );
 	    break;
 
         // fixedU
