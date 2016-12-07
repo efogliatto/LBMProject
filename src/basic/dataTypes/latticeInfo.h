@@ -42,6 +42,11 @@ struct latticeInfo {
 
     // Interaction force weights
     double* weights;
+
+
+    // MRT matrices
+    double** M;
+    double** invM;
     
 };
 

@@ -85,7 +85,24 @@ extern "C" {
     
     
    
-    
+
+
+	// MRT matrices
+	info.M = (double**)malloc( lbm->Q() * sizeof(double*) );
+	info.invM = (double**)malloc( lbm->Q() * sizeof(double*) );
+	for(uint i = 0 ; i < lbm->Q() ; i++) {
+	    info.M[i] = (double*)malloc( lbm->Q() * sizeof(double) );
+	    info.invM[i] = (double*)malloc( lbm->Q() * sizeof(double) );
+	}
+
+	
+	for(uint i = 0 ; i < lbm->Q() ; i++) {
+	    for(uint j = 0 ; j < lbm->Q() ; j++) {
+		info.M[i][j]    = lbm->M()[i][j];
+		info.invM[i][j] = lbm->invM()[i][j];		
+	    }
+	}
+	
 	return info;
     
     }

@@ -41,6 +41,9 @@ struct lbeField {
     // Multiple relaxation times. Inverse values for linear interpolation
     double* inv_Lambda_A;
     double* inv_Lambda_B;
+
+
+    double sigma;
     
 };
 

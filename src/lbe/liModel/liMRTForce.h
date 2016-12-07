@@ -1,8 +1,10 @@
 #ifndef LIMRTFORCE_H
 #define LIMRTFORCE_H
 
-#include <liModelInfo.h>
+#include <macroFields.h>
+#include <lbeField.h>
+#include <latticeMesh.h>
 
-void liMRTForce( struct liModelInfo* info, double v[3], double F[3], double Fm[3], double psi, double* S );
+void liMRTForce( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, double* S, unsigned int id );
 
 #endif // LIMRTFORCE_H

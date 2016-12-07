@@ -48,6 +48,8 @@ extern "C" {
 	    for( uint i = 0 ; i < mrt.size() ; i++) {
 		field.Lambda[i] = mrt[i];
 	    }
+
+	    field.sigma = macroDict.lookUpEntry<double>(name + "/sigma");
 	    
 	}
 
