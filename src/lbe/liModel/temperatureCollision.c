@@ -5,6 +5,7 @@
 #include <interactionForce.h>
 #include <p_eos.h>
 
+#include <updateTau.h>
 
 void temperatureCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
@@ -27,6 +28,11 @@ void temperatureCollision( struct latticeMesh* mesh, struct macroFields* mfields
     // Move over points
     for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
 
+
+	// Update tau value
+	updateTau(field, mfields->rho[id], mesh->lattice.Q);	
+
+	
 	// Compute momentum equilibrium
 	lbgkEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], f_eq);
 

@@ -6,6 +6,8 @@
 #include <potential.h>
 #include <syncPdfField.h>
 
+#include <updateLambda.h>
+
 
 void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
@@ -22,6 +24,9 @@ void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     
     // Move over points
     for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
+
+	// Update Lambda values
+	updateLambda(field, mfields->rho[id], mesh->lattice.Q);
 	
 	double umag = mfields->U[id][0] * mfields->U[id][0]  +  mfields->U[id][1] * mfields->U[id][1];
 	
