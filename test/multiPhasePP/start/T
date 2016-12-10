@@ -21,8 +21,9 @@ boundary
 
     Box_Y0
     {
-	type fixedValue;
+	type fixedRandValue;
 	value 0.97;
+        perturbation 1;
     }
 
     Box_Y1

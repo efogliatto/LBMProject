@@ -945,6 +945,33 @@ const void IOPatch<T>::readBoundaryConditions( const std::string& fileName, cons
 	    }
 	    
 	}
+
+	else {
+
+	    // Fixed value with random perturbation
+	    if( bdtype.compare("fixedRandValue") == 0 ) {
+
+		T val = dict.lookUpEntry<T>( "boundary/" + bdmap.first + "/value" );
+		double pert = dict.lookUpEntry<double>( "boundary/" + bdmap.first + "/perturbation" );
+		double minp, maxp;
+
+		minp = 1 - pert / 100;
+		maxp = 1 + pert / 100;
+
+		// Generate random numbers
+		srand(time(NULL));
+
+		for( auto bdelem : bdmap.second ) {
+
+		    double r = (double)rand() / (double)RAND_MAX;
+		    this->_localValues[ bdelem ] = val * (minp + r * (maxp - minp));
+
+		}
+	    
+	    }
+
+
+	}
 	
     }
     
