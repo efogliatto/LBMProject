@@ -959,7 +959,7 @@ const void IOPatch<T>::readBoundaryConditions( const std::string& fileName, cons
 		maxp = 1 + pert / 100;
 
 		// Generate random numbers
-		srand(time(NULL));
+		srand( bdmap.second.size() );
 
 		for( auto bdelem : bdmap.second ) {
 

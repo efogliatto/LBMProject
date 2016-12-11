@@ -14,6 +14,14 @@ void randomT( struct bdInfo* bdElements, struct lbeField* field, struct latticeI
     double eq_bnd = 0;
     double eq_nb = 0;
 
+
+    double minp = 1.0 - 1.0 / 100;
+    double maxp = 1.0 + 1.0 / 100;
+
+    // Generate random numbers
+    /* srand(time(NULL)); */
+    srand( bdElements->_nbel[bndId] );
+
     
     // Move over boundary elements
     for( i = 0 ; i < bdElements->_nbel[bndId] ; i++ ) {
@@ -26,14 +34,9 @@ void randomT( struct bdInfo* bdElements, struct lbeField* field, struct latticeI
 	// Number of neighbours without reverse
 	unsigned int noneigh = 0;
 	
-	
-	double minp = 1 - 1 / 100;
-	double maxp = 1 + 1 / 100;
-
-	// Generate random numbers
-	srand(time(NULL));
-
+	// Random number between 0 and 1
 	double r = (double)rand() / (double)RAND_MAX;
+
 
 	// Move over lattice velocities
 	for( k = 0 ; k < lattice->Q ; k++ ) {
