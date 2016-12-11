@@ -156,11 +156,15 @@ int main( int argc, char **argv ) {
     	// Collide g (Temperature)
     	if( ht != 0 ) {
 
-    	    // Update macroscopic density
-    	    macroDensity( &mesh, &mfields, &f );
+	    if( frozen != 0 ) {
+
+		// Update macroscopic density
+		macroDensity( &mesh, &mfields, &f );
 		
-    	    // Update macroscopic velocity
-    	    macroVelocity( &mesh, &mfields, &f );
+		// Update macroscopic velocity
+		macroVelocity( &mesh, &mfields, &f );
+
+	    }
 
     	    collision( &mesh, &mfields, &g );
 
