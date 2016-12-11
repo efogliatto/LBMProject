@@ -85,7 +85,31 @@ const double fieldShape::fieldValue( const string& fieldName, const Vector3& poi
 
 	    }
 
+
+	    else {
+
+		// Rayleigh - Taylor function
+		if( ffunc.compare("random") == 0 ) {
+
+		    // Read properties
+		    const double inside   = _dict.lookUpEntry<double>( fieldName + "/inside");
+		    const double pert  = _dict.lookUpEntry<double>( fieldName + "/perturbation");
+
+		    const double minp(1 - pert / 100), 
+			maxp(1 + pert / 100);
+
+		
+		    const double r = (double)rand() / (double)RAND_MAX;
+		
+		    val = inside * (minp + r * (maxp - minp));
+
+		}
+
+	    }
+
+
 	}
+
 
     }
 
