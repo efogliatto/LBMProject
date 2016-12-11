@@ -9,6 +9,7 @@
 #include <lbeField.h>
 #include <macroFields.h>
 #include <latticeMesh.h>
+#include <tSpot.h>
 
 void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
 

@@ -57,6 +57,7 @@ extern "C" {
 	     4: fixedT
 	     5: adiabatic
 	     6: randomT
+	     7: tSpot
 	 */
 	
 	for( uint fieldId = 0 ; fieldId < fields.size() ; fieldId++ ) {
@@ -160,6 +161,26 @@ extern "C" {
 		    info->_value[fieldId][bcId][0] = val;
 		    info->_value[fieldId][bcId][1] = val;
 		    info->_value[fieldId][bcId][2] = val;		    
+		    
+		}
+
+		if( bctype.compare("tSpot") == 0 )  {
+
+		    info->_bc[fieldId][bcId] = 7;
+
+		    std::ostringstream entryval, spotval; 
+		    entryval << fields[fieldId] << "/boundaryConditions/" << info->_bdNames[bcId] << "/value";		    
+		    spotval << fields[fieldId] << "/boundaryConditions/" << info->_bdNames[bcId] << "/spot";		    
+		    
+		    double val  = dict.lookUpEntry<double>( entryval.str() );
+		    double spot = dict.lookUpEntry<double>( spotval.str() );
+
+		    info->_value[fieldId][bcId][0] = val;
+		    info->_value[fieldId][bcId][1] = spot;
+		    info->_value[fieldId][bcId][2] = val;		    
+
+
+
 		    
 		}
 		

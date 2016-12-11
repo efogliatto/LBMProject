@@ -56,6 +56,11 @@ void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, st
 	case 6:
 	    randomT( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
 	    break;
+
+        // tSpot
+	case 7:
+	    tSpot( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
+	    break;
     
 	default:
 	    printf("\n[ERROR]  Unrecognized boundary condition \n\n\n");

@@ -6,4 +6,5 @@ add_library(boundary SHARED
   fixedU.c
   adiabatic.c
   randomT.c
+  tSpot.c
   )
