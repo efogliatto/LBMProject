@@ -10,13 +10,13 @@ void updateTau( struct lbeField* field, double r, unsigned int Q ) {
 
 	c1 = field->tau_A - c2 * field->kappa_A;
 
-	field->tau = c1  + c2 * r;
+	field->tau = c1  + c2 * r;;
 
     }
 
 
     else {
-	
+
 	field->tau = field->tau_A;
     }
     

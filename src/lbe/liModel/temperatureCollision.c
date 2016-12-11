@@ -33,7 +33,7 @@ void temperatureCollision( struct latticeMesh* mesh, struct macroFields* mfields
 	updateTau(field, mfields->rho[id], mesh->lattice.Q);	
 
 	// Update real tau
-	field->tau = 0.5 + field->tau / (mesh->lattice.cs2 * mfields->rho[id]);
+	field->tau = 0.5 + field->tau / (mesh->lattice.cs2 * mfields->rho[id] * mfields->Cv);
 
 	
 	// Compute momentum equilibrium
@@ -45,6 +45,8 @@ void temperatureCollision( struct latticeMesh* mesh, struct macroFields* mfields
 
 	// Parameter for compression work
 	phi = -mfields->T[id] * (p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*1.1) - p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*0.9)) / ( 2 * mfields->T[id]);
+
+
 
 	
 	// Collide g
@@ -72,9 +74,6 @@ void temperatureCollision( struct latticeMesh* mesh, struct macroFields* mfields
 	    for( j = 0 ; j < 3 ; j++) {
 	    	dot += mesh->lattice.c * mesh->lattice.vel[k][j] * mfields->U[id][j];
 	    }
-
-	    /* phi = -mfields->T[id] * (p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*1.1) - p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*0.9)) / ( 2 * mfields->T[id]); */
-
 
 	    M = M - phi * mesh->lattice.omega[k] * dot / (field->tau * mesh->time.tstep * mesh->lattice.cs2);
 
