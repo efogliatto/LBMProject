@@ -29,21 +29,29 @@ void temperatureCollision( struct latticeMesh* mesh, struct macroFields* mfields
     for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
 
 
-	// Update tau value
+	// Update thermal conductivity value (stored in field.tau)
 	updateTau(field, mfields->rho[id], mesh->lattice.Q);	
+
+	// Update real tau
+	field->tau = 0.5 + field->tau / (mesh->lattice.cs2 * mfields->rho[id]);
 
 	
 	// Compute momentum equilibrium
 	lbgkEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], f_eq);
 
+	// Interaction force
+	interactionForce( mesh, F, mfields->rho, mfields->T, id);
+
+
+	// Parameter for compression work
+	phi = -mfields->T[id] * (p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*1.1) - p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*0.9)) / ( 2 * mfields->T[id]);
+
 	
 	// Collide g
 	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-	    
-	    // Interaction force
-	    interactionForce( mesh, F, mfields->rho, mfields->T, id);
 
+	    M = 0;
 	    
 	    // Correction term (force)
 	    kappa = ( 1 - 0.5 / field->tau) * mesh->lattice.omega[k] * mfields->Cv * mfields->T[id] / mesh->lattice.cs2;
@@ -65,7 +73,7 @@ void temperatureCollision( struct latticeMesh* mesh, struct macroFields* mfields
 	    	dot += mesh->lattice.c * mesh->lattice.vel[k][j] * mfields->U[id][j];
 	    }
 
-	    phi = -mfields->T[id] * (p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*1.1) - p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*0.9)) / ( 2 * mfields->T[id]);
+	    /* phi = -mfields->T[id] * (p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*1.1) - p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*0.9)) / ( 2 * mfields->T[id]); */
 
 
 	    M = M - phi * mesh->lattice.omega[k] * dot / (field->tau * mesh->time.tstep * mesh->lattice.cs2);
