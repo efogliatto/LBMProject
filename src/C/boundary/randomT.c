@@ -27,6 +27,14 @@ void randomT( struct bdInfo* bdElements, struct lbeField* field, struct latticeI
 	unsigned int noneigh = 0;
 	
 	
+	double minp = 1 - 1 / 100;
+	double maxp = 1 + 1 / 100;
+
+	// Generate random numbers
+	srand(time(NULL));
+
+	double r = (double)rand() / (double)RAND_MAX;
+
 	// Move over lattice velocities
 	for( k = 0 ; k < lattice->Q ; k++ ) {
 
@@ -38,23 +46,12 @@ void randomT( struct bdInfo* bdElements, struct lbeField* field, struct latticeI
 		int nbid = nb[id][ lattice->reverse[k] ];
 
 		if( nbid != -1 ) {
-		    
-		    double minp, maxp, r;
 
 		    // Compute equilibrium according to model
 		    switch(field->colId) {
 
 		    case 2: {
 			lbgkEquilibrium(lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb);
-
-			minp = 1 - 1 / 100;
-			maxp = 1 + 1 / 100;
-
-			// Generate random numbers
-			srand(time(NULL));
-
-			r = (double)rand() / (double)RAND_MAX;
-
 			eq_bnd = mfields->Cv * bdElements->_value[fid][bndId][0] * (minp + r * (maxp - minp)) * f_eq_nb[k];
 			eq_nb  = mfields->Cv * mfields->T[nbid] * f_eq_nb[k];
 			break;

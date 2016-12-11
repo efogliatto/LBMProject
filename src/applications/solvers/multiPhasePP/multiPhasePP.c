@@ -158,11 +158,11 @@ int main( int argc, char **argv ) {
 
 	    if( frozen != 0 ) {
 
-		// Update macroscopic density
-		macroDensity( &mesh, &mfields, &f );
+	    	// Update macroscopic density
+	    	macroDensity( &mesh, &mfields, &f );
 		
-		// Update macroscopic velocity
-		macroVelocity( &mesh, &mfields, &f );
+	    	// Update macroscopic velocity
+	    	macroVelocity( &mesh, &mfields, &f );
 
 	    }
 

@@ -56,6 +56,7 @@ extern "C" {
 	     3: fixedP
 	     4: fixedT
 	     5: adiabatic
+	     6: randomT
 	 */
 	
 	for( uint fieldId = 0 ; fieldId < fields.size() ; fieldId++ ) {
@@ -147,7 +148,20 @@ extern "C" {
 
 		}
 
+		if( bctype.compare("randomT") == 0 )  {
 
+		    info->_bc[fieldId][bcId] = 6;
+
+		    std::ostringstream entryval; 
+		    entryval << fields[fieldId] << "/boundaryConditions/" << info->_bdNames[bcId] << "/value";		    
+		    
+		    double val = dict.lookUpEntry<double>( entryval.str() );
+
+		    info->_value[fieldId][bcId][0] = val;
+		    info->_value[fieldId][bcId][1] = val;
+		    info->_value[fieldId][bcId][2] = val;		    
+		    
+		}
 		
 	    }	    
 

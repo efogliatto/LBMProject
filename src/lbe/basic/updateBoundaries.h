@@ -3,6 +3,7 @@
 
 #include <bounceBack.h>
 #include <fixedT.h>
+#include <randomT.h>
 #include <fixedU.h>
 #include <adiabatic.h>
 #include <lbeField.h>

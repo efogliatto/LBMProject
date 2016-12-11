@@ -51,7 +51,12 @@ void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, st
 	case 5:
 	    adiabatic( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
 	    break;
-	    
+	
+        // randomT
+	case 6:
+	    randomT( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
+	    break;
+    
 	default:
 	    printf("\n[ERROR]  Unrecognized boundary condition \n\n\n");
 	    exit(1);
