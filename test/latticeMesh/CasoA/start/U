@@ -7,25 +7,43 @@ valuesAtPoints
 
 boundary
 {
-    semiPeriodicBox_X0
+    topBox_X0
     {
         type fixedValue;
 	value ( 0 0 0 );
     }
 
-    semiPeriodicBox_X1
+    topBox_X1
     {
         type fixedValue;
 	value ( 0 0 0 );
     }
 
-    semiPeriodicBox_Y0
+    topBox_Y0
     {
         type fixedValue;
 	value ( 0 0 0 );
     }
 
-    semiPeriodicBox_Y1
+    topBox_Y1
+    {
+        type fixedValue;
+	value ( 0 0 0 );
+    }
+
+    bottomBox_X0
+    {
+        type fixedValue;
+	value ( 0 0 0 );
+    }
+
+    bottomBox_X1
+    {
+        type fixedValue;
+	value ( 0 0 0 );
+    }
+
+    bottomBox_Y0
     {
         type fixedValue;
 	value ( 0 0 0 );

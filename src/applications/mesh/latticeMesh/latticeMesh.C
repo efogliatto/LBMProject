@@ -78,9 +78,9 @@ int main(int argc, char** argv) {
 
 
 
-	    cout << "Creating polyShape from properties" << endl << endl;
-    
+	    cout << "Creating polyShape from properties" << endl << endl;   
 	    polyShapes figura("properties/latticeProperties");
+
 	    
     
 
@@ -245,6 +245,7 @@ int main(int argc, char** argv) {
 
 
 
+	    
 
     
 
@@ -291,6 +292,62 @@ int main(int argc, char** argv) {
 
 
 
+
+
+
+
+
+
+
+
+
+	    // Check for periodic faces
+	    vector<string> pfaces = dict.search("periodicFaces");
+
+	    for( auto pf : pfaces ) {
+
+	    	// Look periodic face
+	    	string ff = dict.lookUpEntry<string>("faces/" + pf);
+
+		
+	    	// Move over indices and assign neighbours
+	    	if( bmap.at(pf).size() != bmap.at(ff).size() ) {
+
+	    	    cout << endl << "  [ERROR]    Unable to match periodic faces " << pf << " and " << ff << endl << endl;
+	    	    exit(1);
+		    
+	    	}
+
+	    	else {
+
+	    	    for(uint i = 0 ; i < bmap.at(pf).size() ; i++) {
+
+	    		for(uint k = 0 ; k < lbm->Q() ; k++) {
+
+	    		    if( neigh[ bmap.at(pf)[i] ][k] == -1 ) {
+
+	    			neigh[ bmap.at(pf)[i] ][k] = neigh[ bmap.at(ff)[i] ][k];
+				
+	    		    }
+
+	    		    if( neigh[ bmap.at(ff)[i] ][k] == -1 ) {
+
+	    			neigh[ bmap.at(ff)[i] ][k] = neigh[ bmap.at(pf)[i] ][k];
+				
+	    		    }			    
+
+	    		}
+			
+	    	    }
+
+	    	}
+		
+	    }
+	    
+
+
+
+	    
 
 
 	    // ******************************************************************** //

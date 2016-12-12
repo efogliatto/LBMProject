@@ -9,27 +9,46 @@ f
 {
     boundaryConditions
     {
-        semiPeriodicBox_X0
+        topBox_X0
     	{
 	    type periodic;
     	}
 
-        semiPeriodicBox_X1
+        topBox_X1
         {
 	    type periodic;
         }
 
-        semiPeriodicBox_Y0
+        topBox_Y0
         {
 	    type fixedU;
 	    value (0 0 0);
         }
 
-        semiPeriodicBox_Y1
+        topBox_Y1
         {
 	    type fixedU;
 	    value (0 0 0);
         }
+
+        bottomBox_X0
+     	{
+	    type fixedU;
+	    value (0 0 0);
+	}
+
+	bottomBox_X1
+	{
+	    type fixedU;
+	    value (0 0 0);
+	}
+
+	bottomBox_Y0
+ 	{
+	    type fixedU;
+	    value (0 0 0);
+	}
+
     }
 }
 
@@ -39,27 +58,46 @@ g
 {
     boundaryConditions
     {
-        semiPeriodicBox_X0
+        topBox_X0
     	{
 	    type periodic;
     	}
 
-        semiPeriodicBox_X1
+        topBox_X1
         {
 	    type periodic;
         }
 
-        semiPeriodicBox_Y0
+        topBox_Y0
         {
-            type tSpot;
-	    value 0.045;
-	    spot 0.2;
+            type fixedT;
+	    value 0.05;
         }
 
-        semiPeriodicBox_Y1
+        topBox_Y1
         {
             type fixedT;
 	    value 0.045;
         }
+
+    	bottomBox_X0
+	{
+            type fixedT;
+	    value 0.06;
+    	}
+
+	bottomBox_X1
+	{
+            type fixedT;
+	    value 0.06;
+	}
+
+        bottomBox_Y0
+        {
+            type fixedT;
+	    value 0.07;
+        }
+	
     }
+    
 }

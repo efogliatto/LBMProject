@@ -32,6 +32,16 @@ boundaryWeights
     bottomBox_Y1 -1;
 }
 
+periodicFaces
+{
+    topBox_X0
+}
+
+faces
+{
+    topBox_X0 topBox_X1;
+}
+
 // Lattice characteristic length
 latticeSize 1;
 
