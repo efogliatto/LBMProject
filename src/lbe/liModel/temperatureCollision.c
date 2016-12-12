@@ -1,5 +1,5 @@
 #include <temperatureCollision.h>
-#include <lbgkEquilibrium.h>
+#include <lbgkTEquilibrium.h>
 #include <stdlib.h>
 #include <syncPdfField.h>
 #include <totalForce.h>
@@ -37,7 +37,7 @@ void temperatureCollision( struct latticeMesh* mesh, struct macroFields* mfields
 
 	
 	// Compute momentum equilibrium
-	lbgkEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], f_eq);
+	lbgkTEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], f_eq);
 
 	// Interaction force
 	/* interactionForce( mesh, F, mfields->rho, mfields->T, id); */

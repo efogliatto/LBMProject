@@ -1,7 +1,7 @@
 #include <fixedT.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <lbgkEquilibrium.h>
+#include <lbgkTEquilibrium.h>
 
 
 void fixedT( struct bdInfo* bdElements, struct lbeField* field, struct latticeInfo* lattice, struct macroFields* mfields, int** nb, int fid, int bndId ) {
@@ -43,7 +43,7 @@ void fixedT( struct bdInfo* bdElements, struct lbeField* field, struct latticeIn
 		    switch(field->colId) {
 
 		    case 2: {
-			lbgkEquilibrium(lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb);
+			lbgkTEquilibrium(lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb);
 			eq_bnd = mfields->Cv * bdElements->_value[fid][bndId][0] * f_eq_nb[k];
 			eq_nb  = mfields->Cv * mfields->T[nbid] * f_eq_nb[k];
 			break;

@@ -1,6 +1,6 @@
 #include <adiabatic.h>
 #include <stdio.h>
-#include <lbgkEquilibrium.h>
+#include <lbgkTEquilibrium.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -59,7 +59,7 @@ void adiabatic( struct bdInfo* bdElements, struct lbeField* field, struct lattic
 		    switch(field->colId) {
 
 		    case 2: {
-			lbgkEquilibrium(lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb);
+			lbgkTEquilibrium(lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb);
 			eq_bnd = mfields->Cv * Tw * f_eq_nb[k];
 			eq_nb  = mfields->Cv * mfields->T[nbid] * f_eq_nb[k];
 			break;
