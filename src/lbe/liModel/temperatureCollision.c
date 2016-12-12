@@ -2,7 +2,7 @@
 #include <lbgkEquilibrium.h>
 #include <stdlib.h>
 #include <syncPdfField.h>
-#include <interactionForce.h>
+#include <totalForce.h>
 #include <p_eos.h>
 
 #include <updateTau.h>
@@ -40,7 +40,8 @@ void temperatureCollision( struct latticeMesh* mesh, struct macroFields* mfields
 	lbgkEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], f_eq);
 
 	// Interaction force
-	interactionForce( mesh, F, mfields->rho, mfields->T, id);
+	/* interactionForce( mesh, F, mfields->rho, mfields->T, id); */
+	totalForce( mesh, F, mfields->rho, mfields->T, id);
 
 
 	// Parameter for compression work
