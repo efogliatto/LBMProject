@@ -1,0 +1,5 @@
+startTime 0;
+endTime 5000;
+writeInterval 100;
+timeStep 1;
+writeVTK true;

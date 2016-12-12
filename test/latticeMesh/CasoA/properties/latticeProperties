@@ -1,0 +1,26 @@
+Shapes
+{
+    top
+    bottomBox
+}
+
+topBox
+{
+    type box;
+    min ( 0 0 0 );
+    max ( 5 5 0 );
+    inside true;
+}
+
+bottomBox
+{
+    type box;
+    min ( 2 -2 0 );
+    max ( 3 0 0 );
+    inside true;
+}
+
+// Lattice characteristic length
+latticeSize 1;
+
+LBModel D2Q9;

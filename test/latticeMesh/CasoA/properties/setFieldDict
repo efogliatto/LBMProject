@@ -1,0 +1,28 @@
+Shapes
+{
+    Box
+}
+
+Fields
+{
+    valuesList
+    {
+        0
+    }
+}
+
+Box
+{
+    type box;
+    min ( 0 0 0 );
+    max ( 256 128 0 );
+    inside true;
+}
+
+rho
+{
+    type latticeScalarField;
+    function random;    
+    inside 0.177412;
+    perturbation 2;
+}

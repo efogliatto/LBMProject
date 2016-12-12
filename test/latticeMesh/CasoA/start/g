@@ -1,0 +1,33 @@
+valuesAtPoints
+{
+    type uniform;
+    value ( 0 0 0 0 0 0 0 0 0 );
+}
+
+
+boundary
+{
+    semiPeriodicBox_X0
+    {
+	type uniform;
+        value ( 0 0 0 0 0 0 0 0 0 );
+    }
+
+    semiPeriodicBox_X1
+    {
+	type uniform;
+        value ( 0 0 0 0 0 0 0 0 0 );
+    }
+
+    semiPeriodicBox_Y0
+    {
+	type uniform;
+        value ( 0 0 0 0 0 0 0 0 0 );
+    }
+
+    semiPeriodicBox_Y1
+    {
+	type uniform;
+        value ( 0 0 0 0 0 0 0 0 0 );
+    }
+}

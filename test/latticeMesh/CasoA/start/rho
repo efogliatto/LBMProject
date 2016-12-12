@@ -1,0 +1,33 @@
+valuesAtPoints
+{
+    type uniform;
+    value 0.13045;
+}
+
+
+boundary
+{
+    semiPeriodicBox_X0
+    {
+	type fixedValue;
+	value 0.13045;
+    }
+
+    semiPeriodicBox_X1
+    {
+	type fixedValue;
+	value 0.13045;
+    }
+
+    semiPeriodicBox_Y0
+    {
+	type fixedValue;
+	value 0.13045;
+    }
+
+    semiPeriodicBox_Y1
+    {
+	type fixedValue;
+	value 0.13045;
+    }
+}

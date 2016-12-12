@@ -1,0 +1,53 @@
+f
+{
+
+    // Relaxation parameters
+    Lambda (1.0 1.1 1.1 1.0 1.1 1.0 1.1 0.8 0.8);
+    Lambda_A (1.0 0.125 1.1 1.0 1.1 1.0 1.1 0.125 0.125);
+    Lambda_B (1.0 0.125 1.1 1.0 1.1 1.0 1.1 0.125 0.125);
+
+    kappa_A 1;
+    kappa_B 1;
+
+    sigma 0.11;
+
+    Collision liMRT;
+
+}
+
+g
+{
+
+    // Relaxation parameters
+    tau 0.01;
+    tau_A 0.01;
+    tau_B 0.01;
+
+    kappa_A 0.01;
+    kappa_B 0.01;
+
+    Collision liTemp;
+
+}
+
+EOS
+{    
+
+    model Carnahan-Starling;
+
+    a 0.5;
+
+    b 4.0;
+
+    R 1.0;
+
+    G -1;
+
+    g (0 -1.0e-03 0);
+
+    rho_0 0.13045;
+
+    // Specific heat
+    Cv 1;
+    
+}

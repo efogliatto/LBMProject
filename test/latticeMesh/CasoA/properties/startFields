@@ -1,0 +1,43 @@
+fields
+{
+    valuesList
+    {
+        5
+	U
+	rho
+	f
+	T
+	g
+    }
+}
+
+
+rho
+{
+    type latticeScalarField;
+    value 0.177412;
+}
+
+T
+{
+    type latticeScalarField;
+    value 0.047;
+}
+
+U
+{
+    type latticeVectorField;
+    value (0 0 0);
+}
+
+f
+{
+    type latticePdfField;
+    value (0 0 0 0 0 0 0 0 0);
+}
+
+g
+{
+    type latticePdfField;
+    value (0 0 0 0 0 0 0 0 0);
+}

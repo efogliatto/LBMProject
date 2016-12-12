@@ -1,0 +1,65 @@
+fields
+{
+    2
+    f
+    g
+}
+
+f
+{
+    boundaryConditions
+    {
+        semiPeriodicBox_X0
+    	{
+	    type periodic;
+    	}
+
+        semiPeriodicBox_X1
+        {
+	    type periodic;
+        }
+
+        semiPeriodicBox_Y0
+        {
+	    type fixedU;
+	    value (0 0 0);
+        }
+
+        semiPeriodicBox_Y1
+        {
+	    type fixedU;
+	    value (0 0 0);
+        }
+    }
+}
+
+
+
+g
+{
+    boundaryConditions
+    {
+        semiPeriodicBox_X0
+    	{
+	    type periodic;
+    	}
+
+        semiPeriodicBox_X1
+        {
+	    type periodic;
+        }
+
+        semiPeriodicBox_Y0
+        {
+            type tSpot;
+	    value 0.045;
+	    spot 0.2;
+        }
+
+        semiPeriodicBox_Y1
+        {
+            type fixedT;
+	    value 0.045;
+        }
+    }
+}

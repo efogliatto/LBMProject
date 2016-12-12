@@ -5,5 +5,5 @@ link_directories( ~/LBMProject/lib )
 
 
 # latticeMesh
-add_executable(latticeMesh "latticeMesh.C")
+add_executable(latticeMesh "latticeMesh.C" "createSPBox.C" "createPBox.C")
 target_link_libraries(latticeMesh ${PROJECT_LINK_LIBS} ${PROJECT_LINK_LIBS})
