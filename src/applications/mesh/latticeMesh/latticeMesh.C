@@ -81,11 +81,6 @@ int main(int argc, char** argv) {
 	    cout << "Creating polyShape from properties" << endl << endl;
     
 	    polyShapes figura("properties/latticeProperties");
-
-	    // vector<string> bdnames = figura.boundaryNames();
-	    // for(auto bdname : bdnames) {
-	    // 	cout << bdname << endl;
-	    // }
 	    
     
 
