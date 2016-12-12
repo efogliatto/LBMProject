@@ -61,6 +61,20 @@ polyShapes::polyShapes(const string& dictName) : _bbox_min(Vector3(1000000,10000
 
     }
 
+
+
+
+
+    // Assign boundary weights
+    vector<string> bdnames = boundaryNames();
+    for(auto bdn : bdnames) {
+
+	// cout << dict.findEntry( "boundaryWeights/" + bdn ) << endl;
+	_bdWeight[bdn] = (int)dict.lookUpEntry<double>( "boundaryWeights/" + bdn );
+	
+    }
+
+
 }
 
 
@@ -126,10 +140,10 @@ polyShapes::~polyShapes() {}
 // Check if point is inside the domain
 const bool polyShapes::locatePoint( const Vector3& v ) const {
 
-    bool is_inside = true;
+    bool is_inside = false;
 
     for(auto shape : _shapes) {
-	if ( !shape->locatePoint(v) ) {  is_inside = false;}
+	if ( shape->locatePoint(v) ) {  is_inside = true;}
     }
 
     return is_inside;
@@ -168,19 +182,53 @@ const vector<string> polyShapes::boundaryNames() const {
 const string polyShapes::pointOverBoundary(const Vector3& v, const double& tol) const {
 
     string name;
-
+    vector<string> names;
+    
     for(auto shape : _shapes) {
+	
 	name = shape->pointOverBoundary(v, tol);
+	
 	if(!name.empty()) {
-	    return name;
+	    
+	    names.push_back(name);
+	    
 	}
+	
     }
 
-    // if(patch.empty()) {
-    // 	cout << endl << "Unable to associate point " << v << " with patch" << endl << endl;
-    // }
 
-    return name;
+
+    string name2;
+    
+    if(  ( names.size() == 1 )  &&  ( _bdWeight.at(names[0]) != -1 )   ) {
+
+	name2 = names[0];
+
+    }
+
+    else {
+
+	if( names.size() == 2 ) {
+
+	    if(  ( _bdWeight.at(names[0]) >= _bdWeight.at(names[1]) )   ) {	    
+
+	    	name2 = names[0];
+
+	    }
+
+	    else {
+
+	    	name2 = names[1];
+
+	    }
+
+	}
+
+	
+    }
+    
+
+    return name2;
 
 }
 

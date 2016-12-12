@@ -71,8 +71,6 @@ class dictionary {
     const void extract(vector<double>& v, std::vector<std::string>::iterator& it) const;
     const void extract(pdf& v, std::vector<std::string>::iterator& it) const;
     
-
-
     
 
 
@@ -102,6 +100,10 @@ public:
 
     // Search for entry between enclosed brackets, using _fileContent
     const vector<string> search(const string& entryName) const;
+
+
+    /* // Check if entry exists */
+    /* const bool findEntry(const std::string& entry) const;     */
     
 
 };

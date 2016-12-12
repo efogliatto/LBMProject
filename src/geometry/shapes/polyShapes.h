@@ -2,6 +2,7 @@
 #define POLYSHAPES_H
 
 #include <basicShape.h>
+#include <map>
 
 
 class polyShapes {
@@ -19,7 +20,11 @@ protected:
 	_bbox_max;
 
 
+    // Boundary weigths. point over boundary preference
+    std::map<std::string, int> _bdWeight;
+    
 
+    
 
     /* ----------------------  Public member functions ----------------------  */
 

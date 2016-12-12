@@ -78,12 +78,15 @@ int main(int argc, char** argv) {
 
 
 
-
 	    cout << "Creating polyShape from properties" << endl << endl;
     
 	    polyShapes figura("properties/latticeProperties");
 
-
+	    // vector<string> bdnames = figura.boundaryNames();
+	    // for(auto bdname : bdnames) {
+	    // 	cout << bdname << endl;
+	    // }
+	    
     
 
 	    // ******************************************************************** //
@@ -105,37 +108,37 @@ int main(int argc, char** argv) {
 	    uint ny = (uint)( (get<1>(bbox).y() - get<0>(bbox).y()) / lsize ) + 1;
 	    uint nz = (uint)( (get<1>(bbox).z() - get<0>(bbox).z()) / lsize ) + 1;
 
+
     
 	    vector<Vector3> meshPoints(nx * ny * nz);
 
 	    {
-		uint id = 0;
+	    	uint id = 0;
     
-		for(uint k = 0 ; k < nz ; k++) {
-		    for(uint j = 0 ; j < ny ; j++) {
-			for(uint i = 0 ; i < nx ; i++) {
+	    	for(uint k = 0 ; k < nz ; k++) {
+	    	    for(uint j = 0 ; j < ny ; j++) {
+	    		for(uint i = 0 ; i < nx ; i++) {
 
-			    Vector3 v(i*lsize + bboxMin.x(),
-				      j*lsize + bboxMin.y(),
-				      k*lsize + bboxMin.z());
-		    
-			    if (figura.locatePoint(v)) {
-				meshPoints[id] = v;
-				id++;
-			    }
+	    		    Vector3 v(i*lsize + bboxMin.x(),
+	    			      j*lsize + bboxMin.y(),
+	    			      k*lsize + bboxMin.z());
+			    
+	    		    if (figura.locatePoint(v)) {
+	    			meshPoints[id] = v;
+	    			id++;
+	    		    }
 		
-			}
-		    }
-		}
+	    		}
+	    	    }
+	    	}
 
 
-		// Remove last elements from _points
-		if( meshPoints.size() != id ) {
-		    int excess =  meshPoints.size() - id;
-		    meshPoints.erase( meshPoints.end() - excess,  meshPoints.end() );
-		}
+	    	// Remove last elements from _points
+	    	if( meshPoints.size() != id ) {
+	    	    int excess =  meshPoints.size() - id;
+	    	    meshPoints.erase( meshPoints.end() - excess,  meshPoints.end() );
+	    	}
 	    }
-
 
     
 
@@ -155,7 +158,7 @@ int main(int argc, char** argv) {
 	    // Create and resize neighbour matrix
 	    vector< vector<int> > neigh(meshPoints.size());
 	    for(uint i = 0 ; i < neigh.size() ; i++) {
-		neigh[i].resize(lbm->Q(), -1);
+	    	neigh[i].resize(lbm->Q(), -1);
 	    }
 
 
@@ -167,57 +170,57 @@ int main(int argc, char** argv) {
 	    // Iterate on points
 	    for(int pointId = 0 ; pointId < (int)meshPoints.size() ; pointId++) {
 
-		// Iterate on velocities
-		for(int velId = 0 ; velId < (int)velocities.size() ; velId++) {
+	    	// Iterate on velocities
+	    	for(int velId = 0 ; velId < (int)velocities.size() ; velId++) {
 
-		    Vector3 vel = velocities[ lbm->reverse(velId) ];
+	    	    Vector3 vel = velocities[ lbm->reverse(velId) ];
 
-		    int newId = pointId + (int)vel.x() + (int)vel.y()*nx + (int)vel.z()*nx*ny;
+	    	    int newId = pointId + (int)vel.x() + (int)vel.y()*nx + (int)vel.z()*nx*ny;
 
-		    // Iterate in backward direction (minimices the number of searches)
-		    if (newId >= pointId) {
+	    	    // Iterate in backward direction (minimices the number of searches)
+	    	    if (newId >= pointId) {
 
-			if(newId >= (int)meshPoints.size()) { newId = meshPoints.size()-1; }
+	    		if(newId >= (int)meshPoints.size()) { newId = meshPoints.size()-1; }
 
-			bool find = false;
-			while( (newId >= pointId)  &&  (find == false) ) {
+	    		bool find = false;
+	    		while( (newId >= pointId)  &&  (find == false) ) {
 
-			    Vector3 diff = ( meshPoints[newId] - meshPoints[pointId] )  -  (vel * lsize);
+	    		    Vector3 diff = ( meshPoints[newId] - meshPoints[pointId] )  -  (vel * lsize);
 
-			    if(  diff.sqMag()  <= 1.0e-10  ) {
-				find = true;
-				neigh[pointId][velId] = newId;
-			    }
-			    newId--;
-			}
+	    		    if(  diff.sqMag()  <= 1.0e-10  ) {
+	    			find = true;
+	    			neigh[pointId][velId] = newId;
+	    		    }
+	    		    newId--;
+	    		}
 
-		    }
+	    	    }
 
 	    
 	    
-		    // Iterate in forward direction
-		    else {
-			if(newId < 0) { newId = 0; }
+	    	    // Iterate in forward direction
+	    	    else {
+	    		if(newId < 0) { newId = 0; }
 
-			bool find = false;
-			while( (newId <= pointId)  &&  (find == false) ) {		   
+	    		bool find = false;
+	    		while( (newId <= pointId)  &&  (find == false) ) {		   
 
-			    Vector3 diff = ( meshPoints[newId] - meshPoints[pointId] )  -  (vel * lsize);
+	    		    Vector3 diff = ( meshPoints[newId] - meshPoints[pointId] )  -  (vel * lsize);
 
-			    if(  diff.sqMag()  <= 1.0e-10  ) {
-				find = true;
-				neigh[pointId][velId] = newId;
-			    }
+	    		    if(  diff.sqMag()  <= 1.0e-10  ) {
+	    			find = true;
+	    			neigh[pointId][velId] = newId;
+	    		    }
 		    
-			    newId++;
+	    		    newId++;
 
-			}
+	    		}
 
-		    }
+	    	    }
 
 
 
-		}
+	    	}
 
 	    }
 	
@@ -237,11 +240,11 @@ int main(int argc, char** argv) {
 	    // Iterate on points
 	    for(int pointId = 0 ; pointId < (int)meshPoints.size() ; pointId++) {
 
-		// Check if point is on boundary
-		string sname = figura.pointOverBoundary( meshPoints[pointId], 1.4142*lsize );
-		if(!sname.empty()) {
-		    bmap[sname].push_back(pointId);
-		}
+	    	// Check if point is on boundary
+	    	string sname = figura.pointOverBoundary( meshPoints[pointId], 1.4142*lsize );
+	    	if(!sname.empty()) {
+	    	    bmap[sname].push_back(pointId);
+	    	}
 	
 	    }
 
@@ -262,31 +265,31 @@ int main(int argc, char** argv) {
 	    if(lbm->D() == 2) {
 
 
-		// Iterate on points
-		for(uint pointId = 0 ; pointId < meshPoints.size() ; pointId++) {
-		    // for(uint pointId = 0 ; pointId < 1 ; pointId++) {
+	    	// Iterate on points
+	    	for(uint pointId = 0 ; pointId < meshPoints.size() ; pointId++) {
+	    	    // for(uint pointId = 0 ; pointId < 1 ; pointId++) {
 
-		    vector<uint> id;
-		    id.push_back( pointId );
+	    	    vector<uint> id;
+	    	    id.push_back( pointId );
 
-		    uint pt = pointId;
+	    	    uint pt = pointId;
 
-		    for(uint velId = 1 ; velId < 4 ; velId ++) {
-			int aux = neigh[pt][lbm->reverse(velId)];
-			if( aux != -1 ) {
-			    pt = aux;
-			    id.push_back(pt);
-			}
-		    }
+	    	    for(uint velId = 1 ; velId < 4 ; velId ++) {
+	    		int aux = neigh[pt][lbm->reverse(velId)];
+	    		if( aux != -1 ) {
+	    		    pt = aux;
+	    		    id.push_back(pt);
+	    		}
+	    	    }
 
-		    if (id.size() == 4) {
-			uint a = id[3];
-			id[3] = id[2];
-			id[2] = a;
-			vtkCells.push_back(id);
-		    }
+	    	    if (id.size() == 4) {
+	    		uint a = id[3];
+	    		id[3] = id[2];
+	    		id[2] = a;
+	    		vtkCells.push_back(id);
+	    	    }
 	
-		}
+	    	}
 
 	
 	    }
@@ -317,12 +320,12 @@ int main(int argc, char** argv) {
 	    string filename = folder.str() + "points";
 	    outFile.open( filename.c_str() );
 	    if( !outFile.is_open() ){
-		cout << "Cant't open file " << filename << endl;
-		exit(1);
+	    	cout << "Cant't open file " << filename << endl;
+	    	exit(1);
 	    }
 	    outFile << meshPoints.size() << endl;
 	    for(uint i = 0 ; i < meshPoints.size() ; i++) {
-		outFile << meshPoints[i] << endl;
+	    	outFile << meshPoints[i] << endl;
 	    }
 	    outFile.close();
 
@@ -330,14 +333,14 @@ int main(int argc, char** argv) {
 	    filename = folder.str() + vm["DQmodel"].as<string>() + "_neighbours";
 	    outFile.open( filename.c_str() );
 	    if( !outFile.is_open() ){
-		cout << "Cant't open file " << filename << endl;
-		exit(1);
+	    	cout << "Cant't open file " << filename << endl;
+	    	exit(1);
 	    }    
 	    for(uint i = 0 ; i < neigh.size() ; i++) {
-		for(uint j = 0 ; j < lbm->Q() ; j++) {
-		    outFile << neigh[i][j] << " ";
-		}
-		outFile << endl;
+	    	for(uint j = 0 ; j < lbm->Q() ; j++) {
+	    	    outFile << neigh[i][j] << " ";
+	    	}
+	    	outFile << endl;
 	    }
 	    outFile.close();    
 
@@ -349,21 +352,21 @@ int main(int argc, char** argv) {
 	    filename = folder.str() + "boundary";
 	    outFile.open( filename.c_str() );
 	    if( !outFile.is_open() ){
-		cout << "Cant't open file " << filename << endl;
-		exit(1);
+	    	cout << "Cant't open file " << filename << endl;
+	    	exit(1);
 	    }
 
 	    // Total number of boundaries
 	    outFile << bmap.size() << endl << endl;	
 
 	    for(auto bd : bmap) {
-		outFile << bd.first << endl;
-		outFile << "{" << endl;
-		outFile << bd.second.size() << endl;
-		for(auto bdid : bd.second) {
-		    outFile << bdid << endl;
-		}
-		outFile << "}" << endl << endl;
+	    	outFile << bd.first << endl;
+	    	outFile << "{" << endl;
+	    	outFile << bd.second.size() << endl;
+	    	for(auto bdid : bd.second) {
+	    	    outFile << bdid << endl;
+	    	}
+	    	outFile << "}" << endl << endl;
 	    }
 	
 	    outFile.close();
@@ -377,19 +380,19 @@ int main(int argc, char** argv) {
 	    filename = folder.str() + "vtkCells";
 	    outFile.open( filename.c_str() );
 	    if( !outFile.is_open() ){
-		cout << "Cant't open file " << filename << endl;
-		exit(1);
+	    	cout << "Cant't open file " << filename << endl;
+	    	exit(1);
 	    }
 
 	    // Total number of cells
 	    outFile << vtkCells.size() << endl;
 	
 	    for(vector< vector<uint> >::const_iterator cell = vtkCells.begin() ; cell != vtkCells.end() ; cell++) {
-		outFile << cell->size() << "  ";
-		for(uint cellId = 0 ; cellId < cell->size() ; cellId++) {
-		    outFile << cell->at(cellId) << "  ";
-		}
-		outFile << endl;
+	    	outFile << cell->size() << "  ";
+	    	for(uint cellId = 0 ; cellId < cell->size() ; cellId++) {
+	    	    outFile << cell->at(cellId) << "  ";
+	    	}
+	    	outFile << endl;
 	    }
 	
 	    outFile.close();    

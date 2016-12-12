@@ -11,11 +11,104 @@ using namespace std;
 // Constructors and destructors
 
 // Default constructor
-box::box() : basicShape() {}
+box::box() : basicShape() {
+
+
+    // Assign boundary weights
+    dictionary dict("properties/latticeProperties");
+
+    // XY box
+    if ( _bbox_min.z() == _bbox_max.z() ) {
+
+	_bdw[_name + "_X0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_X0");
+	_bdw[_name + "_X1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_X1");
+	_bdw[_name + "_Y0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Y0");
+	_bdw[_name + "_Y1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Y1");
+	
+    }
+
+    else {
+
+	// XZ box
+	if ( _bbox_min.y() == _bbox_max.y() ) {
+
+	    _bdw[_name + "_X0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_X0");
+	    _bdw[_name + "_X1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_X1");
+	    _bdw[_name + "_Z0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Z0");
+	    _bdw[_name + "_Z1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Z1");
+	
+	}
+
+
+	else {
+
+	    // YZ box
+	    if ( _bbox_min.z() == _bbox_max.z() ) {
+
+		_bdw[_name + "_Y0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Y0");
+		_bdw[_name + "_Y1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Y1");
+		_bdw[_name + "_Z0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Z0");
+		_bdw[_name + "_Z1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Z1");
+	
+	    }
+
+	}	
+
+    }
+
+
+
+}
 
 // Default constructor
 box::box(const string& name) : basicShape() {
+
+    // Assign name
     _name = name;
+
+    // Assign boundary weights
+    dictionary dict("properties/latticeProperties");
+
+    // XY box
+    if ( _bbox_min.z() == _bbox_max.z() ) {
+
+	_bdw[_name + "_X0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_X0");
+	_bdw[_name + "_X1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_X1");
+	_bdw[_name + "_Y0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Y0");
+	_bdw[_name + "_Y1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Y1");
+	
+    }
+
+    else {
+
+	// XZ box
+	if ( _bbox_min.y() == _bbox_max.y() ) {
+
+	    _bdw[_name + "_X0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_X0");
+	    _bdw[_name + "_X1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_X1");
+	    _bdw[_name + "_Z0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Z0");
+	    _bdw[_name + "_Z1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Z1");
+	
+	}
+
+
+	else {
+
+	    // YZ box
+	    if ( _bbox_min.z() == _bbox_max.z() ) {
+
+		_bdw[_name + "_Y0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Y0");
+		_bdw[_name + "_Y1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Y1");
+		_bdw[_name + "_Z0"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Z0");
+		_bdw[_name + "_Z1"] = (int)dict.lookUpEntry<double>("boundaryWeights/" + _name + "_Z1");
+	
+	    }
+
+	}	
+
+    }
+
+    
 }
 
 
@@ -126,6 +219,7 @@ void box::readProperties(const string& dictName) {
 const string box::pointOverBoundary(const Vector3& v, const double& tol) const {
 
     string patch;
+    vector<string> vpatch;
 
     // Check over each plane
 
@@ -134,27 +228,16 @@ const string box::pointOverBoundary(const Vector3& v, const double& tol) const {
 
 
 	// Y0
-	if (  (v.y() == _bbox_min.y())  ) { patch = _name + "_Y0"; }
-	else {
+	if (  (v.y() == _bbox_min.y())  &&  (v.z() >= _bbox_min.z())  &&  (v.z() <= _bbox_max.z())  ) { patch = _name + "_Y0"; }
 
-	    // Y1
-	    if (  (v.y() == _bbox_max.y())  ) { patch = _name + "_Y1"; }
-	    else {
+	// Y1
+	if (  (v.y() == _bbox_max.y())  &&  (v.z() >= _bbox_min.z())  &&  (v.z() <= _bbox_max.z())  ) { patch = _name + "_Y1"; }
 
-		// Z0
-		if (  (v.z() == _bbox_min.z())  ) { patch = _name + "_Z0"; }
-		else {
+	// Z0
+	if (  (v.z() == _bbox_min.z())  &&  (v.y() >= _bbox_min.y())  &&  (v.y() <= _bbox_max.y())  ) { patch = _name + "_Z0"; }
 
-		    // Z1
-		    if (  (v.z() == _bbox_max.z())  ) { patch = _name + "_Z1"; }
-
-		}
-
-	    }
-
-	}
-
-
+	// Z1
+	if (  (v.z() == _bbox_max.z())  &&  (v.y() >= _bbox_min.y())  &&  (v.y() <= _bbox_max.y())  ) { patch = _name + "_Z1"; }
 	
     }
 
@@ -165,26 +248,16 @@ const string box::pointOverBoundary(const Vector3& v, const double& tol) const {
 
 
 	// X0
-	if (  (v.x() == _bbox_min.x())  ) { patch = _name + "_X0"; }
-	else {
+	if (  (v.x() == _bbox_min.x())  &&  (v.z() >= _bbox_min.z())  &&  (v.z() <= _bbox_max.z())  ) { patch = _name + "_X0"; }
 
-	    // X1
-	    if (  (v.x() == _bbox_max.x())  ) { patch = _name + "_X1"; }
-	    else {
+	// X1
+	if (  (v.x() == _bbox_max.x())  &&  (v.z() >= _bbox_min.z())  &&  (v.z() <= _bbox_max.z())  ) { patch = _name + "_X1"; }
 
-		// Z0
-		if (  (v.z() == _bbox_min.z())  ) { patch = _name + "_Z0"; }
-		else {
+	// Z0
+	if (  (v.z() == _bbox_min.z())  &&  (v.x() >= _bbox_min.x())  &&  (v.x() <= _bbox_max.x()) ) { patch = _name + "_Z0"; }
 
-		    // Z1
-		    if (  (v.z() == _bbox_max.z())  ) { patch = _name + "_Z1"; }
-
-		}
-
-
-	    }
-
-	}
+	// Z1
+	if (  (v.z() == _bbox_max.z())  &&  (v.x() >= _bbox_min.x())  &&  (v.x() <= _bbox_max.x()) ) { patch = _name + "_Z1"; }
 
 	
     }
@@ -195,26 +268,40 @@ const string box::pointOverBoundary(const Vector3& v, const double& tol) const {
     if ( _bbox_min.z() == _bbox_max.z() ){
 
 	// X0
-	if (  (v.x() == _bbox_min.x()) /* &&  (v.y() != _bbox_min.y())  &&  (v.y() != _bbox_max.y()) */ ) { patch = _name + "_X0"; }
-	else {
+	if (  (v.x() == _bbox_min.x())  &&  (v.y() >= _bbox_min.y())  &&  (v.y() <= _bbox_max.y())  ) { vpatch.push_back( _name + "_X0" ); }
 
-	    // X1
-	    if (  (v.x() == _bbox_max.x()) /*  &&  (v.y() != _bbox_min.y())  &&  (v.y() != _bbox_max.y()) */ ) { patch = _name + "_X1"; }
-	    else {
+	// X1
+	if (  (v.x() == _bbox_max.x())  &&  (v.y() >= _bbox_min.y())  &&  (v.y() <= _bbox_max.y()) ) { vpatch.push_back( _name + "_X1" ); }
 
-		// Y0
-		if (  (v.y() == _bbox_min.y())  ) { patch = _name + "_Y0"; }
-		else {
+	// Y0
+	if (  (v.y() == _bbox_min.y())  &&  (v.x() >= _bbox_min.x())  &&  (v.x() <= _bbox_max.x()) ) { vpatch.push_back( _name + "_Y0" ); }
 
-		    // Y1
-		    if (  (v.y() == _bbox_max.y())  ) { patch = _name + "_Y1"; }
-
-		}
+	// Y1
+	if (  (v.y() == _bbox_max.y())  &&  (v.x() >= _bbox_min.x())  &&  (v.x() <= _bbox_max.x()) ) { vpatch.push_back( _name + "_Y1" ); }
+	
+    }
 
 
+
+    if( vpatch.size() == 1 ) {
+	    
+	if( _bdw.at(vpatch[0]) >= 0 ) {  patch = vpatch[0]; }
+	    
+    }
+	
+    else {
+
+	if( vpatch.size() == 2 ) {
+		
+	    if( _bdw.at(vpatch[0]) > _bdw.at(vpatch[1])  ) {
+		if( _bdw.at(vpatch[0]) >= 0 ) {  patch = vpatch[0];  }
 	    }
-
-	}
+	    else {
+		if( _bdw.at(vpatch[1]) >= 0 ) {  patch = vpatch[1]; }
+	    }
+	    
+	}	    
+	    
     }    
 
 

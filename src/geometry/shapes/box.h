@@ -2,9 +2,19 @@
 #define BOX_H
 
 #include <basicShape.h>
+#include <map>
 
 class box : public basicShape {
 
+
+    /* ----------------------  Public member functions ----------------------  */
+
+protected:
+
+    // Boundary weight
+    std::map<std::string, int> _bdw;
+
+    
 
     /* ----------------------  Public member functions ----------------------  */
 

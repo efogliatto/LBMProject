@@ -1,6 +1,6 @@
 Shapes
 {
-    top
+    topBox
     bottomBox
 }
 
@@ -18,6 +18,18 @@ bottomBox
     min ( 2 -2 0 );
     max ( 3 0 0 );
     inside true;
+}
+
+boundaryWeights
+{
+    topBox_X0 1;
+    topBox_X1 1;
+    topBox_Y0 2;
+    topBox_Y1 2;
+    bottomBox_X0 0;
+    bottomBox_X1 0;
+    bottomBox_Y0 1;
+    bottomBox_Y1 -1;
 }
 
 // Lattice characteristic length

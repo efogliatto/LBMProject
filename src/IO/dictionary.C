@@ -375,3 +375,45 @@ const void dictionary::extract(pdf& v, vector<string>::iterator& it) const{
     }
     
 }
+
+
+
+// // Check if entry exists
+// const bool dictionary::findEntry(const string& entry) const {
+
+
+//     // Look for entry definition
+//     bool find = false;
+
+    
+//     // Tokenize entry
+//     vector<string> entryTree;
+//     boost::char_separator<char> sep("/");
+//     boost::tokenizer<boost::char_separator<char>> tokens(entry, sep);
+//     BOOST_FOREACH (string t, tokens) {	
+//     	entryTree.push_back(t);
+//     }
+
+//     // Single entry
+//     vector<string> subEntry;
+//     if(entryTree.size() == 1) {
+//     	outEntry = singleEntry( _fileContent, entry );
+//     }
+//     else {
+
+//     // 	// Initial search
+//     // 	subEntry = search( entryTree[0] );
+	
+//     // 	for(uint id = 1 ; id < entryTree.size() - 1 ; id++) {
+	    
+//     // 	    subEntry = search(subEntry, entryTree[id]);
+	    
+//     // 	}
+
+//     // 	outEntry = singleEntry( subEntry, entryTree.back() );
+
+//     // }    
+    
+//     return find;    
+    
+// }
