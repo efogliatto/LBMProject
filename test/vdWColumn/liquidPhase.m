@@ -1,11 +1,17 @@
-function [Er,C] = liquidPhase(cl_0, Tr, de, nn)
+function [Er,C,Int] = liquidPhase(cl_0, Tr, de, nn)
 
+  
   # Initial condition
-  C = zeros(nn,1);
-  Er = zeros(nn,1);  
-  C(nn) = cl_0;
-  Er(nn) = 0;
 
+  C = zeros(nn,1);
+  Er = zeros(nn,1);
+  Int = zeros(nn,1);  
+  C(nn) = cl_0;
+  
+
+
+  # Integrate differential equation
+  
   for i = (nn-1) : -1 : 1
     
     a = Tr / ((1.0 - C(i+1)/3.0)^2);
@@ -20,5 +26,15 @@ function [Er,C] = liquidPhase(cl_0, Tr, de, nn)
     
   endfor
 
+
+
+  # Integrate density profile
+
+  for i = (nn-1) : -1 : 1
+
+    Int(i) = Int(i+1) + 0.5 * (C(i+1) + C(i)) * de;
+    
+  endfor
+  
   
 endfunction
