@@ -24,7 +24,7 @@ initialTr = [0.99 1.1 0.8 ;
 Er_max = 3.3e-06;
 
 # Average reduced concentration
-c_bar = 1;
+c_bar = 1.5;
 
 # Plot and write flags
 plot_profile = false;

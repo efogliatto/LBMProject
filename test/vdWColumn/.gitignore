@@ -1,0 +1,3 @@
+*.dat
+# Except this file
+!.gitignore
