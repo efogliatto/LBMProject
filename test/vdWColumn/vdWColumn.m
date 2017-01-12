@@ -7,14 +7,15 @@ Ef = 1e-05;
 
 # Reduced temperature
 Tr_min = 0.5;
-Tr_max = 0.5;
+Tr_max = 0.99;
+dTr    = 0.01;
 
 # Reduced temperature initial conditions (Tr cl cg)
 initialTr = [0.99 1.1 0.8 ;
 	     0.95 1.3 0.5 ;
 	     0.90 1.5 0.3 ;
 	     0.70 1.9 0.1 ;
-	     0.60 2.1 0.05 ;
+	     0.60 2.2 0.05 ;
 	     0.50 2.4 0.025 ;
 	     0.45 2.5 0.0125 ;
 	     0.40 2.7 1.5625e-03];
@@ -23,40 +24,35 @@ initialTr = [0.99 1.1 0.8 ;
 Er_max = 3.3e-06;
 
 # Average reduced concentration
-c_bar = 0;
+c_bar = 1;
 
 # Plot and write flags
 plot_profile = false;
 write_profile = false;
+write_vfrac = true;
+
+# Concentration information. Tr, cl, cg, phi_f
+Result = [];
 
 
 
 
 # Move over reduced temperatures
 
-for Tr = Tr_min : 0.1 : Tr_max 
+for Tr = Tr_min : dTr : Tr_max 
 
   
-
   # Equilibrium densities. Use linear interpolation to determine initial densities
   init_cl = interp1( initialTr(:,1), initialTr(:,2), Tr );
   init_cg = interp1( initialTr(:,1), initialTr(:,3), Tr );
   [c,fval,info] = fsolve(@(x) redConFunction(x,Tr), [init_cl;init_cg], optimset("TolX", 1e-10, "TolFun", 1e-10));
-
-
+  
 
 
   # Compute profiles only if fsolve is converged
   if(info == 1)
 
-    # Print information on screen
-    printf("\n");
-    printf("Reduced temperature: %f\n", Tr);
-    printf("Liquid phase reduced concentration: %f\n", c(1));
-    printf("Vapor phase reduced concentration: %f\n", c(2));
-    printf("\n");
-
-  
+ 
     # Compute vapor phase
     [Er_g,Cg,IntCg] = vaporPhase(c(2),Tr,de,floor(Ef/de));
 
@@ -64,8 +60,27 @@ for Tr = Tr_min : 0.1 : Tr_max
     [Er_f,Cf,IntCf] = liquidPhase(c(1),Tr,de,floor(Ef/de));
 
 
+    # Print information on screen
+    if(Tr_min == Tr_max)
+    
+      printf("\n");
+      printf("Reduced temperature: %f\n",Tr);
+      printf("Liquid phase reduced concentration: %f\n",c(1));
+      printf("Vapor phase reduced concentration: %f\n",c(2));    
+      printf("\n");    
 
+    endif
+
+    
+
+    # Save results 
+    Result(end+1,1) = Tr;
+    Result(end,2) = c(1);
+    Result(end,3) = c(2);
+    Result(end,4) = -1;
+    
   
+
     # Volume fraction estimation
 
     if(  (Er_max * c_bar ) > 0  )
@@ -93,15 +108,26 @@ for Tr = Tr_min : 0.1 : Tr_max
       endfor
 
 
-      printf("Liquid phase volume fraction: %f\n", Er_0 / Er_max);
-      printf("Vapor phase volume fraction: %f\n", 1.0 - Er_0 / Er_max);
-      printf("\n");
+      Result(end,4) = Er_0 / Er_max;
+
+
+
+      if(Tr_min == Tr_max)
+    
+	printf("Liquid phase volume fraction: %f\n",Result(end,4));
+	printf("Vapor phase volume fraction: %f\n",1.0-Result(end,4));
+	printf("\n");    
+
+      endif
     
     
     endif
 
 
-  
+    
+
+      
+      
   
 
     # Save profiles
@@ -145,6 +171,40 @@ for Tr = Tr_min : 0.1 : Tr_max
   endif
 
 
+
+
+
+
+
+# Write volume fraction results
+  
+  if(write_vfrac == true)
+
+
+    
+    fname = sprintf("c_bar_%.3f.dat",c_bar);
+    
+    file = fopen(fname,"w");
+    
+    
+    for i = 1 : size(Result,1)
+      
+      for j = 1 : size(Result,2)
+
+	fprintf(file,"%f ",Result(i,j));
+	
+      endfor
+
+      fprintf(file,"\n");
+      
+    endfor
+
+    
+    fclose(file);
+
+    
+  endif
+  
 
 
 endfor
