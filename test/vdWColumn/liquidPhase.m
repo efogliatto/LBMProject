@@ -28,11 +28,11 @@ function [Er,C,Int] = liquidPhase(cl_0, Tr, de, nn)
 
 
 
-  # Integrate density profile
+  # Integrate density profile (inverse order)
 
-  for i = (nn-1) : -1 : 1
+  for i = 2 : nn
 
-    Int(i) = Int(i+1) + 0.5 * (C(i+1) + C(i)) * de;
+    Int(i) = Int(i-1) + 0.5 * (C(nn - i + 2) + C(nn - i + 1)) * de;
     
   endfor
   
