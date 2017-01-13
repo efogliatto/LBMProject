@@ -67,6 +67,37 @@ extern "C" {
 	    
 		}
 
+
+		else {
+
+		    if( eosType.compare("vanderWaals") == 0 ) {
+
+			info._eosIdx = 3;
+
+			// Peng-Robinson constants
+    
+			info._a = (c_scalar)mp.lookUpEntry<double>("EOS/a");
+    
+			info._b = (c_scalar)mp.lookUpEntry<double>("EOS/b");
+    
+			info._R = (c_scalar)mp.lookUpEntry<double>("EOS/R");
+
+			info._G = (c_scalar)mp.lookUpEntry<double>("EOS/G");
+
+			info._M = (c_scalar)mp.lookUpEntry<double>("EOS/M");
+	    
+		    }
+
+
+		    else {
+
+			printf("\n  [ERROR]   Unrecognized EOS %s\n\n", eosType.c_str());
+			exit(1);
+
+		    }
+
+		}			
+
 	    }	
 
 	}

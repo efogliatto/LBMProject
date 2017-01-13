@@ -30,6 +30,11 @@ double p_eos( struct EOSInfo* info, double rho, double T ) {
 	break;
 
 
+    // van der Waals
+    case 3:	
+	p = info->_R * T / (info->_M / rho - info->_b)  -  info->_a * rho * rho / ( info->_M * info->_M );
+	break;
+	
 	
     }    
     

@@ -9,6 +9,7 @@ struct EOSInfo {
     // 0 : ideal gas
     // 1 : Carnahan-Starling
     // 2 : Peng-Robinson
+    // 3 : van der Waals
     unsigned int _eosIdx;
 
 
@@ -17,6 +18,7 @@ struct EOSInfo {
     c_scalar _b;
     c_scalar _R;
     c_scalar _G;
+    c_scalar _M;
     c_scalar _omega;
 
     // Constant specific heat
