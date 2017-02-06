@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <totalForce.h>
 #include <updateTau.h>
+#include <potential.h>
 
 
 void liSRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -20,35 +21,54 @@ void liSRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     // Total force
     double F[3];
 
+    // Modified velocity
+    double Vprime[3];
+    
+
     // Move over points
     for( id = 0 ; id < mesh->lattice.nlocal ; id++ ) {
 
+
+	
 	// Update tau value
 	updateTau(field, mfields->rho[id], mesh->lattice.Q);	
 
 	// Compute equilibrium
 	lbgkEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], feq);
-
 	
 	// Total force
 	totalForce( mesh, F, mfields->rho, mfields->T, id);
 
+	// Potential
+	double psi = potential( mesh, mfields->rho[id], mfields->T[id]);
+
+	// Viscosity
+	double nu = mesh->lattice.cs2 * mesh->time.tstep * (field->tau - 0.5);
 	
-	// Guo forcing scheme. Move over velocities
+
+	// Update prime velocity
+	for( j = 0 ; j < mesh->lattice.d ; j++ ) {
+	    Vprime[j] = mfields->U[id][j]  +  field->sigma * F[j] / (nu * psi * psi);
+	}
+	
+	
+
+	
+	// Li forcing scheme. Move over velocities
 	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
 
-	    // Dot product 1. (e_k - U) * F
+	    // Dot product 1. (e_k - Vprime) * F
 	    double dot_1 = 0;	    
 	    for( j = 0 ; j < mesh->lattice.d ; j++ ) {		
-		dot_1 += (mesh->lattice.c * mesh->lattice.vel[k][j] - mfields->U[id][j]) * F[j];
+		dot_1 += (mesh->lattice.c * mesh->lattice.vel[k][j] - Vprime[j]) * F[j];
 	    }
 
 
-	    // Dot product 2. e_k * U
+	    // Dot product 2. e_k * Vprime
 	    double dot_2 = 0;	    
 	    for( j = 0 ; j < mesh->lattice.d ; j++ ) {		
-		dot_2 += mesh->lattice.c * mesh->lattice.vel[k][j] * mfields->U[id][j];
+		dot_2 += mesh->lattice.c * mesh->lattice.vel[k][j] * Vprime[j];
 	    }
 
 	    // Dot product 3. dot_2 * e_k * F
