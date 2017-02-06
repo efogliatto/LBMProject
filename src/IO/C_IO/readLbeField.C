@@ -78,7 +78,9 @@ extern "C" {
 		field.tau_B = macroDict.lookUpEntry<double>(name + "/tau_B");
 
 		field.kappa_A = macroDict.lookUpEntry<double>(name + "/kappa_A");
-		field.kappa_B = macroDict.lookUpEntry<double>(name + "/kappa_B");	
+		field.kappa_B = macroDict.lookUpEntry<double>(name + "/kappa_B");
+
+		field.sigma = macroDict.lookUpEntry<double>(name + "/sigma");		
 		
 	    }
 	    
@@ -112,8 +114,6 @@ extern "C" {
 
 			field.kappa_A = macroDict.lookUpEntry<double>(name + "/kappa_A");
 			field.kappa_B = macroDict.lookUpEntry<double>(name + "/kappa_B");
-
-			field.sigma = macroDict.lookUpEntry<double>(name + "/sigma");
 		    
 		    }
 		

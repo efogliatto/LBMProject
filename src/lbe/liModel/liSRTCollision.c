@@ -43,13 +43,12 @@ void liSRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 	double psi = potential( mesh, mfields->rho[id], mfields->T[id]);
 
 	// Viscosity
-	double nu = mesh->lattice.cs2 * mesh->time.tstep * (field->tau - 0.5);
+	double nu = mesh->lattice.cs2 * mesh->time.tstep * (field->tau - 0.5);	
 	
-
 	// Update prime velocity
-	for( j = 0 ; j < mesh->lattice.d ; j++ ) {
-	    Vprime[j] = mfields->U[id][j]  +  field->sigma * F[j] / (nu * psi * psi);
-	}
+	Vprime[0] = mfields->U[id][0]  +  field->sigma * F[0] / (nu * psi * psi);
+	Vprime[1] = mfields->U[id][1]  +  field->sigma * F[1] / (nu * psi * psi);
+	Vprime[2] = mfields->U[id][2]  +  field->sigma * F[2] / (nu * psi * psi);	
 	
 	
 
