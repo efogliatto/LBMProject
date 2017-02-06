@@ -1,6 +1,7 @@
 #include <collision.h>
 #include <liMRTCollision.h>
 #include <liSRTCollision.h>
+#include <guoSRTCollision.h>
 #include <temperatureCollision.h>
 #include <stdlib.h>
 
@@ -25,6 +26,12 @@ void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lb
     // Li SRT Model. Temperature
     case 2:
 	temperatureCollision( mesh, mfields, field );
+	break;
+	
+
+    // Guo SRT Model
+    case 3:
+	guoSRTCollision( mesh, mfields, field );
 	break;
 	
 	
