@@ -29,6 +29,11 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 	}
 	break;
 
+
+    // Test SRT model.
+    case 4:
+	lbgkEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id]);
+	break;	
 	
     default:
 	break;

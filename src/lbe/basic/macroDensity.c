@@ -17,6 +17,12 @@ void macroDensity( struct latticeMesh* mesh, struct macroFields* mfields, struct
     case 1:
 	basicDensity( mesh, mfields, field );
 	break;
+
+	
+    // Test SRT Model
+    case 4:
+	basicDensity( mesh, mfields, field );
+	break;	
 	
 	
     default:

@@ -12,7 +12,7 @@ add_library(basiclbe SHARED
   updateBoundaryElements.c
   lbgkEquilibrium_id.c
   lbgkTEquilibrium.c
-  # lbgkTEquilibrium_id.c
+  basicVelocity.c
   updateLambda.c
   updateTau.c
   )

@@ -116,6 +116,25 @@ extern "C" {
 			field.kappa_B = macroDict.lookUpEntry<double>(name + "/kappa_B");
 		    
 		    }
+
+
+		    else {
+		
+			if( model.compare("testSRT") == 0 ) {
+		    
+			    field.colId = 4;
+
+			    // Read srt
+			    field.tau = macroDict.lookUpEntry<double>(name + "/tau");
+			    field.tau_A = macroDict.lookUpEntry<double>(name + "/tau_A");
+			    field.tau_B = macroDict.lookUpEntry<double>(name + "/tau_B");
+
+			    field.kappa_A = macroDict.lookUpEntry<double>(name + "/kappa_A");
+			    field.kappa_B = macroDict.lookUpEntry<double>(name + "/kappa_B");
+		    
+			}
+		
+		    }		    
 		
 		}		
 

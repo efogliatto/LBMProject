@@ -1,6 +1,7 @@
 #include <updateBoundaryElements.h>
 #include <liDensity_local.h>
 #include <liVelocity_local.h>
+#include <testVelocity_local.h>
 #include <liTemperature_local.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -35,6 +36,11 @@ void updateBoundaryElements( struct latticeMesh* mesh, struct macroFields* mfiel
 	    case 2:
 		liTemperature_local( mesh, mfields, field, id );
 		break;
+
+	    case 4:
+		liDensity_local( mesh, mfields, field, id );
+		testVelocity_local( mesh, mfields, field, id );
+		break;		
 
 	    default:
 		if(mesh->parallel.pid == 0) { printf("\n\n\n[ERROR]  Unable to update boundary elements for field %s\n\n\n",field->name); }
