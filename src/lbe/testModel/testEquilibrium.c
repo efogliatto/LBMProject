@@ -5,7 +5,7 @@ void testEquilibrium( struct latticeInfo* lattice, struct EOSInfo* info, double 
     unsigned int k, j;
 
     // van der waals sound speed
-    double cs2 = info->_M * info->_R * T / (info->_M - rho * info->_b)  -  2.0 * rho * info->_a / (info->_M * info->_M);
+    double cs2 = info->_M * info->_R * T / ((info->_M - rho * info->_b)*(info->_M - rho * info->_b))  -  2.0 * rho * info->_a / (info->_M * info->_M);
     cs2 = cs2 * cs2;
 
     // Move over velocities

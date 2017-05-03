@@ -4,14 +4,14 @@
 #include <stdlib.h>
 
 
-void liSRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
+void testSRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
     
     // Indices
     unsigned int id, k;
     
     // Partial distributions
-    double* feq   = (double*)malloc( mesh->lattice.Q * sizeof(double) );
+    double* feq = (double*)malloc( mesh->lattice.Q * sizeof(double) );
  
 
     // Move over points

@@ -7,7 +7,9 @@ void testVelocity_local( struct latticeMesh* mesh, struct macroFields* mfields, 
 	
     // Initialize velocities
     for(k = 0 ; k < 3 ; k++) {
+
 	mfields->U[id][k] = 0;
+	
     }	
 	
 
