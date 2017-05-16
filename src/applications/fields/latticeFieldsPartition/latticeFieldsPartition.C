@@ -247,24 +247,54 @@ int main(int argc, char** argv) {
 		    }
 
 		    else {
-		    
-		    
-			fieldShape shape("properties/setFieldDict");
 
-			uint pointId(0);
+			if( fnc.compare("fixedGradient") == 0 ) {
 
-			// Set local values
-			for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt) {
-			    *pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
-			    pointId++;
+			    // Linear behaviour
+			    // f(\vec{x}) = \vec{alpha} \dot \vec{x} + beta
+
+			    // Read basic properties
+			    Vector3 alpha = setFieldsDict.lookUpEntry<Vector3>( fieldsList[fid] + "/alpha");
+			    double beta   = setFieldsDict.lookUpEntry<double>( fieldsList[fid] + "/beta");
+
+			    
+			    uint pointId(0);
+
+			    // Set local values
+			    for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt) {
+				*pt = alpha * meshPoints[pointId] + beta;
+				// cout << meshPoints[pointId] << endl;
+				pointId++;
+			    }
+
+			    // Set ghost values
+			    for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
+				*pt = alpha * meshPoints[pointId] + beta;
+				pointId++;
+			    }					    
+			    
+			    
 			}
 
-			// Set ghost values
-			for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
-			    *pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
-			    pointId++;
-			}			
+			else {
+			    
+			    fieldShape shape("properties/setFieldDict");
 
+			    uint pointId(0);
+
+			    // Set local values
+			    for(lbPatch_iterator<double> pt = fld.begin() ; pt != fld.end() ; ++pt) {
+				*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+				pointId++;
+			    }
+
+			    // Set ghost values
+			    for(vector<double>::iterator pt = fld.ghostBegin() ; pt != fld.ghostEnd() ; ++pt) {
+				*pt = shape.fieldValue( fieldsList[fid], meshPoints[pointId], *pt);
+				pointId++;
+			    }			
+
+			}
 		    }
 
 
