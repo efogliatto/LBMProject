@@ -90,13 +90,30 @@ extern "C" {
 		    
 		    field.colId = 2;
 
-		    // Read srt
-		    field.tau = macroDict.lookUpEntry<double>(name + "/tau");
-		    field.tau_A = macroDict.lookUpEntry<double>(name + "/tau_A");
-		    field.tau_B = macroDict.lookUpEntry<double>(name + "/tau_B");
+		    // Themal conductivity model
+		    string lmodel = macroDict.lookUpEntry<string>(name + "/LModel");
+		    
+		    if( lmodel.compare("constantLambda") == 0 ) {
 
-		    field.kappa_A = macroDict.lookUpEntry<double>(name + "/kappa_A");
-		    field.kappa_B = macroDict.lookUpEntry<double>(name + "/kappa_B");		    
+			field.lambda =  macroDict.lookUpEntry<double>(name + "/lambda");
+			
+		    }
+
+		    else {
+
+			if( lmodel.compare("none") == 0) {
+
+			    // Read srt
+			    field.tau = macroDict.lookUpEntry<double>(name + "/tau");
+			    field.tau_A = macroDict.lookUpEntry<double>(name + "/tau_A");
+			    field.tau_B = macroDict.lookUpEntry<double>(name + "/tau_B");
+
+			    field.kappa_A = macroDict.lookUpEntry<double>(name + "/kappa_A");
+			    field.kappa_B = macroDict.lookUpEntry<double>(name + "/kappa_B");		    
+			
+			}
+
+		    }		    
 		    
 		}
 

@@ -119,8 +119,9 @@ int main( int argc, char **argv ) {
     	    // f
     	    equilibrium(&mesh, &mfields, &f, id);
 
+	    
     	    // g
-    	    equilibrium(&mesh, &mfields, &g, id);
+    	    if( ht != 0 ) {  equilibrium(&mesh, &mfields, &g, id); }
 
     	}
 	
@@ -156,15 +157,15 @@ int main( int argc, char **argv ) {
     	// Collide g (Temperature)
     	if( ht != 0 ) {
 
-	    if( frozen != 0 ) {
+    	    if( frozen != 0 ) {
 
-	    	// Update macroscopic density
-	    	macroDensity( &mesh, &mfields, &f );
+    	    	// Update macroscopic density
+    	    	macroDensity( &mesh, &mfields, &f );
 		
-	    	// Update macroscopic velocity
-	    	macroVelocity( &mesh, &mfields, &f );
+    	    	// Update macroscopic velocity
+    	    	macroVelocity( &mesh, &mfields, &f );
 
-	    }
+    	    }
 
     	    collision( &mesh, &mfields, &g );
 

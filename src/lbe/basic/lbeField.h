@@ -49,6 +49,9 @@ struct lbeField {
 
     // Force coefficient
     double sigma;
+
+    // Thermal conductivity
+    double lambda;
     
 };
 
