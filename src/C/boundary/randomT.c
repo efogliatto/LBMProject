@@ -16,7 +16,7 @@ void randomT( struct bdInfo* bdElements, struct lbeField* field, struct latticeI
 
 
     double minp = 1.0 - 1.0 / 100;
-    double maxp = 1.0 + 1.0 / 100;
+    double maxp = 1.0 + 1.2 / 100;
 
     // Generate random numbers
     /* srand(time(NULL)); */
