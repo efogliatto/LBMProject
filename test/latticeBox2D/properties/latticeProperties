@@ -1,0 +1,11 @@
+// Elements in X-direction
+Nx 6;
+
+// Elements in Y-direction
+Ny 6;
+
+// Lattice model
+LBModel D2Q9;
+
+// Boundary types
+boundaryType generic;
